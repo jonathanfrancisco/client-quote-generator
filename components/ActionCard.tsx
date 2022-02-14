@@ -1,14 +1,22 @@
 import React from 'react';
 
-import { View, Text } from 'react-native';
+import {
+  View,
+  Text,
+  Pressable,
+  GestureResponderEvent,
+  TouchableOpacity,
+} from 'react-native';
 
 interface ActionCardProps {
   text: string;
+  onPress: (event: GestureResponderEvent) => void;
 }
 
 const ActionCard = (props: ActionCardProps) => {
   return (
-    <View
+    <TouchableOpacity
+      onPress={props.onPress}
       style={{
         width: '44%',
         backgroundColor: '#E9E9E9',
@@ -27,7 +35,7 @@ const ActionCard = (props: ActionCardProps) => {
       >
         {props.text}
       </Text>
-    </View>
+    </TouchableOpacity>
   );
 };
 
