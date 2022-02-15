@@ -7,7 +7,7 @@ import { ThemeProvider } from 'react-native-elements';
 
 /* Screens components */
 import Home from './components/screens/Home';
-import CreateQuote from './components/screens/CreateQuote';
+import CreateQuote from './components/screens/CreateQuote/CreateQuote';
 
 import theme from './theme';
 

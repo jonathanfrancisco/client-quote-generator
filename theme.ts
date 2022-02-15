@@ -7,6 +7,7 @@ const theme = {
     btnSecondary: '#E9E9E0',
     txtPrimary: '#000000',
     txtSecondary: '#FFFFFF',
+    backgroundPrimary: '#FFFFFF',
   },
 };
 
