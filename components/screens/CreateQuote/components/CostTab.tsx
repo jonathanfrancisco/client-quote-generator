@@ -32,19 +32,6 @@ const CostTab = ({ navigation }) => {
             navigation.navigate('benefitTab');
           }}
         />
-        <Button
-          title='Next'
-          buttonStyle={{
-            backgroundColor: theme.Colors.btnPrimary,
-            borderRadius: 8,
-          }}
-          containerStyle={{
-            width: 120,
-          }}
-          onPress={() => {
-            navigation.navigate('benefitTab');
-          }}
-        />
       </View>
     </View>
   );
