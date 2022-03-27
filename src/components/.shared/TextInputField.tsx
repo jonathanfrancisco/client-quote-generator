@@ -1,6 +1,6 @@
 import React from 'react';
 import { Input } from 'react-native-elements';
-import theme from '../../theme';
+import theme from '../../../theme';
 
 interface TextInputFieldProps {
   label: string;

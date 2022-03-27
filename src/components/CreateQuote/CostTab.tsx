@@ -1,9 +1,9 @@
 import React from 'react';
 import { View, Text } from 'react-native';
 import { Button } from 'react-native-elements';
-import theme from '../../../../theme';
+import theme from '../../../theme';
 
-const BenefitTab = ({ navigation }) => {
+const CostTab = ({ navigation }) => {
   return (
     <View
       style={{
@@ -12,7 +12,7 @@ const BenefitTab = ({ navigation }) => {
         padding: 20,
       }}
     >
-      <Text>Benefit Tab </Text>
+      <Text>Cost Tab </Text>
       <View style={{ height: 1, margin: 12 }}></View>
       <View
         style={{
@@ -30,20 +30,7 @@ const BenefitTab = ({ navigation }) => {
             width: 120,
           }}
           onPress={() => {
-            navigation.navigate('clientTab');
-          }}
-        />
-        <Button
-          title='Next'
-          buttonStyle={{
-            backgroundColor: theme.Colors.btnPrimary,
-            borderRadius: 8,
-          }}
-          containerStyle={{
-            width: 120,
-          }}
-          onPress={() => {
-            navigation.navigate('costTab');
+            navigation.navigate('benefitTab');
           }}
         />
       </View>
@@ -51,4 +38,4 @@ const BenefitTab = ({ navigation }) => {
   );
 };
 
-export default BenefitTab;
+export default CostTab;

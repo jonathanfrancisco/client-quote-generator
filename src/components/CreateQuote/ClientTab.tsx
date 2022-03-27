@@ -1,29 +1,27 @@
 import React from 'react';
-import { View, Text } from 'react-native';
+import { ScrollView, View } from 'react-native';
 import { Button } from 'react-native-elements';
-import theme from '../../../../theme';
 
-const CostTab = ({ navigation }) => {
+import ClientDetailsForm from './ClientDetailsForm';
+
+import theme from '../../../theme';
+
+const ClientTab = ({ navigation }) => {
   return (
-    <View
+    <ScrollView
       style={{
-        height: '100%',
+        // height: '100%',
         backgroundColor: theme.Colors.backgroundPrimary,
         padding: 20,
       }}
     >
-      <Text>Cost Tab </Text>
+      <ClientDetailsForm />
       <View style={{ height: 1, margin: 12 }}></View>
-      <View
-        style={{
-          flexDirection: 'row',
-          justifyContent: 'space-between',
-        }}
-      >
+      <View style={{ flexDirection: 'row', justifyContent: 'flex-end' }}>
         <Button
-          title='Back'
+          title='Next'
           buttonStyle={{
-            backgroundColor: theme.Colors.btnSecondary,
+            backgroundColor: theme.Colors.btnPrimary,
             borderRadius: 8,
           }}
           containerStyle={{
@@ -34,8 +32,8 @@ const CostTab = ({ navigation }) => {
           }}
         />
       </View>
-    </View>
+    </ScrollView>
   );
 };
 
-export default CostTab;
+export default ClientTab;

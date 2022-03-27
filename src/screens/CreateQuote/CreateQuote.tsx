@@ -1,8 +1,8 @@
 import React from 'react';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
-import ClientTab from './components/ClientTab';
-import BenefitTab from './components/BenefitTab';
-import CostTab from './components/CostTab';
+import ClientTab from '../../components/CreateQuote/ClientTab';
+import BenefitTab from '../../components/CreateQuote/BenefitTab';
+import CostTab from '../../components/CreateQuote/CostTab';
 
 import theme from '../../../theme';
 

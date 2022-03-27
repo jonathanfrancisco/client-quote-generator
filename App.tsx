@@ -6,8 +6,8 @@ import { SafeAreaView, StatusBar, Platform, View } from 'react-native';
 import { ThemeProvider, Button } from 'react-native-elements';
 
 /* Screens components */
-import Home from './components/screens/Home';
-import CreateQuote from './components/screens/CreateQuote/CreateQuote';
+import Home from './src/screens/Home/Home';
+import CreateQuote from './src/screens/CreateQuote/CreateQuote';
 
 import theme from './theme';
 

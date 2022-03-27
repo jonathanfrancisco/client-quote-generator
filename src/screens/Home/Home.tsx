@@ -1,7 +1,7 @@
 import React from 'react';
 import { View } from 'react-native';
-import ActionCard from '../ActionCard';
-import MainPageHeader from '../MainPageHeader';
+import ActionCard from '../../components/Home/ActionCard';
+import MainPageHeader from '../../components/Home/MainPageHeader';
 
 const Home = ({ navigation }) => {
   return (
