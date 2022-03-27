@@ -1,5 +1,4 @@
 import React from 'react';
-import { NavigationContainer } from '@react-navigation/native';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import ClientTab from './components/ClientTab';
 import BenefitTab from './components/BenefitTab';
@@ -44,7 +43,6 @@ const CreateQuote = () => {
         }}
         listeners={{
           tabPress: (e) => {
-            // Prevent default action
             e.preventDefault();
           },
         }}
@@ -62,7 +60,6 @@ const CreateQuote = () => {
         }}
         listeners={{
           tabPress: (e) => {
-            // Prevent default action
             e.preventDefault();
           },
         }}
@@ -80,7 +77,6 @@ const CreateQuote = () => {
         }}
         listeners={{
           tabPress: (e) => {
-            // Prevent default action
             e.preventDefault();
           },
         }}

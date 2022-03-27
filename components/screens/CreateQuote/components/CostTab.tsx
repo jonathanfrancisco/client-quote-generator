@@ -13,6 +13,7 @@ const CostTab = ({ navigation }) => {
       }}
     >
       <Text>Cost Tab </Text>
+      <View style={{ height: 1, margin: 12 }}></View>
       <View
         style={{
           flexDirection: 'row',

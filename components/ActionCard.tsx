@@ -1,12 +1,6 @@
 import React from 'react';
 
-import {
-  View,
-  Text,
-  Pressable,
-  GestureResponderEvent,
-  TouchableOpacity,
-} from 'react-native';
+import { Text, GestureResponderEvent, TouchableOpacity } from 'react-native';
 
 interface ActionCardProps {
   text: string;

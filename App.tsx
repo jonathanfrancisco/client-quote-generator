@@ -1,9 +1,9 @@
 /* 3rd Party libraries/packages */
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import React, { useState } from 'react';
+import React from 'react';
 import { SafeAreaView, StatusBar, Platform, View } from 'react-native';
-import { ThemeProvider } from 'react-native-elements';
+import { ThemeProvider, Button } from 'react-native-elements';
 
 /* Screens components */
 import Home from './components/screens/Home';

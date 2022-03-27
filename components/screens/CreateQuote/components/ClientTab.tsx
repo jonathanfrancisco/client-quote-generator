@@ -1,23 +1,23 @@
 import React from 'react';
-import { View, Text } from 'react-native';
+import { ScrollView, View } from 'react-native';
 import { Button } from 'react-native-elements';
+
+import ClientDetailsForm from './ClientDetailsForm';
+
 import theme from '../../../../theme';
 
 const ClientTab = ({ navigation }) => {
   return (
-    <View
+    <ScrollView
       style={{
-        height: '100%',
+        // height: '100%',
         backgroundColor: theme.Colors.backgroundPrimary,
         padding: 20,
       }}
     >
-      <Text>Client Tab </Text>
-      <View
-        style={{
-          alignItems: 'flex-end',
-        }}
-      >
+      <ClientDetailsForm />
+      <View style={{ height: 1, margin: 12 }}></View>
+      <View style={{ flexDirection: 'row', justifyContent: 'flex-end' }}>
         <Button
           title='Next'
           buttonStyle={{
@@ -32,7 +32,7 @@ const ClientTab = ({ navigation }) => {
           }}
         />
       </View>
-    </View>
+    </ScrollView>
   );
 };
 
