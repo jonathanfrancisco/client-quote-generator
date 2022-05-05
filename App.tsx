@@ -1,15 +1,15 @@
 /* 3rd Party libraries/packages */
-import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import React from 'react';
-import { SafeAreaView, StatusBar, Platform, View } from 'react-native';
-import { ThemeProvider, Button } from 'react-native-elements';
+import { NavigationContainer } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import React from "react";
+import { SafeAreaView, StatusBar, Platform, View } from "react-native";
+import { ThemeProvider, Button } from "react-native-elements";
 
 /* Screens components */
-import Home from './src/screens/Home/Home';
-import CreateQuote from './src/screens/CreateQuote/CreateQuote';
+import Home from "./src/screens/Dashboard/Dashboard";
+import CreateQuote from "./src/screens/CreateQuote/CreateQuote";
 
-import theme from './theme';
+import theme from "./theme";
 
 const Stack = createNativeStackNavigator();
 
@@ -20,28 +20,28 @@ export default function App() {
         <SafeAreaView
           style={{
             flex: 1,
-            paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
+            paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
           }}
         >
-          <Stack.Navigator initialRouteName='home'>
+          <Stack.Navigator initialRouteName="home">
             <Stack.Screen
-              name='home'
+              name="home"
               component={Home}
-              options={{ title: 'Home', headerShown: false }}
+              options={{ title: "Home", headerShown: false }}
             />
             <Stack.Screen
-              name='createQuote'
+              name="createQuote"
               component={CreateQuote}
               options={{
-                title: 'Create Quote',
+                title: "Create Quote",
                 headerStyle: {
                   backgroundColor: theme.Colors.primary,
                 },
-                headerTintColor: '#fff',
+                headerTintColor: "#fff",
                 headerTitleStyle: {
-                  fontWeight: 'bold',
+                  fontWeight: "bold",
                 },
-                headerTitleAlign: 'center',
+                headerTitleAlign: "center",
               }}
             />
           </Stack.Navigator>

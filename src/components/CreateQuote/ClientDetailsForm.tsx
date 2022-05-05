@@ -1,8 +1,8 @@
-import React from 'react';
-import { View, Text } from 'react-native';
-import { colors, Input } from 'react-native-elements';
-import theme from '../../../theme';
-import TextInputField from '../.shared/TextInputField';
+import React from "react";
+import { View, Text } from "react-native";
+import { colors, Input } from "react-native-elements";
+import theme from "../../../theme";
+import TextInputField from "../.shared/TextInputField";
 
 const ClientDetailsForm = () => {
   return (
@@ -16,13 +16,13 @@ const ClientDetailsForm = () => {
       <Text
         style={{
           fontSize: 21,
-          fontWeight: 'bold',
+          fontWeight: "bold",
         }}
       >
         Client Details
       </Text>
-      <TextInputField label='Name' placeholder='Name' />
-      <TextInputField label='Birthday' placeholder='Birthday' />
+      <TextInputField label="Name" placeholder="Name" />
+      <TextInputField label="Birthday" placeholder="Birthday" />
     </View>
   );
 };
