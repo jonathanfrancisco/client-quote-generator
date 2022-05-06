@@ -6,7 +6,7 @@ import { SafeAreaView, StatusBar, Platform, View } from "react-native";
 import { ThemeProvider, Button } from "react-native-elements";
 
 /* Screens components */
-import Home from "./src/screens/Dashboard/Dashboard";
+import Dashboard from "./src/screens/Dashboard/Dashboard";
 import CreateQuote from "./src/screens/CreateQuote/CreateQuote";
 
 import theme from "./theme";
@@ -23,11 +23,11 @@ export default function App() {
             paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
           }}
         >
-          <Stack.Navigator initialRouteName="home">
+          <Stack.Navigator initialRouteName="DASHBOARD">
             <Stack.Screen
-              name="home"
-              component={Home}
-              options={{ title: "Home", headerShown: false }}
+              name="DASHBOARD"
+              component={Dashboard}
+              options={{ headerShown: false }}
             />
             <Stack.Screen
               name="createQuote"
