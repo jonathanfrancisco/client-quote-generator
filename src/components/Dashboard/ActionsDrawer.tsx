@@ -8,7 +8,9 @@ type Props = {
 
 const ActionsDrawer = ({ children }: Props) => {
   return (
-    <View style={tw`h-full rounded-tl-3xl rounded-tr-3x p-4 bg-sunlife-accent`}>
+    <View
+      style={tw`h-full rounded-tl-3xl rounded-tr-3xl p-4 bg-sunlife-accent`}
+    >
       <ScrollView
         contentContainerStyle={tw`justify-around flex-row flex-wrap grow-1`}
       >
