@@ -30,7 +30,7 @@ const BenefitTab = ({ navigation }) => {
             width: 120,
           }}
           onPress={() => {
-            navigation.navigate("clientTab");
+            navigation.navigate("CLIENT_FORM");
           }}
         />
         <Button
@@ -43,7 +43,7 @@ const BenefitTab = ({ navigation }) => {
             width: 120,
           }}
           onPress={() => {
-            navigation.navigate("costTab");
+            navigation.navigate("COST_FORM");
           }}
         />
       </View>

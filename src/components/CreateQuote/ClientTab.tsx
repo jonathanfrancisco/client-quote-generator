@@ -11,7 +11,7 @@ const ClientTab = ({ navigation }) => {
     <ScrollView
       style={{
         // height: '100%',
-        backgroundColor: theme.Colors.backgroundPrimary,
+        // backgroundColor: theme.Colors.backgroundPrimary,
         padding: 20,
       }}
     >
@@ -28,7 +28,7 @@ const ClientTab = ({ navigation }) => {
             width: 120,
           }}
           onPress={() => {
-            navigation.navigate("benefitTab");
+            navigation.navigate("BENEFITS_FORM");
           }}
         />
       </View>

@@ -10,37 +10,10 @@ const Tab = createMaterialTopTabNavigator();
 
 const CreateQuote = () => {
   return (
-    <Tab.Navigator
-      initialRouteName="clientTab"
-      screenOptions={{
-        swipeEnabled: false,
-        tabBarPressColor: "transparent",
-        tabBarIndicatorStyle: {
-          backgroundColor: theme.Colors.primary,
-          height: 8,
-        },
-        tabBarStyle: {
-          elevation: 0, // for Android
-          shadowOffset: {
-            width: 0,
-            height: 0, // for iOS
-          },
-        },
-        tabBarActiveTintColor: theme.Colors.txtPrimary,
-        tabBarInactiveTintColor: theme.Colors.txtPrimary,
-      }}
-    >
+    <Tab.Navigator initialRouteName="CLIENT_FORM" tabBar={() => null}>
       <Tab.Screen
-        name="clientTab"
+        name="CLIENT_FORM"
         component={ClientTab}
-        options={{
-          tabBarLabel: "Client",
-          tabBarLabelStyle: {
-            textTransform: "none",
-            fontWeight: "bold",
-            fontSize: 16,
-          },
-        }}
         listeners={{
           tabPress: (e) => {
             e.preventDefault();
@@ -48,16 +21,8 @@ const CreateQuote = () => {
         }}
       />
       <Tab.Screen
-        name="benefitTab"
+        name="BENEFITS_FORM"
         component={BenefitTab}
-        options={{
-          tabBarLabel: "Benefit",
-          tabBarLabelStyle: {
-            textTransform: "none",
-            fontWeight: "bold",
-            fontSize: 16,
-          },
-        }}
         listeners={{
           tabPress: (e) => {
             e.preventDefault();
@@ -65,16 +30,8 @@ const CreateQuote = () => {
         }}
       />
       <Tab.Screen
-        name="costTab"
+        name="COST_FORM"
         component={CostTab}
-        options={{
-          tabBarLabel: "Cost",
-          tabBarLabelStyle: {
-            textTransform: "none",
-            fontWeight: "bold",
-            fontSize: 16,
-          },
-        }}
         listeners={{
           tabPress: (e) => {
             e.preventDefault();

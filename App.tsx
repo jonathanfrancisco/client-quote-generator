@@ -4,6 +4,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import React from "react";
 import { SafeAreaView, StatusBar, Platform, View } from "react-native";
 import { ThemeProvider, Button } from "react-native-elements";
+import tw from "@app/lib/tailwind";
 
 /* Screens components */
 import Dashboard from "./src/screens/Dashboard/Dashboard";
@@ -34,13 +35,9 @@ export default function App() {
               component={CreateQuote}
               options={{
                 title: "Create Quote",
-                headerStyle: {
-                  backgroundColor: theme.Colors.primary,
-                },
+                headerStyle: tw`bg-sunlife-primary`,
                 headerTintColor: "#fff",
-                headerTitleStyle: {
-                  fontWeight: "bold",
-                },
+                headerTitleStyle: tw`font-bold  text-white`,
                 headerTitleAlign: "center",
               }}
             />
