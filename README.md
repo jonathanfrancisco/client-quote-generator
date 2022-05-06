@@ -7,6 +7,7 @@ Client quote generator is a utility app for my S.O (She's a financial advisor) f
 - Expo
 - React Native
 - React Native Elements
+- Tailwind CSS (using twrnc npm package)
 
 ## Getting Started
 
