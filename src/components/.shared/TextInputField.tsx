@@ -1,6 +1,6 @@
-import React from 'react';
-import { Input } from 'react-native-elements';
-import theme from '../../../theme';
+import React from "react";
+import { Input } from "react-native-elements";
+import theme from "@app/theme";
 
 interface TextInputFieldProps {
   label: string;
@@ -13,7 +13,7 @@ const TextInputField = (props: TextInputFieldProps) => {
       label={props.label}
       labelStyle={{
         fontSize: 16,
-        fontWeight: 'bold',
+        fontWeight: "bold",
         color: theme.Colors.txtPrimary,
       }}
       placeholder={props.placeholder}

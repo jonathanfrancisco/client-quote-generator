@@ -1,5 +1,5 @@
 import React from "react";
-import tw from "../../../lib/tailwind";
+import tw from "@app/lib/tailwind";
 
 import {
   Text,

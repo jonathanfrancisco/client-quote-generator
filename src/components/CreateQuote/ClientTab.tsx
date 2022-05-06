@@ -1,10 +1,10 @@
-import React from 'react';
-import { ScrollView, View } from 'react-native';
-import { Button } from 'react-native-elements';
+import React from "react";
+import { ScrollView, View } from "react-native";
+import { Button } from "react-native-elements";
 
-import ClientDetailsForm from './ClientDetailsForm';
+import ClientDetailsForm from "@app/src/components/CreateQuote/ClientDetailsForm";
 
-import theme from '../../../theme';
+import theme from "@app/theme";
 
 const ClientTab = ({ navigation }) => {
   return (
@@ -17,9 +17,9 @@ const ClientTab = ({ navigation }) => {
     >
       <ClientDetailsForm />
       <View style={{ height: 1, margin: 12 }}></View>
-      <View style={{ flexDirection: 'row', justifyContent: 'flex-end' }}>
+      <View style={{ flexDirection: "row", justifyContent: "flex-end" }}>
         <Button
-          title='Next'
+          title="Next"
           buttonStyle={{
             backgroundColor: theme.Colors.btnPrimary,
             borderRadius: 8,
@@ -28,7 +28,7 @@ const ClientTab = ({ navigation }) => {
             width: 120,
           }}
           onPress={() => {
-            navigation.navigate('benefitTab');
+            navigation.navigate("benefitTab");
           }}
         />
       </View>

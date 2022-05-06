@@ -1,20 +1,20 @@
-import React from 'react';
-import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
-import ClientTab from '../../components/CreateQuote/ClientTab';
-import BenefitTab from '../../components/CreateQuote/BenefitTab';
-import CostTab from '../../components/CreateQuote/CostTab';
+import React from "react";
+import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
+import ClientTab from "@app/src/components/CreateQuote/ClientTab";
+import BenefitTab from "@app/src/components/CreateQuote/BenefitTab";
+import CostTab from "@app/src/components/CreateQuote/CostTab";
 
-import theme from '../../../theme';
+import theme from "@app/theme";
 
 const Tab = createMaterialTopTabNavigator();
 
 const CreateQuote = () => {
   return (
     <Tab.Navigator
-      initialRouteName='clientTab'
+      initialRouteName="clientTab"
       screenOptions={{
         swipeEnabled: false,
-        tabBarPressColor: 'transparent',
+        tabBarPressColor: "transparent",
         tabBarIndicatorStyle: {
           backgroundColor: theme.Colors.primary,
           height: 8,
@@ -31,13 +31,13 @@ const CreateQuote = () => {
       }}
     >
       <Tab.Screen
-        name='clientTab'
+        name="clientTab"
         component={ClientTab}
         options={{
-          tabBarLabel: 'Client',
+          tabBarLabel: "Client",
           tabBarLabelStyle: {
-            textTransform: 'none',
-            fontWeight: 'bold',
+            textTransform: "none",
+            fontWeight: "bold",
             fontSize: 16,
           },
         }}
@@ -48,13 +48,13 @@ const CreateQuote = () => {
         }}
       />
       <Tab.Screen
-        name='benefitTab'
+        name="benefitTab"
         component={BenefitTab}
         options={{
-          tabBarLabel: 'Benefit',
+          tabBarLabel: "Benefit",
           tabBarLabelStyle: {
-            textTransform: 'none',
-            fontWeight: 'bold',
+            textTransform: "none",
+            fontWeight: "bold",
             fontSize: 16,
           },
         }}
@@ -65,13 +65,13 @@ const CreateQuote = () => {
         }}
       />
       <Tab.Screen
-        name='costTab'
+        name="costTab"
         component={CostTab}
         options={{
-          tabBarLabel: 'Cost',
+          tabBarLabel: "Cost",
           tabBarLabelStyle: {
-            textTransform: 'none',
-            fontWeight: 'bold',
+            textTransform: "none",
+            fontWeight: "bold",
             fontSize: 16,
           },
         }}

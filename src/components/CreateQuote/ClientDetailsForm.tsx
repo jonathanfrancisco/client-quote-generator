@@ -1,8 +1,8 @@
 import React from "react";
 import { View, Text } from "react-native";
 import { colors, Input } from "react-native-elements";
-import theme from "../../../theme";
-import TextInputField from "../.shared/TextInputField";
+import theme from "@app/theme";
+import TextInputField from "@app/src/components/.shared/TextInputField";
 
 const ClientDetailsForm = () => {
   return (

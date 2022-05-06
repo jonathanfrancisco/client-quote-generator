@@ -1,8 +1,8 @@
 import React from "react";
 import { View, Image } from "react-native";
-import tw from "../../../lib/tailwind";
-const SeeMoreIcon = require("../../.assets/see_more_icon.png");
-const BellNotifIcon = require("../../.assets/notification_bell.png");
+import tw from "@app/lib/tailwind";
+const SeeMoreIcon = require("@app/assets/icons/see_more_icon.png");
+const BellNotifIcon = require("@app/assets/icons/notification_bell.png");
 
 const DashboardNav = () => {
   return (

@@ -2,23 +2,21 @@ import React from "react";
 import { View, Image } from "react-native";
 import { useDeviceContext, useAppColorScheme } from "twrnc";
 import AppLoading from "expo-app-loading";
-
-import ActionsDrawer from "../../components/Dashboard/ActionsDrawer";
-import tw from "../../../lib/tailwind";
-import ActionCard from "../../components/Dashboard/ActionCard";
-import MainPageHeader from "../../components/Dashboard/DashboardNav";
-
-const CreateQuoteIcon = require("../../.assets/create_quote_icon.png");
-const ProductListIcon = require("../../.assets/product_list_icon.png");
-
 import {
   useFonts,
   PortLligatSlab_400Regular,
 } from "@expo-google-fonts/port-lligat-slab";
-import DashboardTitle from "../../components/Dashboard/DashboardTitle";
-import QuoteCount from "../../components/Dashboard/QuoteCount";
 
-const SunLifeSunImg = require("../../.assets/sunlife_sun.png");
+import tw from "@app/lib/tailwind";
+import ActionsDrawer from "@app/src/components/Dashboard/ActionsDrawer";
+import ActionCard from "@app/src/components/Dashboard/ActionCard";
+import MainPageHeader from "@app/src/components/Dashboard/DashboardNav";
+import DashboardTitle from "@app/src/components/Dashboard/DashboardTitle";
+import QuoteCount from "@app/src/components/Dashboard/QuoteCount";
+
+const CreateQuoteIcon = require("@app/assets/icons/create_quote_icon.png");
+const ProductListIcon = require("@app/assets/icons/product_list_icon.png");
+const SunLifeSunImg = require("@app/assets/icons/sunlife_sun.png");
 
 const Home = ({ navigation }) => {
   const [colorScheme, toggleColorScheme, setColorScheme] =
@@ -49,54 +47,6 @@ const Home = ({ navigation }) => {
         <ActionCard
           icon={ProductListIcon}
           text="Product List"
-          onPress={() => {
-            alert("Feature not yet available");
-          }}
-        />
-        <ActionCard
-          text="SOON"
-          onPress={() => {
-            alert("Feature not yet available");
-          }}
-        />
-        <ActionCard
-          text="SOON"
-          onPress={() => {
-            alert("Feature not yet available");
-          }}
-        />
-        <ActionCard
-          text="SOON"
-          onPress={() => {
-            alert("Feature not yet available");
-          }}
-        />
-        <ActionCard
-          text="SOON"
-          onPress={() => {
-            alert("Feature not yet available");
-          }}
-        />
-        <ActionCard
-          text="SOON"
-          onPress={() => {
-            alert("Feature not yet available");
-          }}
-        />
-        <ActionCard
-          text="SOON"
-          onPress={() => {
-            alert("Feature not yet available");
-          }}
-        />
-        <ActionCard
-          text="SOON"
-          onPress={() => {
-            alert("Feature not yet available");
-          }}
-        />
-        <ActionCard
-          text="SOON"
           onPress={() => {
             alert("Feature not yet available");
           }}

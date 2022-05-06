@@ -1,6 +1,6 @@
 import React, { ReactNode } from "react";
 import { ScrollView, View } from "react-native";
-import tw from "../../../lib/tailwind";
+import tw from "@app/lib/tailwind";
 
 type Props = {
   children: ReactNode;

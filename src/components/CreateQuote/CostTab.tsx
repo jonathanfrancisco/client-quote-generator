@@ -1,13 +1,13 @@
-import React from 'react';
-import { View, Text } from 'react-native';
-import { Button } from 'react-native-elements';
-import theme from '../../../theme';
+import React from "react";
+import { View, Text } from "react-native";
+import { Button } from "react-native-elements";
+import theme from "@app/theme";
 
 const CostTab = ({ navigation }) => {
   return (
     <View
       style={{
-        height: '100%',
+        height: "100%",
         backgroundColor: theme.Colors.backgroundPrimary,
         padding: 20,
       }}
@@ -16,12 +16,12 @@ const CostTab = ({ navigation }) => {
       <View style={{ height: 1, margin: 12 }}></View>
       <View
         style={{
-          flexDirection: 'row',
-          justifyContent: 'space-between',
+          flexDirection: "row",
+          justifyContent: "space-between",
         }}
       >
         <Button
-          title='Back'
+          title="Back"
           buttonStyle={{
             backgroundColor: theme.Colors.btnSecondary,
             borderRadius: 8,
@@ -30,7 +30,7 @@ const CostTab = ({ navigation }) => {
             width: 120,
           }}
           onPress={() => {
-            navigation.navigate('benefitTab');
+            navigation.navigate("benefitTab");
           }}
         />
       </View>
