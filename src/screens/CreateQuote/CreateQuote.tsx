@@ -10,7 +10,7 @@ const Tab = createMaterialTopTabNavigator();
 
 const CreateQuote = () => {
   return (
-    <Tab.Navigator initialRouteName="CLIENT_FORM" tabBar={() => null}>
+    <Tab.Navigator initialRouteName="ClientForm" tabBar={() => null}>
       <Tab.Screen
         name="ClientForm"
         component={ClientTab}
