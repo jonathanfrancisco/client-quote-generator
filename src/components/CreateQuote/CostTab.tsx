@@ -30,7 +30,7 @@ const CostTab = ({ navigation }) => {
             width: 120,
           }}
           onPress={() => {
-            navigation.navigate("BENEFITS_FORM");
+            navigation.navigate("BenefitsForm");
           }}
         />
       </View>

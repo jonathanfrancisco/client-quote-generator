@@ -42,7 +42,7 @@ const Home = ({ navigation }) => {
         <ActionCard
           icon={CreateQuoteIcon}
           text="Create Quote"
-          onPress={() => navigation.navigate("createQuote")}
+          onPress={() => navigation.navigate("CreateQuote")}
         />
         <ActionCard
           icon={ProductListIcon}

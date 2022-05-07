@@ -1,6 +1,7 @@
 import React from "react";
 import { ScrollView, View } from "react-native";
 import { Button } from "react-native-elements";
+import tw from "@app/lib/tailwind";
 
 import ClientDetailsForm from "@app/src/components/CreateQuote/ClientDetailsForm";
 
@@ -28,7 +29,7 @@ const ClientTab = ({ navigation }) => {
             width: 120,
           }}
           onPress={() => {
-            navigation.navigate("BENEFITS_FORM");
+            navigation.navigate("BenefitsForm");
           }}
         />
       </View>

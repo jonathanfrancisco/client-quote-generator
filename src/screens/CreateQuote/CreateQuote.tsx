@@ -12,7 +12,7 @@ const CreateQuote = () => {
   return (
     <Tab.Navigator initialRouteName="CLIENT_FORM" tabBar={() => null}>
       <Tab.Screen
-        name="CLIENT_FORM"
+        name="ClientForm"
         component={ClientTab}
         listeners={{
           tabPress: (e) => {
@@ -21,7 +21,7 @@ const CreateQuote = () => {
         }}
       />
       <Tab.Screen
-        name="BENEFITS_FORM"
+        name="BenefitsForm"
         component={BenefitTab}
         listeners={{
           tabPress: (e) => {
@@ -30,7 +30,7 @@ const CreateQuote = () => {
         }}
       />
       <Tab.Screen
-        name="COST_FORM"
+        name="CostForm"
         component={CostTab}
         listeners={{
           tabPress: (e) => {
