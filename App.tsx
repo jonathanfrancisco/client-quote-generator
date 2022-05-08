@@ -31,11 +31,7 @@ export default function App() {
             name="CreateQuote"
             component={CreateQuote}
             options={{
-              title: "Create Quote",
-              headerStyle: tw`bg-sunlife-primary`,
-              headerTintColor: "#fff",
-              headerTitleStyle: tw`font-bold  text-white`,
-              headerTitleAlign: "center",
+              headerShown: false,
             }}
           />
         </Stack.Navigator>
