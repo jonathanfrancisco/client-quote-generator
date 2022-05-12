@@ -1,8 +1,7 @@
 import React, { useState } from "react";
-import { View, Text, ScrollView, TouchableOpacity } from "react-native";
+import { View, Text, ScrollView, TouchableOpacity, Button } from "react-native";
 import { HeaderBackButton } from "@react-navigation/elements";
 import { Formik } from "formik";
-import * as Yup from "yup";
 
 import tw from "@app/lib/tailwind";
 import TextInputField from "@app/src/components/shared/TextInputField";
@@ -11,35 +10,12 @@ import RadioGroupField from "@app/src/components/shared/RadioGroupField";
 import FieldError from "@app/src/components/shared/FieldError";
 import DropDownList from "@app/src/components/shared/DropDownList";
 
-const createQuoteSchema = Yup.object().shape({
-  name: Yup.string().required("Required field"),
-  gender: Yup.string().oneOf(["male", "female"]).required("Required field"),
-  birthday: Yup.string()
-    .matches(
-      new RegExp(
-        "^(0[1-9]|1[012])[-/.](0[1-9]|[12][0-9]|3[01])[-/.](19|20)\\d\\d$"
-      ),
-      "Invalid Date"
-    )
-    .required("Required field"),
-  smokingHabit: Yup.string()
-    .oneOf(["smoker", "non-smoker"])
-    .required("Required field"),
-  productCategory: Yup.string()
-    .oneOf(["trad", "vul"])
-    .required("Required field"),
-  productName: Yup.string()
-    .oneOf([
-      "sun-fit-and-well-10",
-      "sun-fit-and-well-15",
-      "sun-fit-and-well-20",
-    ])
-    .required("Required field"),
-  productDescription: Yup.string().required("Required field"),
-});
+import ClientDetailsStepSchema from "@app/src/formSchemas/ClientDetailsStepSchema";
+
+const formSchemaArray = [ClientDetailsStepSchema];
 
 const CreateQuote = ({ navigation }) => {
-  const [step, setStep] = useState(1);
+  const [currentStep, setCurrentStep] = useState(0);
   return (
     <View style={tw`h-full bg-sunlife-primary`}>
       <View
@@ -63,7 +39,6 @@ const CreateQuote = ({ navigation }) => {
         </Text>
 
         <Formik
-          validationSchema={createQuoteSchema}
           initialValues={{
             name: "",
             gender: "male",
@@ -73,8 +48,12 @@ const CreateQuote = ({ navigation }) => {
             productName: "",
             productDescription: "",
           }}
-          onSubmit={(values, { setSubmitting }) => {
-            alert(JSON.stringify(values, null, 2));
+          validationSchema={formSchemaArray[currentStep]}
+          onSubmit={(values) => {
+            setCurrentStep((prevStep) => prevStep + 1);
+            if (currentStep === 2) {
+              // generate quote
+            }
           }}
         >
           {({
@@ -86,7 +65,7 @@ const CreateQuote = ({ navigation }) => {
             touched,
           }) => (
             <View>
-              {step === 1 && (
+              {currentStep === 0 && (
                 <>
                   <View style={tw`bg-white rounded-tl-lg rounded-tr-lg p-4`}>
                     <Text style={tw`text-xl font-bold mb-2`}>
@@ -216,9 +195,7 @@ const CreateQuote = ({ navigation }) => {
                   </View>
                   <View style={tw`flex-row justify-end mt-4 pb-12`}>
                     <TouchableOpacity
-                      onPress={() => {
-                        setStep((prevStep) => prevStep + 1);
-                      }}
+                      onPress={() => handleSubmit()}
                       style={tw`bg-sunlife-secondary py-2 rounded-2 min-w-1/2.1`}
                     >
                       <Text
@@ -231,7 +208,7 @@ const CreateQuote = ({ navigation }) => {
                 </>
               )}
 
-              {step === 2 && (
+              {currentStep === 1 && (
                 <>
                   <View style={tw`bg-white rounded-tl-lg rounded-tr-lg p-4`}>
                     <Text style={tw`text-xl font-bold mb-2`}>
@@ -241,7 +218,7 @@ const CreateQuote = ({ navigation }) => {
                   <View style={tw`flex-row justify-between mt-4 pb-12`}>
                     <TouchableOpacity
                       onPress={() => {
-                        setStep((prevStepVal) => prevStepVal - 1);
+                        setCurrentStep((prevStepVal) => prevStepVal - 1);
                       }}
                       style={tw`bg-gray-200 py-2 rounded-2 min-w-1/2.1`}
                     >
@@ -253,7 +230,7 @@ const CreateQuote = ({ navigation }) => {
                     </TouchableOpacity>
                     <TouchableOpacity
                       onPress={() => {
-                        setStep((prevStepVal) => prevStepVal + 1);
+                        setCurrentStep((prevStepVal) => prevStepVal + 1);
                       }}
                       style={tw`bg-sunlife-secondary py-2 rounded-2 min-w-1/2.1`}
                     >
@@ -267,7 +244,7 @@ const CreateQuote = ({ navigation }) => {
                 </>
               )}
 
-              {step === 3 && (
+              {currentStep === 2 && (
                 <>
                   <View style={tw`bg-white rounded-tl-lg rounded-tr-lg p-4`}>
                     <Text style={tw`text-xl font-bold mb-2`}>Cost Details</Text>
@@ -275,7 +252,7 @@ const CreateQuote = ({ navigation }) => {
                   <View style={tw`flex-row justify-between mt-4 pb-12`}>
                     <TouchableOpacity
                       onPress={() => {
-                        setStep((prevStepVal) => prevStepVal - 1);
+                        setCurrentStep((prevStepVal) => prevStepVal - 1);
                       }}
                       style={tw`bg-gray-200 py-2 rounded-2 min-w-1/2.1`}
                     >
