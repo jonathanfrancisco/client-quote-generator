@@ -29,8 +29,8 @@ const TextInputField = ({
   error,
 }: Props) => {
   return (
-    <View>
-      <Text style={tw`text-lg font-thin my-2`}>{label}</Text>
+    <View style={tw`mb-4`}>
+      <Text style={tw`text-lg font-thin mb-2`}>{label}</Text>
       <View
         style={{
           marginVertical: 2,

@@ -18,8 +18,8 @@ interface Props {
 
 const RadioGroupField = ({ label, items, picked, onChange }: Props) => {
   return (
-    <View>
-      <Text style={tw`text-lg font-thin my-2`}>{label}</Text>
+    <View style={tw`mb-4`}>
+      <Text style={tw`text-lg font-thin mb-2`}>{label}</Text>
       <View style={tw`flex-row`}>
         {items.map((i) => {
           const isSelected = i.value === picked;
