@@ -1,9 +1,7 @@
 import React, { useState } from "react";
 import { View, Text } from "react-native";
-import DropDownPicker from "react-native-dropdown-picker";
+import DropDownPicker, { ListModeType } from "react-native-dropdown-picker";
 import tw from "@app/lib/tailwind";
-
-DropDownPicker.setListMode("SCROLLVIEW");
 
 interface ListItem {
   label: string;
@@ -11,7 +9,8 @@ interface ListItem {
 }
 
 interface Props {
-  label: string;
+  listMode?: ListModeType;
+  label?: string;
   placeholder: string;
   items: ListItem[];
   picked: string;
@@ -19,6 +18,7 @@ interface Props {
 }
 
 const DropDownList = ({
+  listMode = "SCROLLVIEW",
   label,
   placeholder,
   items,
@@ -29,8 +29,9 @@ const DropDownList = ({
 
   return (
     <View style={tw`mb-4`}>
-      <Text style={tw`text-lg font-thin mb-2`}>{label}</Text>
+      {label ? <Text style={tw`text-lg font-thin mb-2`}>{label}</Text> : null}
       <DropDownPicker
+        listMode={listMode}
         style={{
           borderWidth: 0.5,
         }}

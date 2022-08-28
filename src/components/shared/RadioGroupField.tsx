@@ -10,7 +10,7 @@ interface RadioButtonValue {
   label?: string;
 }
 interface Props {
-  label: string;
+  label?: string;
   items: RadioButtonValue[];
   picked: string;
   onChange: (text: string) => void;
@@ -19,7 +19,7 @@ interface Props {
 const RadioGroupField = ({ label, items, picked, onChange }: Props) => {
   return (
     <View style={tw`mb-4`}>
-      <Text style={tw`text-lg font-thin mb-2`}>{label}</Text>
+      {label ? <Text style={tw`text-lg font-thin mb-2`}>{label}</Text> : null}
       <View style={tw`flex-row`}>
         {items.map((i) => {
           const isSelected = i.value === picked;

@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { View, Text, ScrollView, TouchableOpacity, Button } from "react-native";
 import { HeaderBackButton } from "@react-navigation/elements";
-import { Formik } from "formik";
+import { FieldArray, Formik } from "formik";
 
 import tw from "@app/lib/tailwind";
 import TextInputField from "@app/src/components/shared/TextInputField";
@@ -11,11 +11,87 @@ import FieldError from "@app/src/components/shared/FieldError";
 import DropDownList from "@app/src/components/shared/DropDownList";
 
 import ClientDetailsStepSchema from "@app/src/formSchemas/ClientDetailsStepSchema";
+import ClientBenefitsStepSchema from "@app/src/formSchemas/ClientBenefitsStepSchema";
 
-const formSchemaArray = [ClientDetailsStepSchema];
+import Benefit from "@app/src/components/CreateQuote/Benefit";
+import AddBenefitButtonModal from "@app/src/components/CreateQuote/AddBenefitButtonModal";
+
+import BenefitsService from "@app/src/api/services/BenefitsService";
+
+import IBenefit from "@app/src/common/types/IBenefit";
+import IBenefitType from "@app/src/common/types/IBenefitType";
+
+const createQuoteSchemasArr = [
+  ClientDetailsStepSchema,
+  ClientBenefitsStepSchema,
+];
 
 const CreateQuote = ({ navigation }) => {
   const [currentStep, setCurrentStep] = useState(0);
+  const [selectableBenefits, setSelectableBenefits] = useState<IBenefit[]>([]);
+
+  useEffect(() => {
+    BenefitsService.getSelectableDefaultBenefitsByProduct()
+      .then((results) =>
+        results.map((i) => ({
+          ...i,
+          isSelected: false,
+        }))
+      )
+      .then((results) => {
+        setSelectableBenefits(results);
+      });
+  }, []);
+
+  const renderBenefits = (
+    benefitsCategory: IBenefitType,
+    benefits: IBenefit[] | undefined,
+    formikSetFieldValue: (
+      field: string,
+      value: any,
+      shouldValidate?: boolean | undefined
+    ) => void
+  ) => {
+    return (
+      <>
+        <Text style={tw`text-lg font-semibold mb-2`}>
+          {benefitsCategory.toUpperCase()}
+        </Text>
+        <FieldArray
+          name="benefits"
+          render={(arrayHelpers) => (
+            <>
+              {benefits && benefits.length > 0
+                ? benefits.map((benefit, index) => {
+                    if (benefit.type === benefitsCategory) {
+                      return (
+                        <Benefit
+                          index={index}
+                          key={benefit.id}
+                          id={benefit.id}
+                          type={benefit.type}
+                          name={benefit.name}
+                          stateAmount={benefit.amount}
+                          value={benefit.value}
+                          onSelect={(isSelected) => {
+                            formikSetFieldValue(
+                              `benefits.${index}.isSelected`,
+                              isSelected
+                            );
+                          }}
+                        />
+                      );
+                    }
+                    return null;
+                  })
+                : null}
+            </>
+          )}
+        />
+      </>
+    );
+  };
+
   return (
     <View style={tw`h-full bg-sunlife-primary`}>
       <View
@@ -35,10 +111,11 @@ const CreateQuote = ({ navigation }) => {
         style={tw`bg-sunlife-accent pl-6 pr-6 rounded-tl-3xl rounded-tr-3xl`}
       >
         <Text style={tw`font-bold text-xl my-4`}>
-          Complete the information below.
+          Fill the information below.
         </Text>
 
         <Formik
+          enableReinitialize={true}
           initialValues={{
             name: "",
             gender: "male",
@@ -47,12 +124,13 @@ const CreateQuote = ({ navigation }) => {
             productCategory: "trad",
             productName: "",
             productDescription: "",
+            benefits: selectableBenefits,
           }}
-          validationSchema={formSchemaArray[currentStep]}
+          validationSchema={createQuoteSchemasArr[currentStep]}
           onSubmit={(values) => {
             setCurrentStep((prevStep) => prevStep + 1);
             if (currentStep === 2) {
-              // generate quote
+              // TODO: Generate Quote
             }
           }}
         >
@@ -63,8 +141,11 @@ const CreateQuote = ({ navigation }) => {
             values,
             errors,
             touched,
+            setFieldValue,
+            isValid,
           }) => (
             <View>
+              {/* START OF CLIENT DETAILS */}
               {currentStep === 0 && (
                 <>
                   <View style={tw`bg-white rounded-tl-lg rounded-tr-lg p-4`}>
@@ -193,9 +274,11 @@ const CreateQuote = ({ navigation }) => {
                       <FieldError message={errors.productDescription} />
                     ) : null}
                   </View>
-                  <View style={tw`flex-row justify-end mt-4 pb-12`}>
+                  <View style={tw`flex-row justify-end mt-4 pb-24`}>
                     <TouchableOpacity
-                      onPress={() => handleSubmit()}
+                      onPress={() => {
+                        handleSubmit();
+                      }}
                       style={tw`bg-sunlife-secondary py-2 rounded-2 min-w-1/2.1`}
                     >
                       <Text
@@ -207,13 +290,41 @@ const CreateQuote = ({ navigation }) => {
                   </View>
                 </>
               )}
+              {/* END OF CLIENT DETAILS */}
 
+              {/* START OF BENEFIT DETAILS */}
               {currentStep === 1 && (
                 <>
                   <View style={tw`bg-white rounded-tl-lg rounded-tr-lg p-4`}>
                     <Text style={tw`text-xl font-bold mb-2`}>
                       Benefit Details
                     </Text>
+
+                    <View>
+                      {renderBenefits(
+                        IBenefitType.PRIMARY,
+                        values.benefits,
+                        setFieldValue
+                      )}
+
+                      {renderBenefits(
+                        IBenefitType.SUPPLEMENTARY,
+                        values.benefits,
+                        setFieldValue
+                      )}
+                    </View>
+
+                    {typeof errors.benefits === "string" ? (
+                      <FieldError message={errors.benefits} />
+                    ) : null}
+
+                    <AddBenefitButtonModal
+                      onAdd={(benefit) => {
+                        setSelectableBenefits((prevValue) => {
+                          return [...prevValue, benefit];
+                        });
+                      }}
+                    />
                   </View>
                   <View style={tw`flex-row justify-between mt-4 pb-12`}>
                     <TouchableOpacity
@@ -230,7 +341,7 @@ const CreateQuote = ({ navigation }) => {
                     </TouchableOpacity>
                     <TouchableOpacity
                       onPress={() => {
-                        setCurrentStep((prevStepVal) => prevStepVal + 1);
+                        handleSubmit();
                       }}
                       style={tw`bg-sunlife-secondary py-2 rounded-2 min-w-1/2.1`}
                     >
@@ -243,6 +354,7 @@ const CreateQuote = ({ navigation }) => {
                   </View>
                 </>
               )}
+              {/* END OF BENEFIT DETAILS */}
 
               {currentStep === 2 && (
                 <>
