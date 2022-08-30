@@ -1,5 +1,5 @@
-import IBenefit from "@app/src/common/types/IBenefit";
-import IBenefitType from "@app/src/common/types/IBenefitType";
+import IBenefit from "@app/src/common/interfaces/Benefit.interface";
+import IBenefitType from "@app/src/common/enums/BenefitType.enum";
 
 const getSelectableDefaultBenefitsByProduct = async (): Promise<IBenefit[]> => {
   // TODO: Call API here using axios

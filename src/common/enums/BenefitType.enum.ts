@@ -1,6 +1,6 @@
-enum IBenefitType {
+enum BenefitType {
   PRIMARY = "primary",
   SUPPLEMENTARY = "supplementary",
 }
 
-export default IBenefitType;
+export default BenefitType;

@@ -1,4 +1,4 @@
-import BenefitType from "./IBenefitType";
+import BenefitType from "../enums/BenefitType.enum";
 
 export default interface IBenefit {
   id: string;

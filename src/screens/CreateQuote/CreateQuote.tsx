@@ -13,13 +13,13 @@ import DropDownList from "@app/src/components/shared/DropDownList";
 import ClientDetailsStepSchema from "@app/src/formSchemas/ClientDetailsStepSchema";
 import ClientBenefitsStepSchema from "@app/src/formSchemas/ClientBenefitsStepSchema";
 
-import Benefit from "@app/src/components/CreateQuote/Benefit";
+import Benefit from "@app/src/components/CreateQuote/BenefitCard";
 import AddBenefitButtonModal from "@app/src/components/CreateQuote/AddBenefitButtonModal";
 
 import BenefitsService from "@app/src/api/services/BenefitsService";
 
-import IBenefit from "@app/src/common/types/IBenefit";
-import IBenefitType from "@app/src/common/types/IBenefitType";
+import IBenefit from "@app/src/common/interfaces/Benefit.interface";
+import IBenefitType from "@app/src/common/enums/BenefitType.enum";
 import AmountInputField from "@app/src/components/shared/AmountInputField";
 import OtherPaymentOptions from "@app/src/components/CreateQuote/OtherPaymentOptions";
 import { Ionicons } from "@expo/vector-icons";

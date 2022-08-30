@@ -6,9 +6,9 @@ import Modal from "react-native-modal";
 import tw from "@app/lib/tailwind";
 import twTheme from "@app/tailwind.config";
 import DropDownList from "../shared/DropDownList";
-import IBenefitType from "@app/src/common/types/IBenefitType";
+import IBenefitType from "@app/src/common/enums/BenefitType.enum";
 import RadioGroupField from "../shared/RadioGroupField";
-import IBenefit from "@app/src/common/types/IBenefit";
+import IBenefit from "@app/src/common/interfaces/Benefit.interface";
 import BenefitsService from "@app/src/api/services/BenefitsService";
 
 interface Props {
