@@ -11,7 +11,7 @@ import CurrencyInput from "react-native-currency-input";
 
 import tw from "@app/lib/tailwind";
 import twTheme from "@app/tailwind.config";
-import IBenefitType from "@app/src/common/enums/BenefitType.enum";
+import IBenefitType from "@app/src/common/enums/benefitType.enum";
 
 interface Props {
   index: number;

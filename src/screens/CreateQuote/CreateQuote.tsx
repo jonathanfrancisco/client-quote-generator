@@ -10,19 +10,18 @@ import RadioGroupField from "@app/src/components/shared/RadioGroupField";
 import FieldError from "@app/src/components/shared/FieldError";
 import DropDownList from "@app/src/components/shared/DropDownList";
 
-import ClientDetailsStepSchema from "@app/src/formSchemas/ClientDetailsStepSchema";
-import ClientBenefitsStepSchema from "@app/src/formSchemas/ClientBenefitsStepSchema";
+import ClientDetailsStepSchema from "@app/src/formSchemas/clientDetailsStep.schema";
+import ClientBenefitsStepSchema from "@app/src/formSchemas/clientBenefitsStep.schema";
 
 import Benefit from "@app/src/components/CreateQuote/BenefitCard";
 import AddBenefitButtonModal from "@app/src/components/CreateQuote/AddBenefitButtonModal";
 
-import BenefitsService from "@app/src/api/services/BenefitsService";
+import benefitsService from "@app/src/api/services/benefits";
 
-import IBenefit from "@app/src/common/interfaces/Benefit.interface";
-import IBenefitType from "@app/src/common/enums/BenefitType.enum";
+import IBenefit from "@app/src/common/interfaces/benefit.interface";
+import IBenefitType from "@app/src/common/enums/benefitType.enum";
 import AmountInputField from "@app/src/components/shared/AmountInputField";
 import OtherPaymentOptions from "@app/src/components/CreateQuote/OtherPaymentOptions";
-import { Ionicons } from "@expo/vector-icons";
 
 const createQuoteSchemasArr = [
   ClientDetailsStepSchema,
@@ -34,7 +33,8 @@ const CreateQuote = ({ navigation }) => {
   const [selectableBenefits, setSelectableBenefits] = useState<IBenefit[]>([]);
 
   useEffect(() => {
-    BenefitsService.getSelectableDefaultBenefitsByProduct()
+    benefitsService
+      .getSelectableDefaultBenefitsByProduct()
       .then((results) =>
         results.map((i) => ({
           ...i,
