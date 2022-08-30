@@ -10,6 +10,15 @@ import tw from "@app/lib/tailwind";
 import Dashboard from "@app/src/screens/Dashboard/Dashboard";
 import CreateQuote from "@app/src/screens/CreateQuote/CreateQuote";
 
+/* 
+  Why this code? To be able to use toLocaleString to format numbers or use intl
+*/
+if (Platform.OS === "android") {
+  // only android needs polyfill
+  require("intl"); // import intl object
+  require("intl/locale-data/jsonp/en-IN"); // load the required locale details
+}
+
 const Stack = createNativeStackNavigator();
 
 export default function App() {
