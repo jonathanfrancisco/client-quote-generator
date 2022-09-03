@@ -1,5 +1,5 @@
 enum ProductCategory {
-  TRAD = "TRAD",
+  TRAD = "Trad",
   VUL = "VUL",
 }
 

@@ -17,11 +17,14 @@ import Benefit from "@app/src/components/CreateQuote/BenefitCard";
 import AddBenefitButtonModal from "@app/src/components/CreateQuote/AddBenefitButtonModal";
 
 import benefitsService from "@app/src/api/services/benefits";
+import productsService from "@app/src/api/services/products";
 
 import IBenefit from "@app/src/common/interfaces/benefit.interface";
 import IBenefitType from "@app/src/common/enums/benefitType.enum";
 import AmountInputField from "@app/src/components/shared/AmountInputField";
 import OtherPaymentOptions from "@app/src/components/CreateQuote/OtherPaymentOptions";
+import Product from "@app/src/common/interfaces/product.interface";
+import ProductCategory from "@app/src/common/enums/productCategory.enum";
 
 const createQuoteSchemasArr = [
   ClientDetailsStepSchema,
@@ -29,10 +32,20 @@ const createQuoteSchemasArr = [
 ];
 
 const CreateQuote = ({ navigation }) => {
+  // UI/Ephemeral state not form values that will be eventually submitted.
   const [currentStep, setCurrentStep] = useState(0);
+  const [productsDropdownList, setProductsDropdownList] = useState<Product[]>(
+    []
+  );
   const [selectableBenefits, setSelectableBenefits] = useState<IBenefit[]>([]);
 
   useEffect(() => {
+    productsService
+      .getProductsByCategory(ProductCategory.TRAD)
+      .then((products) => {
+        setProductsDropdownList(products);
+      });
+
     benefitsService
       .getSelectableDefaultBenefitsByProduct()
       .then((results) =>
@@ -124,7 +137,7 @@ const CreateQuote = ({ navigation }) => {
             gender: "male",
             birthday: "",
             smokingHabit: "",
-            productCategory: "trad",
+            productCategory: ProductCategory.TRAD,
             productName: "",
             productDescription: "",
             benefits: selectableBenefits,
@@ -224,17 +237,24 @@ const CreateQuote = ({ navigation }) => {
                       items={[
                         {
                           id: "1",
-                          value: "trad",
+                          value: "Trad",
                           label: "Trad",
                         },
                         {
                           id: "2",
-                          value: "vul",
+                          value: "VUL",
                           label: "VUL",
                         },
                       ]}
                       picked={values.productCategory}
-                      onChange={handleChange("productCategory")}
+                      onChange={(value) => {
+                        handleChange("productCategory")(value);
+                        productsService
+                          .getProductsByCategory(value as ProductCategory)
+                          .then((products) => {
+                            setProductsDropdownList(products);
+                          });
+                      }}
                     />
                     {errors.productCategory && touched.productCategory ? (
                       <FieldError message={errors.productCategory} />
@@ -243,20 +263,10 @@ const CreateQuote = ({ navigation }) => {
                     <DropDownList
                       label="Product Name"
                       placeholder="Select product"
-                      items={[
-                        {
-                          label: "Sun Fit And Well 10",
-                          value: "sun-fit-and-well-10",
-                        },
-                        {
-                          label: "Sun Fit And Well 15",
-                          value: "sun-fit-and-well-15",
-                        },
-                        {
-                          label: "Sun Fit And Well 20",
-                          value: "sun-fit-and-well-20",
-                        },
-                      ]}
+                      items={productsDropdownList.map((i) => ({
+                        value: i.id,
+                        label: i.name,
+                      }))}
                       picked={values.productName}
                       onChange={handleChange("productName")}
                     />
@@ -375,7 +385,7 @@ const CreateQuote = ({ navigation }) => {
                       onChangeValue={(value) => {
                         let annualAsFloat = parseFloat(value);
 
-                        if (values.productCategory === "trad") {
+                        if (values.productCategory === ProductCategory.TRAD) {
                           annualAsFloat += annualAsFloat * 0.1;
                         }
 
