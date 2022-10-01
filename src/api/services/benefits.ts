@@ -4,8 +4,7 @@ import IBenefitType from "@app/src/common/enums/benefitType.enum";
 const getSelectableDefaultBenefitsByProduct = async (): Promise<IBenefit[]> => {
   // TODO: Call API here using axios
   // TODO: Add logic only default benefit
-
-  return [
+  const apiData = [
     {
       id: "f389156d-7396-49d0-9bb7-cab79915fef8",
       type: IBenefitType.PRIMARY,
@@ -39,6 +38,13 @@ const getSelectableDefaultBenefitsByProduct = async (): Promise<IBenefit[]> => {
       defaultBenefit: true,
     },
   ];
+
+  return apiData.map((i) => {
+    return {
+      ...i,
+      value: i.amount ? "0" : i.value,
+    };
+  });
 };
 
 const getAllAvailableBenefits = async () => {

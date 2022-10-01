@@ -12,14 +12,12 @@ const ClientDetailsStepSchema = Yup.object().shape({
     )
     .required("Required field"),
   smokingHabit: Yup.string()
-    .oneOf(["smoker", "non-smoker"])
+    .oneOf(["Smoker", "Non-Smoker"])
     .required("Required field"),
   productCategory: Yup.string()
     .oneOf(["Trad", "VUL"])
     .required("Required field"),
-  productName:
-    Yup.string()
-    .required("Required field"),
+  productName: Yup.string().required("Required field"),
   productDescription: Yup.string().required("Required field"),
 });
 
