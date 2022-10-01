@@ -10,7 +10,8 @@ interface Props {
 
 const OtherPaymentOptions = ({ semiAnnual, quarterly, monthly }: Props) => {
   const formatter = Intl.NumberFormat("en-PH", {
-    maximumFractionDigits: 2,
+    style: "currency",
+    currency: "PHP",
     minimumFractionDigits: 2,
   });
   return (
@@ -26,12 +27,12 @@ const OtherPaymentOptions = ({ semiAnnual, quarterly, monthly }: Props) => {
       <Text style={tw`text-lg font-semibold mb-2`}>OTHER PAYMENT OPTIONS</Text>
       <View>
         <Text style={tw`text-lg`}>
-          Semi Annual: ₱{formatter.format(semiAnnual)}
+          Semi Annual: {formatter.format(semiAnnual)}
         </Text>
         <Text style={tw`text-lg`}>
-          Quarterly: ₱{formatter.format(quarterly)}
+          Quarterly: {formatter.format(quarterly)}
         </Text>
-        <Text style={tw`text-lg`}>Monthly: ₱{formatter.format(monthly)}</Text>
+        <Text style={tw`text-lg`}>Monthly: {formatter.format(monthly)}</Text>
       </View>
     </View>
   );

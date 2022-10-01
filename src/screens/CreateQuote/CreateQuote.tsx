@@ -2,6 +2,9 @@ import React, { useEffect, useState } from "react";
 import { View, Text, ScrollView, TouchableOpacity, Button } from "react-native";
 import { HeaderBackButton } from "@react-navigation/elements";
 import { FieldArray, Formik } from "formik";
+import { printToFileAsync } from "expo-print";
+import * as FileSystem from "expo-file-system";
+import * as Sharing from "expo-sharing";
 
 import tw from "@app/lib/tailwind";
 import TextInputField from "@app/src/components/shared/TextInputField";
@@ -13,7 +16,7 @@ import DropDownList from "@app/src/components/shared/DropDownList";
 import ClientDetailsStepSchema from "@app/src/formSchemas/clientDetailsStep.schema";
 import ClientBenefitsStepSchema from "@app/src/formSchemas/clientBenefitsStep.schema";
 
-import Benefit from "@app/src/components/CreateQuote/BenefitCard";
+import BenefitCard from "@app/src/components/CreateQuote/BenefitCard";
 import AddBenefitButtonModal from "@app/src/components/CreateQuote/AddBenefitButtonModal";
 
 import benefitsService from "@app/src/api/services/benefits";
@@ -25,6 +28,7 @@ import AmountInputField from "@app/src/components/shared/AmountInputField";
 import OtherPaymentOptions from "@app/src/components/CreateQuote/OtherPaymentOptions";
 import Product from "@app/src/common/interfaces/product.interface";
 import ProductCategory from "@app/src/common/enums/productCategory.enum";
+import generatedQuoteHtmlTemplate from "@app/src/templates/html/generatedQuoteHtmlTemplate";
 
 const createQuoteSchemasArr = [
   ClientDetailsStepSchema,
@@ -81,7 +85,7 @@ const CreateQuote = ({ navigation }) => {
                 ? benefits.map((benefit, index) => {
                     if (benefit.type === benefitsCategory) {
                       return (
-                        <Benefit
+                        <BenefitCard
                           index={index}
                           key={benefit.id}
                           id={benefit.id}
@@ -89,10 +93,14 @@ const CreateQuote = ({ navigation }) => {
                           name={benefit.name}
                           stateAmount={benefit.amount}
                           value={benefit.value}
-                          onSelect={(isSelected) => {
+                          onSelect={(isSelected, value) => {
                             formikSetFieldValue(
                               `benefits.${index}.isSelected`,
                               isSelected
+                            );
+                            formikSetFieldValue(
+                              `benefits.${index}.value`,
+                              value.toString()
                             );
                           }}
                         />
@@ -148,10 +156,41 @@ const CreateQuote = ({ navigation }) => {
             additionalComment: "",
           }}
           validationSchema={createQuoteSchemasArr[currentStep]}
-          onSubmit={(values) => {
-            setCurrentStep((prevStep) => prevStep + 1);
+          onSubmit={async (values) => {
             if (currentStep === 2) {
-              // TODO: Generate Quote
+              const templateValues = {
+                generationDate: new Date(),
+                name: values.name,
+                birthday: values.birthday,
+                smokingHabit: values.smokingHabit,
+                productName: values.productName,
+                productDescription: values.productDescription,
+                benefits: values.benefits,
+                annualPayment: values.annualPremium,
+                semiAnnualPayment: values.semiAnnual,
+                quarterlyPayment: values.quarterly,
+                monthlyPayment: values.monthly,
+                additionalComment: values.additionalComment,
+              };
+
+              const file = await printToFileAsync({
+                html: await generatedQuoteHtmlTemplate(templateValues),
+                base64: true,
+              });
+              const nameToBeInsured = values.name
+                .split(" ")
+                .join("")
+                .toUpperCase();
+              const documentDirectory = FileSystem.documentDirectory;
+              const filename = `${documentDirectory}${nameToBeInsured}_INSURANCE_QUOTATION.pdf`;
+
+              FileSystem.writeAsStringAsync(filename, file.base64!, {
+                encoding: FileSystem.EncodingType.Base64,
+              }).then(() => {
+                Sharing.shareAsync(filename);
+              });
+            } else {
+              setCurrentStep((prevStep) => prevStep + 1);
             }
           }}
         >
@@ -222,8 +261,8 @@ const CreateQuote = ({ navigation }) => {
                       label="Smoking Habit"
                       placeholder="Select habit"
                       items={[
-                        { label: "Smoker", value: "smoker" },
-                        { label: "Non-Smoker", value: "non-smoker" },
+                        { label: "Smoker", value: "Smoker" },
+                        { label: "Non-Smoker", value: "Non-Smoker" },
                       ]}
                       picked={values.smokingHabit}
                       onChange={handleChange("smokingHabit")}
@@ -264,7 +303,7 @@ const CreateQuote = ({ navigation }) => {
                       label="Product Name"
                       placeholder="Select product"
                       items={productsDropdownList.map((i) => ({
-                        value: i.id,
+                        value: i.name,
                         label: i.name,
                       }))}
                       picked={values.productName}
@@ -434,6 +473,9 @@ const CreateQuote = ({ navigation }) => {
 
                     <TouchableOpacity
                       style={tw`px-8 py-4 my-2 bg-sunlife-secondary rounded-xl`}
+                      onPress={() => {
+                        handleSubmit();
+                      }}
                     >
                       <Text
                         style={tw`text-xl text-white text-center font-semibold`}

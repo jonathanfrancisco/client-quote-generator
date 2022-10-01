@@ -16,8 +16,10 @@ import CreateQuote from "@app/src/screens/CreateQuote/CreateQuote";
 if (Platform.OS === "android") {
   // only android needs polyfill
   require("intl"); // import intl object
-  require("intl/locale-data/jsonp/en-IN"); // load the required locale details
+  require("intl/locale-data/jsonp/en-PH"); // load the required locale details
 }
+
+// TODO: Support Internationalization for iOS Devices
 
 const Stack = createNativeStackNavigator();
 

@@ -19,19 +19,26 @@ interface Props {
   type: IBenefitType;
   name: string;
   stateAmount: boolean;
-  value?: string;
-  onSelect: (isSelected: boolean) => void;
+  value: string;
+  onSelect: (isSelected: boolean, value: string) => void;
 }
 
-const Benefit = ({ id, type, name, stateAmount, value, onSelect }: Props) => {
+const BenefitCard = ({
+  id,
+  type,
+  name,
+  stateAmount,
+  value,
+  onSelect,
+}: Props) => {
   const [isSelected, setIsSelected] = useState(false);
-  const [amount, setAmount] = useState(0);
+  const [valueField, setValueField] = useState(value);
 
   return (
     <TouchableOpacity
       onPress={() => {
         setIsSelected(!isSelected);
-        onSelect(!isSelected);
+        onSelect(!isSelected, valueField);
       }}
       style={{
         ...tw`my-2 bg-white rounded-xl`,
@@ -57,9 +64,9 @@ const Benefit = ({ id, type, name, stateAmount, value, onSelect }: Props) => {
                 ...tw`text-base pl-2 w-38`,
                 borderWidth: 0.8,
               }}
-              value={amount}
-              onChangeValue={(value) => {
-                setAmount(value || 0);
+              value={parseInt(valueField)}
+              onChangeValue={(newValueField) => {
+                setValueField(newValueField?.toString() || "0");
               }}
               prefix="₱"
               delimiter=","
@@ -81,4 +88,4 @@ const Benefit = ({ id, type, name, stateAmount, value, onSelect }: Props) => {
   );
 };
 
-export default Benefit;
+export default BenefitCard;
