@@ -15,7 +15,7 @@ Client quote generator is a utility app for my S.O (She's a financial advisor) f
 Make sure these are installed on your machine
 
 - Node.js v16.14.0 or greater
-- Yarn
+- NPM
 - Expo
 - An Android Emulator or IOS emulator where you'll be running the app in development. (You can also use an actual device instead)
 
@@ -30,11 +30,11 @@ https://github.com/jonathanfrancisco/client-quote-generator
 2. Install NPM packages. Since we're using yarn for this project run:
 
 ```
-yarn install
+npm install
 ```
 
 3. Start the app
 
 ```
-yarn start
+npm start
 ```
