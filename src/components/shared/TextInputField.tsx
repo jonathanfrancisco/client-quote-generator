@@ -1,13 +1,13 @@
-import React from "react";
+import React from 'react';
 import {
   View,
   Text,
   TextInput,
   TargetedEvent,
   NativeSyntheticEvent,
-} from "react-native";
-import tw from "@app/lib/tailwind";
-import twTheme from "@app/tailwind.config";
+} from 'react-native';
+import tw from '@app/lib/tailwind';
+import twTheme from '@app/tailwind.config';
 
 interface Props {
   label: string;
@@ -38,9 +38,8 @@ const TextInputField = ({
           padding: 8,
           borderRadius: 6,
           height: height,
-          borderColor: error ? "red" : "black",
-        }}
-      >
+          borderColor: error ? 'red' : 'black',
+        }}>
         <TextInput
           style={tw`text-lg font-bold`}
           placeholder={placeholder}

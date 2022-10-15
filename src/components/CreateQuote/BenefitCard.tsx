@@ -1,17 +1,17 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 import {
   View,
   Text,
   TextInput,
   TouchableOpacity,
   GestureResponderEvent,
-} from "react-native";
-import Checkbox from "expo-checkbox";
-import CurrencyInput from "react-native-currency-input";
+} from 'react-native';
+import Checkbox from 'expo-checkbox';
+import CurrencyInput from 'react-native-currency-input';
 
-import tw from "@app/lib/tailwind";
-import twTheme from "@app/tailwind.config";
-import IBenefitType from "@app/src/common/enums/benefitType.enum";
+import tw from '@app/lib/tailwind';
+import twTheme from '@app/tailwind.config';
+import IBenefitType from '@app/src/common/enums/benefitType.enum';
 
 interface Props {
   index: number;
@@ -43,9 +43,8 @@ const BenefitCard = ({
       style={{
         ...tw`my-2 bg-white rounded-xl`,
         elevation: 10,
-        shadowColor: "gray",
-      }}
-    >
+        shadowColor: 'gray',
+      }}>
       <View style={tw`rounded-lg px-4 pt-2 pb-6`}>
         <View style={tw`flex-row justify-between items-center`}>
           <Text style={tw`text-lg my-2 font-semibold`}>{name}</Text>
@@ -66,7 +65,7 @@ const BenefitCard = ({
               }}
               value={parseInt(valueField)}
               onChangeValue={(newValueField) => {
-                setValueField(newValueField?.toString() || "0");
+                setValueField(newValueField?.toString() || '0');
               }}
               prefix="₱"
               delimiter=","

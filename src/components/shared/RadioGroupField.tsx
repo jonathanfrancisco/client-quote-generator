@@ -1,8 +1,8 @@
-import React from "react";
-import { RadioButton } from "react-native-radio-buttons-group";
-import { Text, View } from "react-native";
+import React from 'react';
+import { RadioButton } from 'react-native-radio-buttons-group';
+import { Text, View } from 'react-native';
 
-import tw from "@app/lib/tailwind";
+import tw from '@app/lib/tailwind';
 
 interface RadioButtonValue {
   id: string;
@@ -38,7 +38,7 @@ const RadioGroupField = ({ label, items, picked, onChange }: Props) => {
                 const selectedValue = items.find(
                   (i) => i.id === selectedId
                 )?.value;
-                onChange(selectedValue || "");
+                onChange(selectedValue || '');
               }}
             />
           );

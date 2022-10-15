@@ -1,22 +1,22 @@
 /* 3rd Party libraries/packages */
-import "react-native-gesture-handler";
-import { NavigationContainer } from "@react-navigation/native";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import React from "react";
-import { SafeAreaView, StatusBar, Platform, View } from "react-native";
-import tw from "@app/lib/tailwind";
+import 'react-native-gesture-handler';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import React from 'react';
+import { SafeAreaView, StatusBar, Platform, View } from 'react-native';
+import tw from '@app/lib/tailwind';
 
 /* Screens components */
-import Dashboard from "@app/src/screens/Dashboard/Dashboard";
-import CreateQuote from "@app/src/screens/CreateQuote/CreateQuote";
+import Dashboard from '@app/src/screens/Dashboard/Dashboard';
+import CreateQuote from '@app/src/screens/CreateQuote/CreateQuote';
 
 /* 
   Why this code? To be able to use toLocaleString to format numbers or use intl
 */
-if (Platform.OS === "android") {
+if (Platform.OS === 'android') {
   // only android needs polyfill
-  require("intl"); // import intl object
-  require("intl/locale-data/jsonp/en-PH"); // load the required locale details
+  require('intl'); // import intl object
+  require('intl/locale-data/jsonp/en-PH'); // load the required locale details
 }
 
 // TODO: Support Internationalization for iOS Devices
@@ -29,9 +29,8 @@ export default function App() {
       <SafeAreaView
         style={{
           flex: 1,
-          paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
-        }}
-      >
+          paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
+        }}>
         <Stack.Navigator initialRouteName="Dashboard">
           <Stack.Screen
             name="Dashboard"

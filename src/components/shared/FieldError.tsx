@@ -1,7 +1,7 @@
-import React from "react";
-import { Text } from "react-native";
+import React from 'react';
+import { Text } from 'react-native';
 
-import tw from "@app/lib/tailwind";
+import tw from '@app/lib/tailwind';
 
 interface Props {
   message: string;

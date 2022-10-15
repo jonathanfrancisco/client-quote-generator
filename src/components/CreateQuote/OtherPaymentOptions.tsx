@@ -1,6 +1,6 @@
-import tw from "@app/lib/tailwind";
-import React from "react";
-import { View, Text } from "react-native";
+import tw from '@app/lib/tailwind';
+import React from 'react';
+import { View, Text } from 'react-native';
 
 interface Props {
   semiAnnual: number;
@@ -9,9 +9,9 @@ interface Props {
 }
 
 const OtherPaymentOptions = ({ semiAnnual, quarterly, monthly }: Props) => {
-  const formatter = Intl.NumberFormat("en-PH", {
-    style: "currency",
-    currency: "PHP",
+  const formatter = Intl.NumberFormat('en-PH', {
+    style: 'currency',
+    currency: 'PHP',
     minimumFractionDigits: 2,
   });
   return (
@@ -22,8 +22,7 @@ const OtherPaymentOptions = ({ semiAnnual, quarterly, monthly }: Props) => {
         padding: 8,
         borderRadius: 6,
         marginBottom: 10,
-      }}
-    >
+      }}>
       <Text style={tw`text-lg font-semibold mb-2`}>OTHER PAYMENT OPTIONS</Text>
       <View>
         <Text style={tw`text-lg`}>

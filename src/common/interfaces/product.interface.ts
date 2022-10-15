@@ -1,4 +1,4 @@
-import ProductCategory from "../enums/ProductCategory.enum";
+import ProductCategory from '../enums/ProductCategory.enum';
 
 export default interface Product {
   id: string;

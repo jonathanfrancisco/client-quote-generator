@@ -4,15 +4,15 @@ export default {
     extend: {
       colors: {
         sunlife: {
-          primaryDarker: "#FFCB03",
-          primary: "#FFE069",
-          secondary: "#034C6A",
-          accent: "#F8F5F5",
-          secondaryAccent: "#CCD2E3",
+          primaryDarker: '#FFCB03',
+          primary: '#FFE069',
+          secondary: '#034C6A',
+          accent: '#F8F5F5',
+          secondaryAccent: '#CCD2E3',
         },
       },
       fontFamily: {
-        "port-slab": ["PortLligatSlab_400Regular"],
+        'port-slab': ['PortLligatSlab_400Regular'],
       },
     },
   },

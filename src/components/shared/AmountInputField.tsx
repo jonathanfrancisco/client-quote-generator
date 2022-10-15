@@ -1,8 +1,8 @@
-import React from "react";
-import { View, Text, TargetedEvent, NativeSyntheticEvent } from "react-native";
-import tw from "@app/lib/tailwind";
-import twTheme from "@app/tailwind.config";
-import CurrencyInput from "react-native-currency-input";
+import React from 'react';
+import { View, Text, TargetedEvent, NativeSyntheticEvent } from 'react-native';
+import tw from '@app/lib/tailwind';
+import twTheme from '@app/tailwind.config';
+import CurrencyInput from 'react-native-currency-input';
 
 interface Props {
   label: string;
@@ -31,14 +31,13 @@ const AmountInputField = ({
           padding: 8,
           borderRadius: 6,
           height: height,
-          borderColor: error ? "red" : "black",
-        }}
-      >
+          borderColor: error ? 'red' : 'black',
+        }}>
         <CurrencyInput
           style={tw`text-lg font-bold`}
           value={value}
           onChangeValue={(value: number) => {
-            onChangeValue(value?.toString() || "0");
+            onChangeValue(value?.toString() || '0');
           }}
           onBlur={onBlur}
           prefix="₱"

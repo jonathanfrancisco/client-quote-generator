@@ -1,4 +1,5 @@
 # About The Project
+
 Client quote generator is a utility app for my S.O (She's a financial advisor) for generating quotation for a client instead of designing/creating it over sketch, adobe, or figma.
 
 ### Built With
@@ -12,6 +13,7 @@ Client quote generator is a utility app for my S.O (She's a financial advisor) f
 ## Getting Started
 
 ### Prerequisites
+
 Make sure these are installed on your machine
 
 - Node.js v16.14.0 or greater

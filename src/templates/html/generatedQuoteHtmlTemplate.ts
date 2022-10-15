@@ -1,10 +1,10 @@
-import dayjs from "dayjs";
-import { Image } from "react-native";
+import dayjs from 'dayjs';
+import { Image } from 'react-native';
 
-import BenefitType from "@app/src/common/enums/benefitType.enum";
-import IBenefit from "@app/src/common/interfaces/benefit.interface";
-import getAgeByBirthday from "@app/src/utils/getAgeByBirthday";
-import sunLifeLogoBase64 from "./images/sunlifeLogo.base64";
+import BenefitType from '@app/src/common/enums/benefitType.enum';
+import IBenefit from '@app/src/common/interfaces/benefit.interface';
+import getAgeByBirthday from '@app/src/utils/getAgeByBirthday';
+import sunLifeLogoBase64 from './images/sunlifeLogo.base64';
 
 // TODO: Refactor
 interface TemplateValues {
@@ -36,9 +36,9 @@ const generatedQuoteHtmlTemplate = async ({
   monthlyPayment,
   additionalComment,
 }: TemplateValues) => {
-  const formatter = Intl.NumberFormat("en-PH", {
-    style: "currency",
-    currency: "PHP",
+  const formatter = Intl.NumberFormat('en-PH', {
+    style: 'currency',
+    currency: 'PHP',
     minimumFractionDigits: 2,
   });
 
@@ -50,7 +50,7 @@ const generatedQuoteHtmlTemplate = async ({
         let value;
         if (i.amount) {
           value = i.amount
-            ? `${formatter.format(parseInt(i.value || "0"))}`
+            ? `${formatter.format(parseInt(i.value || '0'))}`
             : i.value;
         } else {
           value = i.value;
@@ -72,7 +72,7 @@ const generatedQuoteHtmlTemplate = async ({
 
         if (i.amount) {
           value = i.amount
-            ? `${formatter.format(parseInt(i.value || "0"))}`
+            ? `${formatter.format(parseInt(i.value || '0'))}`
             : i.value;
         } else {
           value = i.value;
@@ -146,7 +146,7 @@ const generatedQuoteHtmlTemplate = async ({
       <div id="divider"></div>
       <p style="text-align: right; font-weight: bold">${dayjs(
         generationDate
-      ).format("MMMM D, YYYY")}</p>
+      ).format('MMMM D, YYYY')}</p>
       <h3>Insurance Proposal Quotation For:</h3>
       <p>${name}, ${age} Years Old, ${smokingHabit}</p>
       <div style="height: 10px"></div>

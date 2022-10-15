@@ -1,37 +1,46 @@
-import React from "react";
-import { View, Image } from "react-native";
-import { useDeviceContext, useAppColorScheme } from "twrnc";
-import AppLoading from "expo-app-loading";
+import React, { useCallback } from 'react';
+import { View, Image } from 'react-native';
+import { useDeviceContext, useAppColorScheme } from 'twrnc';
 import {
   useFonts,
   PortLligatSlab_400Regular,
-} from "@expo-google-fonts/port-lligat-slab";
+} from '@expo-google-fonts/port-lligat-slab';
+import * as SplashScreen from 'expo-splash-screen';
 
-import tw from "@app/lib/tailwind";
-import ActionsDrawer from "@app/src/components/Dashboard/ActionsDrawer";
-import ActionCard from "@app/src/components/Dashboard/ActionCard";
-import MainPageHeader from "@app/src/components/Dashboard/DashboardNav";
-import DashboardTitle from "@app/src/components/Dashboard/DashboardTitle";
-import QuoteCount from "@app/src/components/Dashboard/QuoteCount";
+import tw from '@app/lib/tailwind';
+import ActionsDrawer from '@app/src/components/Dashboard/ActionsDrawer';
+import ActionCard from '@app/src/components/Dashboard/ActionCard';
+import MainPageHeader from '@app/src/components/Dashboard/DashboardNav';
+import DashboardTitle from '@app/src/components/Dashboard/DashboardTitle';
+import QuoteCount from '@app/src/components/Dashboard/QuoteCount';
 
-const CreateQuoteIcon = require("@app/assets/icons/create_quote_icon.png");
-const ProductListIcon = require("@app/assets/icons/product_list_icon.png");
-const SunLifeSunImg = require("@app/assets/icons/sunlife_sun.png");
+const CreateQuoteIcon = require('@app/assets/icons/create_quote_icon.png');
+const ProductListIcon = require('@app/assets/icons/product_list_icon.png');
+const SunLifeSunImg = require('@app/assets/icons/sunlife_sun.png');
+
+// Keep the splash screen visible while we fetch resources
+SplashScreen.preventAutoHideAsync();
 
 const Home = ({ navigation }) => {
   const [colorScheme, toggleColorScheme, setColorScheme] =
     useAppColorScheme(tw);
 
-  let [fontsLoaded] = useFonts({
+  const [fontsLoaded] = useFonts({
     PortLligatSlab_400Regular,
   });
 
+  const onLayoutRootView = useCallback(async () => {
+    if (fontsLoaded) {
+      await SplashScreen.hideAsync();
+    }
+  }, [fontsLoaded]);
+
   if (!fontsLoaded) {
-    return <AppLoading />;
+    return null;
   }
 
   return (
-    <View style={tw`h-full bg-sunlife-primary`}>
+    <View style={tw`h-full bg-sunlife-primary`} onLayout={onLayoutRootView}>
       <View>
         <MainPageHeader />
         <DashboardTitle />
@@ -42,25 +51,25 @@ const Home = ({ navigation }) => {
         <ActionCard
           icon={CreateQuoteIcon}
           text="Create Quote"
-          onPress={() => navigation.navigate("CreateQuote")}
+          onPress={() => navigation.navigate('CreateQuote')}
         />
         <ActionCard
           icon={ProductListIcon}
           text="Product List"
           onPress={() => {
-            alert("Feature not yet available");
+            alert('Feature not yet available');
           }}
         />
         <ActionCard
           text="SOON"
           onPress={() => {
-            alert("Feature not yet available");
+            alert('Feature not yet available');
           }}
         />
         <ActionCard
           text="SOON"
           onPress={() => {
-            alert("Feature not yet available");
+            alert('Feature not yet available');
           }}
         />
       </ActionsDrawer>

@@ -1,6 +1,6 @@
-import React from "react";
-import { View, Text } from "react-native";
-import tw from "@app/lib/tailwind";
+import React from 'react';
+import { View, Text } from 'react-native';
+import tw from '@app/lib/tailwind';
 
 type Props = {
   count: number;

@@ -1,5 +1,5 @@
-import React from "react";
-import tw from "@app/lib/tailwind";
+import React from 'react';
+import tw from '@app/lib/tailwind';
 
 import {
   Text,
@@ -8,7 +8,7 @@ import {
   Image,
   ImageSourcePropType,
   View,
-} from "react-native";
+} from 'react-native';
 
 interface ActionCardProps {
   icon?: ImageSourcePropType;
@@ -21,8 +21,7 @@ const ActionCard = ({ icon, text, onPress }: ActionCardProps) => {
     return (
       <TouchableOpacity
         onPress={onPress}
-        style={tw`w-1/2.3 h-48 shadow-md bg-white mt-5 py-18 justify-center items-center rounded-xl`}
-      >
+        style={tw`w-1/2.3 h-48 shadow-md bg-white mt-5 py-18 justify-center items-center rounded-xl`}>
         <View style={tw`p-3 bg-sunlife-accent rounded-full text-black`}>
           <Image source={icon} />
         </View>
@@ -36,8 +35,7 @@ const ActionCard = ({ icon, text, onPress }: ActionCardProps) => {
   return (
     <TouchableOpacity
       onPress={onPress}
-      style={tw`w-1/2.3 h-48 shadow-md bg-white mt-5 py-18 justify-center items-center rounded-xl`}
-    >
+      style={tw`w-1/2.3 h-48 shadow-md bg-white mt-5 py-18 justify-center items-center rounded-xl`}>
       <Text style={tw`font-thin text-center text-lg text-black`}>{text}</Text>
     </TouchableOpacity>
   );

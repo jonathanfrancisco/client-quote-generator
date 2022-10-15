@@ -1,34 +1,34 @@
-import React, { useEffect, useState } from "react";
-import { View, Text, ScrollView, TouchableOpacity, Button } from "react-native";
-import { HeaderBackButton } from "@react-navigation/elements";
-import { FieldArray, Formik } from "formik";
-import { printToFileAsync } from "expo-print";
-import * as FileSystem from "expo-file-system";
-import * as Sharing from "expo-sharing";
+import React, { useEffect, useState } from 'react';
+import { View, Text, ScrollView, TouchableOpacity, Button } from 'react-native';
+import { HeaderBackButton } from '@react-navigation/elements';
+import { FieldArray, Formik } from 'formik';
+import { printToFileAsync } from 'expo-print';
+import * as FileSystem from 'expo-file-system';
+import * as Sharing from 'expo-sharing';
 
-import tw from "@app/lib/tailwind";
-import TextInputField from "@app/src/components/shared/TextInputField";
-import DatePicker from "@app/src/components/shared/DatePicker";
-import RadioGroupField from "@app/src/components/shared/RadioGroupField";
-import FieldError from "@app/src/components/shared/FieldError";
-import DropDownList from "@app/src/components/shared/DropDownList";
+import tw from '@app/lib/tailwind';
+import TextInputField from '@app/src/components/shared/TextInputField';
+import DatePicker from '@app/src/components/shared/DatePicker';
+import RadioGroupField from '@app/src/components/shared/RadioGroupField';
+import FieldError from '@app/src/components/shared/FieldError';
+import DropDownList from '@app/src/components/shared/DropDownList';
 
-import ClientDetailsStepSchema from "@app/src/formSchemas/clientDetailsStep.schema";
-import ClientBenefitsStepSchema from "@app/src/formSchemas/clientBenefitsStep.schema";
+import ClientDetailsStepSchema from '@app/src/formSchemas/clientDetailsStep.schema';
+import ClientBenefitsStepSchema from '@app/src/formSchemas/clientBenefitsStep.schema';
 
-import BenefitCard from "@app/src/components/CreateQuote/BenefitCard";
-import AddBenefitButtonModal from "@app/src/components/CreateQuote/AddBenefitButtonModal";
+import BenefitCard from '@app/src/components/CreateQuote/BenefitCard';
+import AddBenefitButtonModal from '@app/src/components/CreateQuote/AddBenefitButtonModal';
 
-import benefitsService from "@app/src/api/services/benefits";
-import productsService from "@app/src/api/services/products";
+import benefitsService from '@app/src/api/services/benefits';
+import productsService from '@app/src/api/services/products';
 
-import IBenefit from "@app/src/common/interfaces/benefit.interface";
-import IBenefitType from "@app/src/common/enums/benefitType.enum";
-import AmountInputField from "@app/src/components/shared/AmountInputField";
-import OtherPaymentOptions from "@app/src/components/CreateQuote/OtherPaymentOptions";
-import Product from "@app/src/common/interfaces/product.interface";
-import ProductCategory from "@app/src/common/enums/productCategory.enum";
-import generatedQuoteHtmlTemplate from "@app/src/templates/html/generatedQuoteHtmlTemplate";
+import IBenefit from '@app/src/common/interfaces/benefit.interface';
+import IBenefitType from '@app/src/common/enums/benefitType.enum';
+import AmountInputField from '@app/src/components/shared/AmountInputField';
+import OtherPaymentOptions from '@app/src/components/CreateQuote/OtherPaymentOptions';
+import Product from '@app/src/common/interfaces/product.interface';
+import ProductCategory from '@app/src/common/enums/productCategory.enum';
+import generatedQuoteHtmlTemplate from '@app/src/templates/html/generatedQuoteHtmlTemplate';
 
 const createQuoteSchemasArr = [
   ClientDetailsStepSchema,
@@ -119,12 +119,11 @@ const CreateQuote = ({ navigation }) => {
   return (
     <View style={tw`h-full bg-sunlife-primary`}>
       <View
-        style={tw`flex-row justify-start justify-between items-center py-2.5`}
-      >
+        style={tw`flex-row justify-start justify-between items-center py-2.5`}>
         <HeaderBackButton
           tintColor="white"
           onPress={() => {
-            navigation.navigate("Dashboard");
+            navigation.navigate('Dashboard');
           }}
         />
         <Text style={tw`text-xl font-bold text-white`}>Create Quote</Text>
@@ -132,8 +131,7 @@ const CreateQuote = ({ navigation }) => {
       </View>
 
       <ScrollView
-        style={tw`bg-sunlife-accent pl-6 pr-6 rounded-tl-3xl rounded-tr-3xl`}
-      >
+        style={tw`bg-sunlife-accent pl-6 pr-6 rounded-tl-3xl rounded-tr-3xl`}>
         <Text style={tw`font-bold text-xl my-4`}>
           Fill the information below.
         </Text>
@@ -141,19 +139,19 @@ const CreateQuote = ({ navigation }) => {
         <Formik
           enableReinitialize={true}
           initialValues={{
-            name: "",
-            gender: "male",
-            birthday: "",
-            smokingHabit: "",
+            name: '',
+            gender: 'male',
+            birthday: '',
+            smokingHabit: '',
             productCategory: ProductCategory.TRAD,
-            productName: "",
-            productDescription: "",
+            productName: '',
+            productDescription: '',
             benefits: selectableBenefits,
             annualPremium: 0.0,
             semiAnnual: 0.0,
             quarterly: 0.0,
             monthly: 0.0,
-            additionalComment: "",
+            additionalComment: '',
           }}
           validationSchema={createQuoteSchemasArr[currentStep]}
           onSubmit={async (values) => {
@@ -178,8 +176,8 @@ const CreateQuote = ({ navigation }) => {
                 base64: true,
               });
               const nameToBeInsured = values.name
-                .split(" ")
-                .join("")
+                .split(' ')
+                .join('')
                 .toUpperCase();
               const documentDirectory = FileSystem.documentDirectory;
               const filename = `${documentDirectory}${nameToBeInsured}_INSURANCE_QUOTATION.pdf`;
@@ -192,8 +190,7 @@ const CreateQuote = ({ navigation }) => {
             } else {
               setCurrentStep((prevStep) => prevStep + 1);
             }
-          }}
-        >
+          }}>
           {({
             handleChange,
             handleBlur,
@@ -216,8 +213,8 @@ const CreateQuote = ({ navigation }) => {
                       label="Name"
                       placeholder="Name"
                       value={values.name}
-                      onChangeText={handleChange("name")}
-                      onBlur={handleBlur("name")}
+                      onChangeText={handleChange('name')}
+                      onBlur={handleBlur('name')}
                       error={errors.name && touched.name ? true : false}
                     />
                     {errors.name && touched.name ? (
@@ -228,18 +225,18 @@ const CreateQuote = ({ navigation }) => {
                       label="Gender"
                       items={[
                         {
-                          id: "1",
-                          value: "male",
-                          label: "Male",
+                          id: '1',
+                          value: 'male',
+                          label: 'Male',
                         },
                         {
-                          id: "2",
-                          value: "female",
-                          label: "Female",
+                          id: '2',
+                          value: 'female',
+                          label: 'Female',
                         },
                       ]}
                       picked={values.gender}
-                      onChange={handleChange("gender")}
+                      onChange={handleChange('gender')}
                     />
                     {errors.gender && touched.gender ? (
                       <FieldError message={errors.gender} />
@@ -249,8 +246,8 @@ const CreateQuote = ({ navigation }) => {
                       label="Birthday"
                       placeholder="Birthday"
                       value={values.birthday}
-                      onChangeText={handleChange("birthday")}
-                      onBlur={handleBlur("birthday")}
+                      onChangeText={handleChange('birthday')}
+                      onBlur={handleBlur('birthday')}
                       error={errors.birthday && touched.birthday ? true : false}
                     />
                     {errors.birthday && touched.birthday ? (
@@ -261,11 +258,11 @@ const CreateQuote = ({ navigation }) => {
                       label="Smoking Habit"
                       placeholder="Select habit"
                       items={[
-                        { label: "Smoker", value: "Smoker" },
-                        { label: "Non-Smoker", value: "Non-Smoker" },
+                        { label: 'Smoker', value: 'Smoker' },
+                        { label: 'Non-Smoker', value: 'Non-Smoker' },
                       ]}
                       picked={values.smokingHabit}
-                      onChange={handleChange("smokingHabit")}
+                      onChange={handleChange('smokingHabit')}
                     />
                     {errors.smokingHabit && touched.smokingHabit ? (
                       <FieldError message={errors.smokingHabit} />
@@ -275,19 +272,19 @@ const CreateQuote = ({ navigation }) => {
                       label="Product Category"
                       items={[
                         {
-                          id: "1",
-                          value: "Trad",
-                          label: "Trad",
+                          id: '1',
+                          value: 'Trad',
+                          label: 'Trad',
                         },
                         {
-                          id: "2",
-                          value: "VUL",
-                          label: "VUL",
+                          id: '2',
+                          value: 'VUL',
+                          label: 'VUL',
                         },
                       ]}
                       picked={values.productCategory}
                       onChange={(value) => {
-                        handleChange("productCategory")(value);
+                        handleChange('productCategory')(value);
                         productsService
                           .getProductsByCategory(value as ProductCategory)
                           .then((products) => {
@@ -307,7 +304,7 @@ const CreateQuote = ({ navigation }) => {
                         label: i.name,
                       }))}
                       picked={values.productName}
-                      onChange={handleChange("productName")}
+                      onChange={handleChange('productName')}
                     />
                     {errors.productName && touched.productName ? (
                       <FieldError message={errors.productName} />
@@ -317,8 +314,8 @@ const CreateQuote = ({ navigation }) => {
                       label="Product Description"
                       placeholder="Write the description here..."
                       value={values.productDescription}
-                      onChangeText={handleChange("productDescription")}
-                      onBlur={handleBlur("productDescription")}
+                      onChangeText={handleChange('productDescription')}
+                      onBlur={handleBlur('productDescription')}
                       height={100}
                       error={
                         errors.productDescription && touched.productDescription
@@ -335,11 +332,9 @@ const CreateQuote = ({ navigation }) => {
                       onPress={() => {
                         handleSubmit();
                       }}
-                      style={tw`bg-sunlife-secondary py-2 rounded-2 min-w-1/2.1`}
-                    >
+                      style={tw`bg-sunlife-secondary py-2 rounded-2 min-w-1/2.1`}>
                       <Text
-                        style={tw`text-center text-white font-bold text-lg`}
-                      >
+                        style={tw`text-center text-white font-bold text-lg`}>
                         Next
                       </Text>
                     </TouchableOpacity>
@@ -370,7 +365,7 @@ const CreateQuote = ({ navigation }) => {
                       )}
                     </View>
 
-                    {typeof errors.benefits === "string" ? (
+                    {typeof errors.benefits === 'string' ? (
                       <FieldError message={errors.benefits} />
                     ) : null}
 
@@ -387,11 +382,9 @@ const CreateQuote = ({ navigation }) => {
                       onPress={() => {
                         setCurrentStep((prevStepVal) => prevStepVal - 1);
                       }}
-                      style={tw`bg-gray-200 py-2 rounded-2 min-w-1/2.1`}
-                    >
+                      style={tw`bg-gray-200 py-2 rounded-2 min-w-1/2.1`}>
                       <Text
-                        style={tw`text-center text-black font-bold text-lg`}
-                      >
+                        style={tw`text-center text-black font-bold text-lg`}>
                         Back
                       </Text>
                     </TouchableOpacity>
@@ -399,11 +392,9 @@ const CreateQuote = ({ navigation }) => {
                       onPress={() => {
                         handleSubmit();
                       }}
-                      style={tw`bg-sunlife-secondary py-2 rounded-2 min-w-1/2.1`}
-                    >
+                      style={tw`bg-sunlife-secondary py-2 rounded-2 min-w-1/2.1`}>
                       <Text
-                        style={tw`text-center text-white font-bold text-lg`}
-                      >
+                        style={tw`text-center text-white font-bold text-lg`}>
                         Next
                       </Text>
                     </TouchableOpacity>
@@ -432,12 +423,12 @@ const CreateQuote = ({ navigation }) => {
                         const quarterly = (annualAsFloat / 4).toString();
                         const monthly = (annualAsFloat / 12).toString();
 
-                        handleChange("annualPremium")(value);
-                        handleChange("semiAnnual")(semiAnnual);
-                        handleChange("quarterly")(quarterly);
-                        handleChange("monthly")(monthly);
+                        handleChange('annualPremium')(value);
+                        handleChange('semiAnnual')(semiAnnual);
+                        handleChange('quarterly')(quarterly);
+                        handleChange('monthly')(monthly);
                       }}
-                      onBlur={handleBlur("annualPremium")}
+                      onBlur={handleBlur('annualPremium')}
                       error={
                         errors.annualPremium && touched.annualPremium
                           ? true
@@ -458,8 +449,8 @@ const CreateQuote = ({ navigation }) => {
                       label="Additional Comment"
                       placeholder=""
                       value={values.additionalComment}
-                      onChangeText={handleChange("additionalComment")}
-                      onBlur={handleBlur("additionalComment")}
+                      onChangeText={handleChange('additionalComment')}
+                      onBlur={handleBlur('additionalComment')}
                       height={100}
                       error={
                         errors.additionalComment && touched.additionalComment
@@ -475,11 +466,9 @@ const CreateQuote = ({ navigation }) => {
                       style={tw`px-8 py-4 my-2 bg-sunlife-secondary rounded-xl`}
                       onPress={() => {
                         handleSubmit();
-                      }}
-                    >
+                      }}>
                       <Text
-                        style={tw`text-xl text-white text-center font-semibold`}
-                      >
+                        style={tw`text-xl text-white text-center font-semibold`}>
                         Generate Quote
                       </Text>
                     </TouchableOpacity>
@@ -489,11 +478,9 @@ const CreateQuote = ({ navigation }) => {
                       onPress={() => {
                         setCurrentStep((prevStepVal) => prevStepVal - 1);
                       }}
-                      style={tw`bg-gray-200 py-2 rounded-2 min-w-1/2.1`}
-                    >
+                      style={tw`bg-gray-200 py-2 rounded-2 min-w-1/2.1`}>
                       <Text
-                        style={tw`text-center text-black font-bold text-lg`}
-                      >
+                        style={tw`text-center text-black font-bold text-lg`}>
                         Back
                       </Text>
                     </TouchableOpacity>

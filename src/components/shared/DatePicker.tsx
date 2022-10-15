@@ -1,15 +1,15 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 import {
   View,
   TextInput,
   Text,
   TargetedEvent,
   NativeSyntheticEvent,
-} from "react-native";
-import DateTimePickerModal from "react-native-modal-datetime-picker";
+} from 'react-native';
+import DateTimePickerModal from 'react-native-modal-datetime-picker';
 
-import tw from "@app/lib/tailwind";
-import twTheme from "@app/tailwind.config";
+import tw from '@app/lib/tailwind';
+import twTheme from '@app/tailwind.config';
 
 interface Props {
   label: string;
@@ -44,10 +44,10 @@ const DatePicker = ({
     let dd: StringOrNum = date.getDate();
     const yyyy = date.getFullYear();
 
-    if (mm < 10) mm = "0" + mm;
-    if (dd < 10) dd = "0" + dd;
+    if (mm < 10) mm = '0' + mm;
+    if (dd < 10) dd = '0' + dd;
 
-    onChangeText(mm + "/" + dd + "/" + yyyy);
+    onChangeText(mm + '/' + dd + '/' + yyyy);
     hideDatePicker();
   };
 
@@ -60,9 +60,8 @@ const DatePicker = ({
           borderWidth: error ? 1.5 : 0.5,
           padding: 8,
           borderRadius: 6,
-          borderColor: error ? "red" : "black",
-        }}
-      >
+          borderColor: error ? 'red' : 'black',
+        }}>
         <TextInput
           style={tw`text-lg font-bold`}
           placeholder={placeholder}

@@ -1,15 +1,15 @@
-import React, { useEffect, useState } from "react";
-import { TouchableOpacity, Text, View } from "react-native";
-import { Ionicons } from "@expo/vector-icons";
-import Modal from "react-native-modal";
+import React, { useEffect, useState } from 'react';
+import { TouchableOpacity, Text, View } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
+import Modal from 'react-native-modal';
 
-import tw from "@app/lib/tailwind";
-import twTheme from "@app/tailwind.config";
-import DropDownList from "../shared/DropDownList";
-import IBenefitType from "@app/src/common/enums/benefitType.enum";
-import RadioGroupField from "../shared/RadioGroupField";
-import IBenefit from "@app/src/common/interfaces/benefit.interface";
-import BenefitsService from "@app/src/api/services/benefits";
+import tw from '@app/lib/tailwind';
+import twTheme from '@app/tailwind.config';
+import DropDownList from '../shared/DropDownList';
+import IBenefitType from '@app/src/common/enums/benefitType.enum';
+import RadioGroupField from '../shared/RadioGroupField';
+import IBenefit from '@app/src/common/interfaces/benefit.interface';
+import BenefitsService from '@app/src/api/services/benefits';
 
 interface Props {
   onAdd: (benefit: IBenefit) => void;
@@ -18,7 +18,7 @@ interface Props {
 const AddBenefitButtonModal = ({ onAdd }: Props) => {
   const [isVisible, setIsVisible] = useState(false);
   const [allBenefits, setAllBenefits] = useState<IBenefit[]>([]);
-  const [selectedBenefitId, setSelectedBenefitId] = useState<string>("");
+  const [selectedBenefitId, setSelectedBenefitId] = useState<string>('');
   const [selectedBenefitType, setSelectedBenefitType] = useState<string>(
     IBenefitType.PRIMARY
   );
@@ -44,8 +44,7 @@ const AddBenefitButtonModal = ({ onAdd }: Props) => {
     <View>
       <TouchableOpacity
         onPress={toggleModal}
-        style={tw`px-8 py-4 my-2 bg-sunlife-secondary rounded-xl`}
-      >
+        style={tw`px-8 py-4 my-2 bg-sunlife-secondary rounded-xl`}>
         <View style={tw`flex-row justify-between items-center`}>
           <View>
             <Text style={tw`text-lg text-white font-semibold`}>
@@ -58,16 +57,14 @@ const AddBenefitButtonModal = ({ onAdd }: Props) => {
       </TouchableOpacity>
       <Modal
         backdropTransitionOutTiming={0}
-        animationIn={"zoomIn"}
-        animationOut={"fadeOut"}
-        isVisible={isVisible}
-      >
+        animationIn={'zoomIn'}
+        animationOut={'fadeOut'}
+        isVisible={isVisible}>
         <View style={tw`bg-white rounded-md px-4 pb-6`}>
           <View style={tw`flex-row justify-between items-center`}>
             <Ionicons name="close" size={24} style={tw`p-3`} color="white" />
             <Text
-              style={tw`font-bold text-sunlife-primaryDarker text-center text-base`}
-            >
+              style={tw`font-bold text-sunlife-primaryDarker text-center text-base`}>
               ADD BENEFIT
             </Text>
             <Ionicons
@@ -123,8 +120,7 @@ const AddBenefitButtonModal = ({ onAdd }: Props) => {
                 onAdd(benefit!);
                 toggleModal();
               }}
-              style={tw`bg-sunlife-secondary py-1 rounded-2 min-w-1/2.5`}
-            >
+              style={tw`bg-sunlife-secondary py-1 rounded-2 min-w-1/2.5`}>
               <Text style={tw`text-center text-white font-bold text-lg`}>
                 Add
               </Text>

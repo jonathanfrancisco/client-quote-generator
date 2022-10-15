@@ -1,7 +1,7 @@
-import React, { useState } from "react";
-import { View, Text } from "react-native";
-import DropDownPicker, { ListModeType } from "react-native-dropdown-picker";
-import tw from "@app/lib/tailwind";
+import React, { useState } from 'react';
+import { View, Text } from 'react-native';
+import DropDownPicker, { ListModeType } from 'react-native-dropdown-picker';
+import tw from '@app/lib/tailwind';
 
 interface ListItem {
   label: string;
@@ -18,7 +18,7 @@ interface Props {
 }
 
 const DropDownList = ({
-  listMode = "SCROLLVIEW",
+  listMode = 'SCROLLVIEW',
   label,
   placeholder,
   items,
