@@ -142,7 +142,7 @@ const CreateQuote = ({ navigation }) => {
             name: '',
             gender: 'male',
             birthday: '',
-            smokingHabit: '',
+            smokingHabit: 'Non-Smoker',
             productCategory: ProductCategory.TRAD,
             productName: '',
             productDescription: '',
