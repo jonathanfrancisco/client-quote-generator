@@ -29,7 +29,7 @@ const DropDownList = ({
 
   return (
     <View style={tw`mb-4`}>
-      {label ? <Text style={tw`text-lg font-thin mb-2`}>{label}</Text> : null}
+      {label ? <Text style={tw`text-lg mb-2`}>{label}</Text> : null}
       <DropDownPicker
         listMode={listMode}
         style={{

@@ -30,6 +30,7 @@ const Home = ({ navigation }) => {
   });
 
   const onLayoutRootView = useCallback(async () => {
+    console.log('fontsLoaded: ', fontsLoaded);
     if (fontsLoaded) {
       await SplashScreen.hideAsync();
     }
