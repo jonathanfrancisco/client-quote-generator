@@ -66,6 +66,11 @@ const BenefitCard = ({
               value={parseInt(valueField)}
               onChangeValue={(newValueField) => {
                 setValueField(newValueField?.toString() || '0');
+
+                // If benefit is already selected and amount changed is while selected, update the selected benefit amount also form values
+                if (isSelected) {
+                  onSelect(isSelected, newValueField?.toString() || '0');
+                }
               }}
               prefix="₱"
               delimiter=","

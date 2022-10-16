@@ -29,6 +29,7 @@ import OtherPaymentOptions from '@app/src/components/CreateQuote/OtherPaymentOpt
 import Product from '@app/src/common/interfaces/product.interface';
 import ProductCategory from '@app/src/common/enums/productCategory.enum';
 import generatedQuoteHtmlTemplate from '@app/src/templates/html/generatedQuoteHtmlTemplate';
+import DisabledTextInputField from '@app/src/components/shared/DisabledTextInputField';
 
 const createQuoteSchemasArr = [
   ClientDetailsStepSchema,
@@ -144,6 +145,7 @@ const CreateQuote = ({ navigation }) => {
             birthday: '',
             smokingHabit: 'Non-Smoker',
             productCategory: ProductCategory.TRAD,
+            productId: '',
             productName: '',
             productDescription: '',
             benefits: selectableBenefits,
@@ -179,8 +181,7 @@ const CreateQuote = ({ navigation }) => {
                 .split(' ')
                 .join('')
                 .toUpperCase();
-              const documentDirectory = FileSystem.documentDirectory;
-              const filename = `${documentDirectory}${nameToBeInsured}_INSURANCE_QUOTATION.pdf`;
+              const filename = `${FileSystem.documentDirectory}${nameToBeInsured}_INSURANCE_QUOTATION.pdf`;
 
               FileSystem.writeAsStringAsync(filename, file.base64!, {
                 encoding: FileSystem.EncodingType.Base64,
@@ -300,23 +301,34 @@ const CreateQuote = ({ navigation }) => {
                       label="Product Name"
                       placeholder="Select product"
                       items={productsDropdownList.map((i) => ({
-                        value: i.name,
+                        value: i.id,
                         label: i.name,
                       }))}
-                      picked={values.productName}
-                      onChange={handleChange('productName')}
+                      picked={values.productId}
+                      onChange={(value) => {
+                        const selectedProduct = productsDropdownList.find(
+                          (i) => i.id === value
+                        );
+
+                        handleChange('productId')(selectedProduct!.id);
+                        setFieldValue('productName', selectedProduct!.name);
+                        setFieldValue(
+                          'productDescription',
+                          selectedProduct!.description
+                        );
+                      }}
                     />
                     {errors.productName && touched.productName ? (
                       <FieldError message={errors.productName} />
                     ) : null}
 
-                    <TextInputField
+                    <DisabledTextInputField
                       label="Product Description"
                       placeholder="Write the description here..."
                       value={values.productDescription}
                       onChangeText={handleChange('productDescription')}
                       onBlur={handleBlur('productDescription')}
-                      height={100}
+                      height={200}
                       error={
                         errors.productDescription && touched.productDescription
                           ? true
