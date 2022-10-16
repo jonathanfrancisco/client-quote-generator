@@ -44,7 +44,7 @@ const AddBenefitButtonModal = ({ onAdd }: Props) => {
     <View>
       <TouchableOpacity
         onPress={toggleModal}
-        style={tw`px-8 py-4 my-2 bg-sunlife-secondary rounded-xl`}>
+        style={tw`px-4 py-4 my-2 bg-sunlife-secondary rounded-xl`}>
         <View style={tw`flex-row justify-between items-center`}>
           <View>
             <Text style={tw`text-lg text-white font-semibold`}>
@@ -61,10 +61,10 @@ const AddBenefitButtonModal = ({ onAdd }: Props) => {
         animationOut={'fadeOut'}
         isVisible={isVisible}>
         <View style={tw`bg-white rounded-md px-4 pb-6`}>
-          <View style={tw`flex-row justify-between items-center`}>
+          <View style={tw`flex-row justify-between items-center mb-4`}>
             <Ionicons name="close" size={24} style={tw`p-3`} color="white" />
             <Text
-              style={tw`font-bold text-sunlife-primaryDarker text-center text-base`}>
+              style={tw`font-bold text-sunlife-primaryDarker text-center text-xl`}>
               ADD BENEFIT
             </Text>
             <Ionicons
@@ -89,29 +89,29 @@ const AddBenefitButtonModal = ({ onAdd }: Props) => {
               setSelectedBenefitId(value);
             }}
           />
-          {/* <RadioGroupField
-              items={[
-                {
-                  id: "1",
-                  label:
-                    IBenefitType.PRIMARY.toString().charAt(0).toUpperCase() +
-                    IBenefitType.PRIMARY.toString().slice(1),
-                  value: IBenefitType.PRIMARY,
-                },
-                {
-                  id: "2",
-                  label:
-                    IBenefitType.SUPPLEMENTARY.toString()
-                      .charAt(0)
-                      .toUpperCase() +
-                    IBenefitType.SUPPLEMENTARY.toString().slice(1),
-                  value: IBenefitType.SUPPLEMENTARY,
-                },
-              ]}
-              picked={selectedBenefitType}
-              onChange={setSelectedBenefitType}
-            /> */}
-          <View style={tw`flex-row justify-end`}>
+          <RadioGroupField
+            items={[
+              {
+                id: '1',
+                label:
+                  IBenefitType.PRIMARY.toString().charAt(0).toUpperCase() +
+                  IBenefitType.PRIMARY.toString().slice(1),
+                value: IBenefitType.PRIMARY,
+              },
+              {
+                id: '2',
+                label:
+                  IBenefitType.SUPPLEMENTARY.toString()
+                    .charAt(0)
+                    .toUpperCase() +
+                  IBenefitType.SUPPLEMENTARY.toString().slice(1),
+                value: IBenefitType.SUPPLEMENTARY,
+              },
+            ]}
+            picked={selectedBenefitType}
+            onChange={setSelectedBenefitType}
+          />
+          <View style={tw`mt-2 flex-row justify-end`}>
             <TouchableOpacity
               onPress={() => {
                 const benefit = allBenefits.find(
@@ -120,8 +120,8 @@ const AddBenefitButtonModal = ({ onAdd }: Props) => {
                 onAdd(benefit!);
                 toggleModal();
               }}
-              style={tw`bg-sunlife-secondary py-1 rounded-2 min-w-1/2.5`}>
-              <Text style={tw`text-center text-white font-bold text-lg`}>
+              style={tw`bg-sunlife-secondary py-2 rounded-2 min-w-1/2.5`}>
+              <Text style={tw`text-center text-white font-bold text-xl`}>
                 Add
               </Text>
             </TouchableOpacity>
