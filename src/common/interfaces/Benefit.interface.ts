@@ -7,5 +7,5 @@ export default interface IBenefit {
   amount: boolean;
   value: string;
   defaultBenefit: boolean;
-  isSelected?: boolean;
+  isSelected: boolean;
 }

@@ -94,6 +94,7 @@ const CreateQuote = ({ navigation }) => {
                           name={benefit.name}
                           stateAmount={benefit.amount}
                           value={benefit.value}
+                          isSelected={benefit.isSelected}
                           onSelect={(isSelected, value) => {
                             formikSetFieldValue(
                               `benefits.${index}.isSelected`,
@@ -157,6 +158,7 @@ const CreateQuote = ({ navigation }) => {
           }}
           validationSchema={createQuoteSchemasArr[currentStep]}
           onSubmit={async (values) => {
+            console.log('values: ', values.benefits);
             if (currentStep === 2) {
               const templateValues = {
                 generationDate: new Date(),

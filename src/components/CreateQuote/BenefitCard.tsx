@@ -20,6 +20,7 @@ interface Props {
   name: string;
   stateAmount: boolean;
   value: string;
+  isSelected: boolean;
   onSelect: (isSelected: boolean, value: string) => void;
 }
 
@@ -29,9 +30,10 @@ const BenefitCard = ({
   name,
   stateAmount,
   value,
+  isSelected: isSelectedProp,
   onSelect,
 }: Props) => {
-  const [isSelected, setIsSelected] = useState(false);
+  const [isSelected, setIsSelected] = useState(isSelectedProp);
   const [valueField, setValueField] = useState(value);
 
   return (
