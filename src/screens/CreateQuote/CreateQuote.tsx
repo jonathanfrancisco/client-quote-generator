@@ -158,7 +158,6 @@ const CreateQuote = ({ navigation }) => {
           }}
           validationSchema={createQuoteSchemasArr[currentStep]}
           onSubmit={async (values) => {
-            console.log('values: ', values.benefits);
             if (currentStep === 2) {
               const templateValues = {
                 generationDate: new Date(),
