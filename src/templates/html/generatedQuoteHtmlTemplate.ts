@@ -45,49 +45,52 @@ const generatedQuoteHtmlTemplate = async ({
     minimumFractionDigits: 2,
   });
 
-  const primaryBenefitsTableHtml = `<p>Primary</p>
-  <table>
-    ${primaryBenefits.map((i) => {
-      let value;
-      if (i.amount) {
-        value = i.amount
-          ? `${formatter.format(parseInt(i.value || '0'))}`
-          : i.value;
-      } else {
-        value = i.value;
-      }
-      return `
+  const primaryBenefitsTableHtml = `<p>Primary</p><table>
+    ${primaryBenefits
+      .map((i) => {
+        let value;
+        if (i.amount) {
+          value = i.amount
+            ? `${formatter.format(parseInt(i.value || '0'))}`
+            : i.value;
+        } else {
+          value = i.value;
+        }
+        return `
         <tr>
           <td>${i.benefitName}</td>
           <td>${value}</td>
         </tr>`;
-    })}
+      })
+      .join('')}
   </table>`;
 
-  const suppBenefitsTableHtml = `<p>Supplementary</p>
-  <table>
-    ${supplementaryBenefits.map((i) => {
-      let value;
+  const suppBenefitsTableHtml = `<p>Supplementary</p><table>
+    ${supplementaryBenefits
+      .map((i) => {
+        let value;
 
-      if (i.amount) {
-        value = i.amount
-          ? `${formatter.format(parseInt(i.value || '0'))}`
-          : i.value;
-      } else {
-        value = i.value;
-      }
-      return `
+        if (i.amount) {
+          value = i.amount
+            ? `${formatter.format(parseInt(i.value || '0'))}`
+            : i.value;
+        } else {
+          value = i.value;
+        }
+        return `
         <tr>
           <td>${i.benefitName}</td>
           <td>${value}</td>
         </tr>`;
-    })}
+      })
+      .join('')}
   </table>`;
 
   const age = getAgeByBirthday(birthday);
 
+  // function return value
   return `
-  <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
