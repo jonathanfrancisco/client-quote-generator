@@ -5,6 +5,7 @@ import BenefitType from '@app/src/common/enums/benefitType.enum';
 import IBenefit from '@app/src/common/interfaces/benefit.interface';
 import getAgeByBirthday from '@app/src/utils/getAgeByBirthday';
 import sunLifeLogoBase64 from './images/sunlifeLogo.base64';
+import ISelectableBenefit from '@app/src/common/interfaces/selectable-benefit.interface';
 
 // TODO: Refactor
 interface TemplateValues {
@@ -14,7 +15,8 @@ interface TemplateValues {
   smokingHabit: string;
   productName: string;
   productDescription: string;
-  benefits: IBenefit[];
+  primaryBenefits: ISelectableBenefit[];
+  supplementaryBenefits: ISelectableBenefit[];
   annualPayment: number;
   semiAnnualPayment: number;
   quarterlyPayment: number;
@@ -29,7 +31,8 @@ const generatedQuoteHtmlTemplate = async ({
   smokingHabit,
   productName,
   productDescription,
-  benefits,
+  primaryBenefits,
+  supplementaryBenefits,
   annualPayment,
   semiAnnualPayment,
   quarterlyPayment,
@@ -44,45 +47,41 @@ const generatedQuoteHtmlTemplate = async ({
 
   const primaryBenefitsTableHtml = `<p>Primary</p>
   <table>
-    ${benefits
-      .filter((i) => i.type === BenefitType.PRIMARY)
-      .map((i) => {
-        let value;
-        if (i.amount) {
-          value = i.amount
-            ? `${formatter.format(parseInt(i.value || '0'))}`
-            : i.value;
-        } else {
-          value = i.value;
-        }
-        return `
+    ${primaryBenefits.map((i) => {
+      let value;
+      if (i.amount) {
+        value = i.amount
+          ? `${formatter.format(parseInt(i.value || '0'))}`
+          : i.value;
+      } else {
+        value = i.value;
+      }
+      return `
         <tr>
-          <td>${i.name}</td>
+          <td>${i.benefitName}</td>
           <td>${value}</td>
         </tr>`;
-      })}
+    })}
   </table>`;
 
   const suppBenefitsTableHtml = `<p>Supplementary</p>
   <table>
-    ${benefits
-      .filter((i) => i.type === BenefitType.SUPPLEMENTARY)
-      .map((i) => {
-        let value;
+    ${supplementaryBenefits.map((i) => {
+      let value;
 
-        if (i.amount) {
-          value = i.amount
-            ? `${formatter.format(parseInt(i.value || '0'))}`
-            : i.value;
-        } else {
-          value = i.value;
-        }
-        return `
+      if (i.amount) {
+        value = i.amount
+          ? `${formatter.format(parseInt(i.value || '0'))}`
+          : i.value;
+      } else {
+        value = i.value;
+      }
+      return `
         <tr>
-          <td>${i.name}</td>
+          <td>${i.benefitName}</td>
           <td>${value}</td>
         </tr>`;
-      })}
+    })}
   </table>`;
 
   const age = getAgeByBirthday(birthday);

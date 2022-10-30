@@ -11,7 +11,6 @@ const getSelectableDefaultBenefitsByProduct = async (): Promise<IBenefit[]> => {
       name: 'LIFE INSURANCE',
       amount: true,
       value: '',
-      defaultBenefit: true,
     },
     {
       id: 'adc181e6-c344-45d0-bbb1-b88c0e443128',
@@ -19,7 +18,6 @@ const getSelectableDefaultBenefitsByProduct = async (): Promise<IBenefit[]> => {
       name: 'CRITICAL ILLNESS',
       amount: true,
       value: '',
-      defaultBenefit: true,
     },
     {
       id: 'bf64ffd8-6dd2-4067-bdb4-847a90a7e215',
@@ -27,7 +25,6 @@ const getSelectableDefaultBenefitsByProduct = async (): Promise<IBenefit[]> => {
       name: 'ACCIDENTAL DEATH',
       amount: true,
       value: '',
-      defaultBenefit: true,
     },
     {
       id: '436a39cd-8e84-4b46-9d50-425eb71b473f',
@@ -35,7 +32,6 @@ const getSelectableDefaultBenefitsByProduct = async (): Promise<IBenefit[]> => {
       name: 'TOTAL DISABILITY',
       amount: false,
       value: 'WAIVED OF PREMIUM',
-      defaultBenefit: true,
     },
   ];
 
@@ -58,7 +54,6 @@ const getAllAvailableBenefits = async () => {
       name: 'TEST BENEFIT 1',
       amount: true,
       value: '',
-      defaultBenefit: true,
     },
     {
       id: 'adc181e6-c344-45d0-bbb1-b88c0e443128',
@@ -66,7 +61,6 @@ const getAllAvailableBenefits = async () => {
       name: 'TEST BENEFIT 2',
       amount: true,
       value: '',
-      defaultBenefit: true,
     },
     {
       id: 'bf64ffd8-6dd2-4067-bdb4-847a90a7e215',
@@ -74,7 +68,6 @@ const getAllAvailableBenefits = async () => {
       name: 'TEST BENEFIT 3',
       amount: true,
       value: '',
-      defaultBenefit: true,
     },
     {
       id: '436a39cd-8e84-4b46-9d50-425eb71b473f',
@@ -82,7 +75,6 @@ const getAllAvailableBenefits = async () => {
       name: 'TEST BENEFIT 4',
       amount: false,
       value: 'WAIVED OF PREMIUM',
-      defaultBenefit: true,
     },
     {
       id: '436aokcd-8e84-4b46-9d50-425eb71b4731',
@@ -90,7 +82,6 @@ const getAllAvailableBenefits = async () => {
       name: 'TEST BENEFIT 5',
       amount: false,
       value: 'WAIVED OF PREMIUM',
-      defaultBenefit: true,
     },
     {
       id: '123a39cd-8e84-4b46-9d50-425eb71b473f',
@@ -98,7 +89,6 @@ const getAllAvailableBenefits = async () => {
       name: 'TEST BENEFIT 6',
       amount: false,
       value: 'WAIVED OF PREMIUM',
-      defaultBenefit: true,
     },
     {
       id: '451a39cd-8e84-4b46-9d50-425eb71b473f',
@@ -106,7 +96,6 @@ const getAllAvailableBenefits = async () => {
       name: 'TEST BENEFIT 7',
       amount: false,
       value: 'WAIVED OF PREMIUM',
-      defaultBenefit: true,
     },
   ];
 };

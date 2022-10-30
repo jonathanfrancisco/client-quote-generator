@@ -1,32 +1,22 @@
 import React, { useState } from 'react';
-import {
-  View,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  GestureResponderEvent,
-} from 'react-native';
+import { View, Text, TouchableOpacity } from 'react-native';
 import Checkbox from 'expo-checkbox';
 import CurrencyInput from 'react-native-currency-input';
 
 import tw from '@app/lib/tailwind';
 import twTheme from '@app/tailwind.config';
-import IBenefitType from '@app/src/common/enums/benefitType.enum';
 
 interface Props {
   index: number;
-  id: string;
-  type: IBenefitType;
   name: string;
   stateAmount: boolean;
   value: string;
   isSelected: boolean;
-  onSelect: (isSelected: boolean, value: string) => void;
+  onSelect: (index: number, isSelected: boolean, value: string) => void;
 }
 
 const BenefitCard = ({
-  id,
-  type,
+  index,
   name,
   stateAmount,
   value,
@@ -40,7 +30,7 @@ const BenefitCard = ({
     <TouchableOpacity
       onPress={() => {
         setIsSelected(!isSelected);
-        onSelect(!isSelected, valueField);
+        onSelect(index, !isSelected, valueField);
       }}
       style={{
         ...tw`my-2 bg-white rounded-xl`,
@@ -69,9 +59,10 @@ const BenefitCard = ({
               onChangeValue={(newValueField) => {
                 setValueField(newValueField?.toString() || '0');
 
-                // If benefit is already selected and amount changed is while selected, update the selected benefit amount also form values
+                // If benefit is already selected and amount is changed then
+                // while selected, update the selected benefit amount also on formik values not just here on the UI state
                 if (isSelected) {
-                  onSelect(isSelected, newValueField?.toString() || '0');
+                  onSelect(index, isSelected, newValueField?.toString() || '0');
                 }
               }}
               prefix="₱"

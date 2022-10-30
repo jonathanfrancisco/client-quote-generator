@@ -1,9 +1,10 @@
 import BenefitType from '../enums/benefitType.enum';
 
-export default interface IBenefit {
-  id: string;
+export default interface ISelectableBenefit {
+  benefitId: string;
   type: BenefitType;
-  name: string;
+  benefitName: string;
   amount: boolean;
   value: string;
+  isSelected: boolean;
 }

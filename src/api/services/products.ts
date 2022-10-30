@@ -1,5 +1,6 @@
 import ProductCategory from '@app/src/common/enums/ProductCategory.enum';
 import Product from '@app/src/common/interfaces/product.interface';
+
 import axios from './axios';
 
 const getProductsByCategory = async (
@@ -14,6 +15,29 @@ const getProductsByCategory = async (
   }
 };
 
+const getProductById = async (id: string): Promise<Nullable<Product>> => {
+  try {
+    const response = await axios.get(`/api/product/${id}`);
+
+    const product = response?.data.results as Product;
+
+    // TODO: Remove this once amount is added on the API response
+    product.productBenefits = product.productBenefits.map((i) => {
+      return {
+        ...i,
+        // amount: true, // TODO: remove complete once amount is available in API
+        value: !i.value ? '0' : i.value,
+      };
+    });
+
+    return product;
+  } catch (err) {
+    console.log('error: ', err);
+    return undefined;
+  }
+};
+
 export default {
   getProductsByCategory,
+  getProductById,
 };
