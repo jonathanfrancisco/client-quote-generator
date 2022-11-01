@@ -8,9 +8,8 @@ const getProductsByCategory = async (
 ): Promise<Product[]> => {
   try {
     const response = await axios.get(`/api/products/${prodCategory}`);
-    return response?.data.results;
-  } catch (err) {
-    console.log('error: ', err);
+    return response?.data.result;
+  } catch (err: any) {
     return [];
   }
 };
@@ -19,14 +18,13 @@ const getProductById = async (id: string): Promise<Nullable<Product>> => {
   try {
     const response = await axios.get(`/api/product/${id}`);
 
-    const product = response?.data.results as Product;
+    const product = response?.data.result as Product;
 
     // TODO: Remove this once amount is added on the API response
     product.productBenefits = product.productBenefits.map((i) => {
       return {
         ...i,
-        // amount: true, // TODO: remove complete once amount is available in API
-        value: !i.value ? '0' : i.value,
+        value: i.value === '' ? '0' : i.value,
       };
     });
 

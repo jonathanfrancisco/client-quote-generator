@@ -10,14 +10,18 @@ import IBenefitType from '@app/src/common/enums/benefitType.enum';
 import RadioGroupField from '../shared/RadioGroupField';
 import IBenefit from '@app/src/common/interfaces/benefit.interface';
 import BenefitsService from '@app/src/api/services/benefits';
+import Benefits from '@app/src/api/services/benefits';
+import IAddableBenefit from '@app/src/common/interfaces/addable-benefit.interface';
 
 interface Props {
-  onAdd: (benefit: IBenefit) => void;
+  onAdd: (benefit: IAddableBenefit, type: IBenefitType) => void;
 }
 
 const AddBenefitButtonModal = ({ onAdd }: Props) => {
   const [isVisible, setIsVisible] = useState(false);
-  const [allBenefits, setAllBenefits] = useState<IBenefit[]>([]);
+  const [addableNotDefaultBenefits, setAddableNotDefaultBenefits] = useState<
+    IAddableBenefit[]
+  >([]);
   const [selectedBenefitId, setSelectedBenefitId] = useState<string>('');
   const [selectedBenefitType, setSelectedBenefitType] = useState<string>(
     IBenefitType.PRIMARY
@@ -28,16 +32,9 @@ const AddBenefitButtonModal = ({ onAdd }: Props) => {
   };
 
   useEffect(() => {
-    BenefitsService.getAllAvailableBenefits()
-      .then((results) =>
-        results.map((i) => ({
-          ...i,
-          isSelected: false,
-        }))
-      )
-      .then((results) => {
-        setAllBenefits(results);
-      });
+    Benefits.getAddableNotDefaultBenefits().then((results) => {
+      setAddableNotDefaultBenefits(results);
+    });
   }, []);
 
   return (
@@ -78,7 +75,7 @@ const AddBenefitButtonModal = ({ onAdd }: Props) => {
           <DropDownList
             listMode="MODAL"
             placeholder="Select Benefit Name"
-            items={allBenefits.map((i) => {
+            items={addableNotDefaultBenefits.map((i) => {
               return {
                 label: i.name,
                 value: i.id,
@@ -114,11 +111,11 @@ const AddBenefitButtonModal = ({ onAdd }: Props) => {
           <View style={tw`mt-2 flex-row justify-end`}>
             <TouchableOpacity
               onPress={() => {
-                const benefit = allBenefits.find(
+                const benefit = addableNotDefaultBenefits.find(
                   (i) => i.id === selectedBenefitId
                 );
-                onAdd(benefit!);
                 toggleModal();
+                onAdd(benefit!, selectedBenefitType as IBenefitType);
               }}
               style={tw`bg-sunlife-secondary py-2 rounded-2 min-w-1/2.5`}>
               <Text style={tw`text-center text-white font-bold text-xl`}>

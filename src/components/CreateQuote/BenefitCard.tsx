@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 import Checkbox from 'expo-checkbox';
 import CurrencyInput from 'react-native-currency-input';
@@ -23,8 +23,12 @@ const BenefitCard = ({
   isSelected: isSelectedProp,
   onSelect,
 }: Props) => {
-  const [isSelected, setIsSelected] = useState(isSelectedProp);
+  const [isSelected, setIsSelected] = useState<boolean>(isSelectedProp);
   const [valueField, setValueField] = useState(value);
+
+  useEffect(() => {
+    setIsSelected(isSelectedProp);
+  }, [isSelectedProp]);
 
   return (
     <TouchableOpacity

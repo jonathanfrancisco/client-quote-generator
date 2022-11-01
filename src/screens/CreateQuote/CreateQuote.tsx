@@ -1,5 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { ScrollView, Text, TouchableOpacity, View } from 'react-native';
+import {
+  ActivityIndicator,
+  ScrollView,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import { HeaderBackButton } from '@react-navigation/elements';
 import { FieldArray, Formik } from 'formik';
 import { printToFileAsync } from 'expo-print';
@@ -40,6 +46,10 @@ const CreateQuote = ({ navigation }) => {
   const [productsDropdownList, setProductsDropdownList] = useState<Product[]>(
     []
   );
+  const [currentProductIdSelected, setCurrentProductIdSelected] =
+    useState<string>();
+  const [selectableIsBenefitsLoading, setSelectableBenefitsIsLoading] =
+    useState<boolean>(false);
 
   useEffect(() => {
     productsService
@@ -50,6 +60,7 @@ const CreateQuote = ({ navigation }) => {
   }, []);
 
   const renderBenefits = (
+    formikFieldKey: string,
     benefitsCategory: BenefitType,
     benefits: ISelectableBenefit[] | undefined,
     onBenefitSelect: (index: number, isSelected: boolean, value: string) => void
@@ -62,13 +73,13 @@ const CreateQuote = ({ navigation }) => {
               {benefitsCategory.toUpperCase()}
             </Text>
             <FieldArray
-              name="benefits"
+              name={formikFieldKey}
               render={(arrayHelpers) => (
                 <>
                   {benefits.map((benefit, index) => {
                     return (
                       <BenefitCard
-                        key={benefit.benefitId}
+                        key={currentProductIdSelected + benefit.benefitId}
                         index={index}
                         name={benefit.benefitName}
                         stateAmount={benefit.amount}
@@ -133,31 +144,36 @@ const CreateQuote = ({ navigation }) => {
           validationSchema={createQuoteSchemasArr[currentStep]}
           onSubmit={async (values, formikHelpers) => {
             if (currentStep === CreateQuoteFormStep.ClientDetails) {
-              productsService
-                .getProductById(values.productId)
-                .then((product) => {
-                  const productSelectableBenefits =
-                    product!.productBenefits.map((i) => {
-                      return {
-                        ...i,
-                        isSelected: false,
-                      } as ISelectableBenefit;
-                    });
+              setCurrentProductIdSelected(values.productId);
 
-                  formikHelpers.setFieldValue(
-                    'productPrimaBenefits',
-                    productSelectableBenefits.filter(
-                      (i) => i.type === BenefitType.PRIMARY
-                    )
-                  );
-                  formikHelpers.setFieldValue(
-                    'productSuppBenefits',
-                    productSelectableBenefits.filter(
-                      (i) => i.type === BenefitType.SUPPLEMENTARY
-                    )
-                  );
-                });
-              // Get Product Benefits by id
+              if (currentProductIdSelected !== values.productId) {
+                setSelectableBenefitsIsLoading(true);
+                productsService
+                  .getProductById(values.productId)
+                  .then((product) => {
+                    const productSelectableBenefits =
+                      product!.productBenefits.map((i) => {
+                        return {
+                          ...i,
+                          isSelected: false,
+                        } as ISelectableBenefit;
+                      });
+
+                    formikHelpers.setFieldValue(
+                      'productPrimaBenefits',
+                      productSelectableBenefits.filter(
+                        (i) => i.type === BenefitType.PRIMARY
+                      )
+                    );
+                    formikHelpers.setFieldValue(
+                      'productSuppBenefits',
+                      productSelectableBenefits.filter(
+                        (i) => i.type === BenefitType.SUPPLEMENTARY
+                      )
+                    );
+                    setSelectableBenefitsIsLoading(false);
+                  });
+              }
             }
 
             if (currentStep === CreateQuoteFormStep.CostDetails) {
@@ -372,56 +388,87 @@ const CreateQuote = ({ navigation }) => {
                     <Text style={tw`text-xl font-bold mb-2`}>
                       Benefit Details
                     </Text>
+                    {selectableIsBenefitsLoading ? (
+                      <ActivityIndicator color="#FFE069" size="large" />
+                    ) : (
+                      <>
+                        <View>
+                          {renderBenefits(
+                            'productPrimaBenefits',
+                            BenefitType.PRIMARY,
+                            values.productPrimaBenefits,
+                            (index, isSelected, value) => {
+                              setFieldValue(
+                                `productPrimaBenefits.${index}.isSelected`,
+                                isSelected
+                              );
+                              setFieldValue(
+                                `productPrimaBenefits.${index}.value`,
+                                value.toString()
+                              );
+                            }
+                          )}
 
-                    <View>
-                      {renderBenefits(
-                        BenefitType.PRIMARY,
-                        values.productPrimaBenefits,
-                        (index, isSelected, value) => {
-                          setFieldValue(
-                            `productPrimaBenefits.${index}.isSelected`,
-                            isSelected
-                          );
-                          setFieldValue(
-                            `productPrimaBenefits.${index}.value`,
-                            value.toString()
-                          );
-                        }
-                      )}
+                          {renderBenefits(
+                            'productSuppBenefits',
+                            BenefitType.SUPPLEMENTARY,
+                            values.productSuppBenefits,
+                            (index, isSelected, value) => {
+                              setFieldValue(
+                                `productSuppBenefits.${index}.isSelected`,
+                                isSelected
+                              );
+                              setFieldValue(
+                                `productSuppBenefits.${index}.value`,
+                                value.toString()
+                              );
+                            }
+                          )}
+                        </View>
 
-                      {renderBenefits(
-                        BenefitType.SUPPLEMENTARY,
-                        values.productSuppBenefits,
-                        (index, isSelected, value) => {
-                          setFieldValue(
-                            `productSuppBenefits.${index}.isSelected`,
-                            isSelected
-                          );
-                          setFieldValue(
-                            `productSuppBenefits.${index}.value`,
-                            value.toString()
-                          );
-                        }
-                      )}
-                    </View>
+                        {typeof errors.productPrimaBenefits === 'string' &&
+                        errors.productSuppBenefits ? (
+                          <FieldError
+                            message={
+                              errors.productPrimaBenefits ||
+                              errors.productPrimaBenefits
+                            }
+                          />
+                        ) : null}
 
-                    {typeof errors.productPrimaBenefits === 'string' &&
-                    errors.productSuppBenefits ? (
-                      <FieldError
-                        message={
-                          errors.productPrimaBenefits ||
-                          errors.productPrimaBenefits
-                        }
-                      />
-                    ) : null}
-
-                    <AddBenefitButtonModal
-                      onAdd={(benefit) => {
-                        // setSelectableBenefits((prevValue) => {
-                        //   return [...prevValue, benefit];
-                        // });
-                      }}
-                    />
+                        <AddBenefitButtonModal
+                          onAdd={(benefit, type) => {
+                            setSelectableBenefitsIsLoading(true);
+                            if (type === BenefitType.PRIMARY) {
+                              setFieldValue('productPrimaBenefits', [
+                                ...values.productPrimaBenefits,
+                                {
+                                  benefitId: benefit.id,
+                                  type: BenefitType.PRIMARY,
+                                  benefitName: benefit.name,
+                                  amount: benefit.amount,
+                                  value: benefit.value,
+                                  isSelected: false,
+                                } as ISelectableBenefit,
+                              ]);
+                            } else {
+                              setFieldValue('productSuppBenefits', [
+                                ...values.productSuppBenefits,
+                                {
+                                  benefitId: benefit.id,
+                                  type: BenefitType.SUPPLEMENTARY,
+                                  benefitName: benefit.name,
+                                  amount: benefit.amount,
+                                  value: benefit.value,
+                                  isSelected: false,
+                                } as ISelectableBenefit,
+                              ]);
+                            }
+                            setSelectableBenefitsIsLoading(false);
+                          }}
+                        />
+                      </>
+                    )}
                   </View>
                   <View style={tw`flex-row justify-between mt-4 pb-12`}>
                     <TouchableOpacity

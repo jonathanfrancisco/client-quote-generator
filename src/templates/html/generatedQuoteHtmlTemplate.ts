@@ -1,8 +1,5 @@
 import dayjs from 'dayjs';
-import { Image } from 'react-native';
 
-import BenefitType from '@app/src/common/enums/benefitType.enum';
-import IBenefit from '@app/src/common/interfaces/benefit.interface';
 import getAgeByBirthday from '@app/src/utils/getAgeByBirthday';
 import sunLifeLogoBase64 from './images/sunlifeLogo.base64';
 import ISelectableBenefit from '@app/src/common/interfaces/selectable-benefit.interface';
