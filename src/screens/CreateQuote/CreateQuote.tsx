@@ -176,6 +176,14 @@ const CreateQuote = ({ navigation }) => {
               }
             }
 
+            if (currentStep === CreateQuoteFormStep.BenefitDetails) {
+              formikHelpers.setFieldValue('annualPremium', 0.0);
+              formikHelpers.setFieldValue('semiAnnual', 0.0);
+              formikHelpers.setFieldValue('quarterly', 0.0);
+              formikHelpers.setFieldValue('monthly', 0.0);
+              formikHelpers.setFieldValue('additionalComment', '');
+            }
+
             if (currentStep === CreateQuoteFormStep.CostDetails) {
               const templateValues = {
                 generationDate: new Date(),
