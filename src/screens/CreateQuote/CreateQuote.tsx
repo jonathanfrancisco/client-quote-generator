@@ -29,6 +29,7 @@ import ISelectableBenefit from '@app/src/common/interfaces/selectable-benefit.in
 import BenefitType from '@app/src/common/enums/benefitType.enum';
 import ClientDetailsForm from '@app/src/components/CreateQuote/ClientDetailsForm';
 import CostDetailsForm from '../../components/CreateQuote/CostDetailsForm';
+import BenefitDetailsForm from '../../components/CreateQuote/BenefitDetailsForm';
 
 const createQuoteSchemasArr = [
   ClientDetailsStepSchema,
@@ -38,50 +39,8 @@ const createQuoteSchemasArr = [
 const CreateQuote = ({ navigation }) => {
   // UI/Ephemeral state not form values that will be eventually submitted.
   const [currentStep, setCurrentStep] = useState(0);
-
   const [currentProductIdSelected, setCurrentProductIdSelected] =
     useState<string>();
-  const [selectableIsBenefitsLoading, setSelectableBenefitsIsLoading] =
-    useState<boolean>(false);
-
-  const renderBenefits = (
-    formikFieldKey: string,
-    benefitsCategory: BenefitType,
-    benefits: ISelectableBenefit[] | undefined,
-    onBenefitSelect: (index: number, isSelected: boolean, value: string) => void
-  ) => {
-    return (
-      <>
-        {benefits && benefits.length > 0 ? (
-          <>
-            <Text style={tw`text-lg font-semibold mb-2`}>
-              {benefitsCategory.toUpperCase()}
-            </Text>
-            <FieldArray
-              name={formikFieldKey}
-              render={(arrayHelpers) => (
-                <>
-                  {benefits.map((benefit, index) => {
-                    return (
-                      <BenefitCard
-                        key={currentProductIdSelected + benefit.benefitId}
-                        index={index}
-                        name={benefit.benefitName}
-                        stateAmount={benefit.amount}
-                        value={benefit.value}
-                        isSelected={benefit.isSelected}
-                        onSelect={onBenefitSelect}
-                      />
-                    );
-                  })}
-                </>
-              )}
-            />
-          </>
-        ) : null}
-      </>
-    );
-  };
 
   return (
     <View style={tw`h-full bg-sunlife-primary`}>
@@ -128,39 +87,6 @@ const CreateQuote = ({ navigation }) => {
           }}
           validationSchema={createQuoteSchemasArr[currentStep]}
           onSubmit={async (values, formikHelpers) => {
-            if (currentStep === CreateQuoteFormStep.ClientDetails) {
-              setCurrentProductIdSelected(values.productId);
-
-              if (currentProductIdSelected !== values.productId) {
-                setSelectableBenefitsIsLoading(true);
-                productsService
-                  .getProductById(values.productId)
-                  .then((product) => {
-                    const productSelectableBenefits =
-                      product!.productBenefits.map((i) => {
-                        return {
-                          ...i,
-                          isSelected: false,
-                        } as ISelectableBenefit;
-                      });
-
-                    formikHelpers.setFieldValue(
-                      'productPrimaBenefits',
-                      productSelectableBenefits.filter(
-                        (i) => i.type === BenefitType.PRIMARY
-                      )
-                    );
-                    formikHelpers.setFieldValue(
-                      'productSuppBenefits',
-                      productSelectableBenefits.filter(
-                        (i) => i.type === BenefitType.SUPPLEMENTARY
-                      )
-                    );
-                    setSelectableBenefitsIsLoading(false);
-                  });
-              }
-            }
-
             if (currentStep === CreateQuoteFormStep.BenefitDetails) {
               formikHelpers.setFieldValue('annualPremium', 0.0);
               formikHelpers.setFieldValue('semiAnnual', 0.0);
@@ -221,126 +147,16 @@ const CreateQuote = ({ navigation }) => {
             setFieldValue,
           }) => (
             <View>
-              {/* START OF CLIENT DETAILS */}
               {currentStep === 0 && <ClientDetailsForm />}
-              {/* END OF CLIENT DETAILS */}
 
-              {/* START OF BENEFIT DETAILS */}
               {currentStep === 1 && (
-                <>
-                  <View style={tw`bg-white rounded-tl-lg rounded-tr-lg p-4`}>
-                    <Text style={tw`text-xl font-bold mb-2`}>
-                      Benefit Details
-                    </Text>
-                    {selectableIsBenefitsLoading ? (
-                      <ActivityIndicator color="#FFE069" size="large" />
-                    ) : (
-                      <>
-                        <View>
-                          {renderBenefits(
-                            'productPrimaBenefits',
-                            BenefitType.PRIMARY,
-                            values.productPrimaBenefits,
-                            (index, isSelected, value) => {
-                              setFieldValue(
-                                `productPrimaBenefits.${index}.isSelected`,
-                                isSelected
-                              );
-                              setFieldValue(
-                                `productPrimaBenefits.${index}.value`,
-                                value.toString()
-                              );
-                            }
-                          )}
-
-                          {renderBenefits(
-                            'productSuppBenefits',
-                            BenefitType.SUPPLEMENTARY,
-                            values.productSuppBenefits,
-                            (index, isSelected, value) => {
-                              setFieldValue(
-                                `productSuppBenefits.${index}.isSelected`,
-                                isSelected
-                              );
-                              setFieldValue(
-                                `productSuppBenefits.${index}.value`,
-                                value.toString()
-                              );
-                            }
-                          )}
-                        </View>
-
-                        {typeof errors.productPrimaBenefits === 'string' &&
-                        errors.productSuppBenefits ? (
-                          <FieldError
-                            message={
-                              errors.productPrimaBenefits ||
-                              errors.productPrimaBenefits
-                            }
-                          />
-                        ) : null}
-
-                        <AddBenefitButtonModal
-                          onAdd={(benefit, type) => {
-                            setSelectableBenefitsIsLoading(true);
-                            if (type === BenefitType.PRIMARY) {
-                              setFieldValue('productPrimaBenefits', [
-                                ...values.productPrimaBenefits,
-                                {
-                                  benefitId: benefit.id,
-                                  type: BenefitType.PRIMARY,
-                                  benefitName: benefit.name,
-                                  amount: benefit.amount,
-                                  value: benefit.value,
-                                  isSelected: false,
-                                } as ISelectableBenefit,
-                              ]);
-                            } else {
-                              setFieldValue('productSuppBenefits', [
-                                ...values.productSuppBenefits,
-                                {
-                                  benefitId: benefit.id,
-                                  type: BenefitType.SUPPLEMENTARY,
-                                  benefitName: benefit.name,
-                                  amount: benefit.amount,
-                                  value: benefit.value,
-                                  isSelected: false,
-                                } as ISelectableBenefit,
-                              ]);
-                            }
-                            setSelectableBenefitsIsLoading(false);
-                          }}
-                        />
-                      </>
-                    )}
-                  </View>
-                  <View style={tw`flex-row justify-between mt-4 pb-12`}>
-                    <TouchableOpacity
-                      onPress={() => {
-                        setCurrentStep((prevStepVal) => prevStepVal - 1);
-                      }}
-                      style={tw`bg-gray-200 py-2 rounded-2 min-w-1/2.1`}>
-                      <Text
-                        style={tw`text-center text-black font-bold text-lg`}>
-                        Back
-                      </Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                      onPress={() => {
-                        handleSubmit();
-                      }}
-                      style={tw`bg-sunlife-secondary py-2 rounded-2 min-w-1/2.1`}>
-                      <Text
-                        style={tw`text-center text-white font-bold text-lg`}>
-                        Next
-                      </Text>
-                    </TouchableOpacity>
-                  </View>
-                </>
+                <BenefitDetailsForm
+                  onBack={() => {
+                    setCurrentStep((prevStepVal) => prevStepVal - 1);
+                  }}
+                />
               )}
-              {/* END OF BENEFIT DETAILS */}
 
-              {/*START OF COST DETAILS*/}
               {currentStep === 2 && (
                 <CostDetailsForm
                   onBack={() => {
@@ -348,7 +164,6 @@ const CreateQuote = ({ navigation }) => {
                   }}
                 />
               )}
-              {/* END OF  COST DETAILS */}
             </View>
           )}
         </Formik>
