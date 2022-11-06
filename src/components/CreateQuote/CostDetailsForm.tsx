@@ -6,15 +6,30 @@ import AmountInputField from '@app/src/components/shared/AmountInputField';
 import FieldError from '@app/src/components/shared/FieldError';
 import TextInputField from '@app/src/components/shared/TextInputField';
 import { useFormikContext } from 'formik';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Text, View, TouchableOpacity } from 'react-native';
 
 interface Props {
   onBack: () => void;
 }
 const CostDetailsForm = ({ onBack }: Props) => {
-  const { values, handleChange, handleBlur, handleSubmit, errors, touched } =
-    useFormikContext<CreateQuoteAggregatedForm>();
+  const {
+    values,
+    handleChange,
+    handleBlur,
+    handleSubmit,
+    setFieldValue,
+    errors,
+    touched,
+  } = useFormikContext<CreateQuoteAggregatedForm>();
+
+  useEffect(() => {
+    setFieldValue('annualPremium', 0.0);
+    setFieldValue('semiAnnual', 0.0);
+    setFieldValue('quarterly', 0.0);
+    setFieldValue('monthly', 0.0);
+    setFieldValue('additionalComment', '');
+  }, []);
 
   return (
     <>

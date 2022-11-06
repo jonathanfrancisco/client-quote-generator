@@ -53,7 +53,7 @@ const CreateQuote = ({ navigation }) => {
           }}
         />
         <Text style={tw`text-xl font-bold text-white`}>Create Quote</Text>
-        <View style={tw`pr-14`}></View>
+        <View style={tw`pr-14`} />
       </View>
 
       <ScrollView
@@ -87,14 +87,6 @@ const CreateQuote = ({ navigation }) => {
           }}
           validationSchema={createQuoteSchemasArr[currentStep]}
           onSubmit={async (values, formikHelpers) => {
-            if (currentStep === CreateQuoteFormStep.BenefitDetails) {
-              formikHelpers.setFieldValue('annualPremium', 0.0);
-              formikHelpers.setFieldValue('semiAnnual', 0.0);
-              formikHelpers.setFieldValue('quarterly', 0.0);
-              formikHelpers.setFieldValue('monthly', 0.0);
-              formikHelpers.setFieldValue('additionalComment', '');
-            }
-
             if (currentStep === CreateQuoteFormStep.CostDetails) {
               const templateValues = {
                 generationDate: new Date(),
@@ -137,35 +129,23 @@ const CreateQuote = ({ navigation }) => {
               setCurrentStep((prevStep) => prevStep + 1);
             }
           }}>
-          {({
-            handleChange,
-            handleBlur,
-            handleSubmit,
-            values,
-            errors,
-            touched,
-            setFieldValue,
-          }) => (
-            <View>
-              {currentStep === 0 && <ClientDetailsForm />}
-
-              {currentStep === 1 && (
-                <BenefitDetailsForm
-                  onBack={() => {
-                    setCurrentStep((prevStepVal) => prevStepVal - 1);
-                  }}
-                />
-              )}
-
-              {currentStep === 2 && (
-                <CostDetailsForm
-                  onBack={() => {
-                    setCurrentStep((prevStepVal) => prevStepVal - 1);
-                  }}
-                />
-              )}
-            </View>
-          )}
+          <View>
+            {currentStep === 0 && <ClientDetailsForm />}
+            {currentStep === 1 && (
+              <BenefitDetailsForm
+                onBack={() => {
+                  setCurrentStep((prevStepVal) => prevStepVal - 1);
+                }}
+              />
+            )}
+            {currentStep === 2 && (
+              <CostDetailsForm
+                onBack={() => {
+                  setCurrentStep((prevStepVal) => prevStepVal - 1);
+                }}
+              />
+            )}
+          </View>
         </Formik>
       </ScrollView>
     </View>
