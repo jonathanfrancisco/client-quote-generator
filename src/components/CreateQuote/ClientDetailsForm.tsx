@@ -9,23 +9,12 @@ import DropDownList from '@app/src/components/shared/DropDownList';
 import FieldError from '@app/src/components/shared/FieldError';
 import RadioGroupField from '@app/src/components/shared/RadioGroupField';
 import TextInputField from '@app/src/components/shared/TextInputField';
+import { useQuery } from '@tanstack/react-query';
 import { useFormikContext } from 'formik';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 
 const ClientDetailsForm = () => {
-  const [productsDropdownList, setProductsDropdownList] = useState<Product[]>(
-    []
-  );
-
-  useEffect(() => {
-    productsService
-      .getProductsByCategory(ProductCategory.TRAD)
-      .then((products) => {
-        setProductsDropdownList(products);
-      });
-  }, []);
-
   const {
     values,
     handleChange,
@@ -35,6 +24,18 @@ const ClientDetailsForm = () => {
     errors,
     touched,
   } = useFormikContext<CreateQuoteAggregatedForm>();
+
+  const {
+    isLoading: isProductsDropdownListLoading,
+    data: productsDropdownListData,
+  } = useQuery({
+    queryKey: ['productsByCategory', values.productCategory],
+    queryFn: () => {
+      return productsService.getProductsByCategory(
+        values.productCategory as ProductCategory
+      );
+    },
+  });
 
   return (
     <>
@@ -87,6 +88,7 @@ const ClientDetailsForm = () => {
         ) : null}
 
         <DropDownList
+          isLoading={false}
           label="Smoking Habit"
           placeholder="Select habit"
           items={[
@@ -117,11 +119,6 @@ const ClientDetailsForm = () => {
           picked={values.productCategory}
           onChange={(value) => {
             handleChange('productCategory')(value);
-            productsService
-              .getProductsByCategory(value as ProductCategory)
-              .then((products) => {
-                setProductsDropdownList(products);
-              });
           }}
         />
         {errors.productCategory && touched.productCategory ? (
@@ -129,19 +126,25 @@ const ClientDetailsForm = () => {
         ) : null}
 
         <DropDownList
+          isLoading={isProductsDropdownListLoading}
           label="Product Name"
           placeholder="Select product"
-          items={productsDropdownList.map((i) => ({
-            value: i.id,
-            label: i.name,
-          }))}
+          items={
+            isProductsDropdownListLoading
+              ? []
+              : productsDropdownListData!.map((i) => ({
+                  value: i.id,
+                  label: i.name,
+                }))
+          }
           picked={values.productId}
           onChange={(value) => {
-            const selectedProduct = productsDropdownList.find(
+            const selectedProduct = productsDropdownListData!.find(
               (i) => i.id === value
             );
 
-            handleChange('productId')(selectedProduct!.id);
+            // Set formik values
+            setFieldValue('productId', selectedProduct!.id);
             setFieldValue('productName', selectedProduct!.name);
             setFieldValue('productDescription', selectedProduct!.description);
           }}

@@ -8,7 +8,7 @@ const getProductsByCategory = async (
 ): Promise<Product[]> => {
   try {
     const response = await axios.get(`/api/products/${prodCategory}`);
-    return response?.data.result;
+    return response.data.result;
   } catch (err: any) {
     return [];
   }

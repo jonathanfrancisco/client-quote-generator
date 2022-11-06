@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, ActivityIndicator } from 'react-native';
 import DropDownPicker, { ListModeType } from 'react-native-dropdown-picker';
 import tw from '@app/lib/tailwind';
 
@@ -9,6 +9,7 @@ interface ListItem {
 }
 
 interface Props {
+  isLoading: boolean;
   listMode?: ListModeType;
   label?: string;
   placeholder: string;
@@ -18,6 +19,7 @@ interface Props {
 }
 
 const DropDownList = ({
+  isLoading,
   listMode = 'SCROLLVIEW',
   label,
   placeholder,
@@ -31,6 +33,7 @@ const DropDownList = ({
     <View style={tw`mb-4`}>
       {label ? <Text style={tw`text-lg mb-2`}>{label}</Text> : null}
       <DropDownPicker
+        loading={isLoading}
         listMode={listMode}
         style={{
           borderWidth: 0.5,
