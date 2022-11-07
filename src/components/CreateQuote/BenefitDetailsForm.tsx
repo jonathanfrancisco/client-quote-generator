@@ -9,6 +9,7 @@ import FieldError from '../shared/FieldError';
 import AddBenefitButtonModal from './AddBenefitButtonModal';
 import BenefitCard from './BenefitCard';
 import productsService from '@app/src/api/services/products';
+import { useQuery } from '@tanstack/react-query';
 
 const renderBenefits = (
   formikFieldKey: string,
@@ -16,7 +17,6 @@ const renderBenefits = (
   benefits: ISelectableBenefit[] | undefined,
   onBenefitSelect: (index: number, isSelected: boolean, value: string) => void
 ) => {
-  const currentProductIdSelected = 'temp1234';
   return (
     <>
       {benefits && benefits.length > 0 ? (
@@ -31,7 +31,7 @@ const renderBenefits = (
                 {benefits.map((benefit, index) => {
                   return (
                     <BenefitCard
-                      key={currentProductIdSelected + benefit.benefitId}
+                      key={benefit.benefitId}
                       index={index}
                       name={benefit.benefitName}
                       stateAmount={benefit.amount}
@@ -55,21 +55,23 @@ interface Props {
 }
 
 const BenefitDetailsForm = ({ onBack }: Props) => {
-  const [isLoading, setIsLoading] = useState<boolean>();
   const { values, handleSubmit, setFieldValue, errors } =
     useFormikContext<CreateQuoteAggregatedForm>();
 
-  useEffect(() => {
-    setIsLoading(true);
-    productsService.getProductById(values.productId).then((product) => {
-      // TODO: Don't refetch if selected product id didn't change
-      const productSelectableBenefits = product!.productBenefits.map((i) => {
+  const { isLoading: isProductBenefitsLoading } = useQuery({
+    queryKey: ['productBenefits', values.productId],
+    queryFn: () => {
+      return productsService.getProductById(values.productId);
+    },
+    onSuccess: (data) => {
+      const productSelectableBenefits = data!.productBenefits.map((i) => {
         return {
           ...i,
           isSelected: false,
         } as ISelectableBenefit;
       });
 
+      // Set formik values
       setFieldValue(
         'productPrimaBenefits',
         productSelectableBenefits.filter((i) => i.type === BenefitType.PRIMARY)
@@ -80,15 +82,16 @@ const BenefitDetailsForm = ({ onBack }: Props) => {
           (i) => i.type === BenefitType.SUPPLEMENTARY
         )
       );
-      setIsLoading(false);
-    });
-  }, []);
+    },
+    staleTime: Infinity,
+    cacheTime: Infinity,
+  });
 
   return (
     <>
       <View style={tw`bg-white rounded-tl-lg rounded-tr-lg p-4`}>
         <Text style={tw`text-xl font-bold mb-2`}>Benefit Details</Text>
-        {isLoading ? (
+        {isProductBenefitsLoading ? (
           <ActivityIndicator color="#FFE069" size="large" />
         ) : (
           <>
@@ -137,7 +140,6 @@ const BenefitDetailsForm = ({ onBack }: Props) => {
 
             <AddBenefitButtonModal
               onAdd={(benefit, type) => {
-                setIsLoading(true);
                 if (type === BenefitType.PRIMARY) {
                   setFieldValue('productPrimaBenefits', [
                     ...values.productPrimaBenefits,
@@ -163,7 +165,6 @@ const BenefitDetailsForm = ({ onBack }: Props) => {
                     } as ISelectableBenefit,
                   ]);
                 }
-                setIsLoading(false);
               }}
             />
           </>
