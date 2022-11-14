@@ -13,6 +13,8 @@ import ActionCard from '@app/src/components/Dashboard/ActionCard';
 import MainPageHeader from '@app/src/components/Dashboard/DashboardNav';
 import DashboardTitle from '@app/src/components/Dashboard/DashboardTitle';
 import QuoteCount from '@app/src/components/Dashboard/QuoteCount';
+import quotesService from '@app/src/api/services/quotes';
+import { useQuery } from '@tanstack/react-query';
 
 const CreateQuoteIcon = require('@app/assets/icons/create_quote_icon.png');
 const ProductListIcon = require('@app/assets/icons/product_list_icon.png');
@@ -35,6 +37,15 @@ const Home = ({ navigation }) => {
     }
   }, [fontsLoaded]);
 
+  const { isLoading: isTotalQuotesCountLoading, data: totalQuotesCount } =
+    useQuery({
+      queryKey: ['totalQuotesCount'],
+      queryFn: () => {
+        return quotesService.getTotalQuotesCount();
+      },
+      refetchInterval: 300 * 1000,
+    });
+
   if (!fontsLoaded) {
     return null;
   }
@@ -44,7 +55,10 @@ const Home = ({ navigation }) => {
       <View>
         <MainPageHeader />
         <DashboardTitle />
-        <QuoteCount count={123} />
+        <QuoteCount
+          count={totalQuotesCount!}
+          isLoading={isTotalQuotesCountLoading}
+        />
         <Image style={tw`absolute -bottom-6 left-0`} source={SunLifeSunImg} />
       </View>
       <ActionsDrawer>

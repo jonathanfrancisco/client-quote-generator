@@ -24,7 +24,7 @@ import ISelectableBenefit from '@app/src/common/interfaces/selectable-benefit.in
 import ClientDetailsForm from '@app/src/components/CreateQuote/ClientDetailsForm';
 import CostDetailsForm from '../../components/CreateQuote/CostDetailsForm';
 import BenefitDetailsForm from '../../components/CreateQuote/BenefitDetailsForm';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import quotes from '../../api/services/quotes';
 import { NewClientQuoteRequest } from '../../common/interfaces/new-client-quote-request.interface';
 
@@ -37,12 +37,13 @@ const CreateQuote = ({ navigation }) => {
   // UI/Ephemeral state not form values that will be eventually submitted.
   const [currentStep, setCurrentStep] = useState(0);
 
+  const queryClient = useQueryClient();
   const { mutate, isLoading, isError } = useMutation({
     mutationFn: (payload: NewClientQuoteRequest) => {
       return quotes.createQuoteForNewClient(payload);
     },
-    onSuccess: (data) => {
-      // TODO: Reload total quote count
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['totalQuotesCount'] });
     },
   });
 

@@ -34,7 +34,18 @@ const createQuoteForExistingCLient = async (id: string): Promise<any> => {
   }
 };
 
+const getTotalQuotesCount = async (): Promise<number> => {
+  try {
+    const response = await axios.get(`/api/quotes/total`);
+
+    return response.data.result[0]?.count;
+  } catch (err: any) {
+    return 0;
+  }
+};
+
 export default {
   createQuoteForNewClient,
   createQuoteForExistingCLient,
+  getTotalQuotesCount,
 };
