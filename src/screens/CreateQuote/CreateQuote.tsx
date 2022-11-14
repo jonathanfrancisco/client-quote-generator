@@ -7,29 +7,26 @@ import {
   View,
 } from 'react-native';
 import { HeaderBackButton } from '@react-navigation/elements';
-import { FieldArray, Formik } from 'formik';
+import { Formik } from 'formik';
 import { printToFileAsync } from 'expo-print';
 import * as FileSystem from 'expo-file-system';
 import * as Sharing from 'expo-sharing';
 
 import tw from '@app/lib/tailwind';
-import FieldError from '@app/src/components/shared/FieldError';
 
 import ClientDetailsStepSchema from '@app/src/formSchemas/clientDetailsStep.schema';
 import ClientBenefitsStepSchema from '@app/src/formSchemas/clientBenefitsStep.schema';
-
-import BenefitCard from '@app/src/components/CreateQuote/BenefitCard';
-import AddBenefitButtonModal from '@app/src/components/CreateQuote/AddBenefitButtonModal';
-import productsService from '@app/src/api/services/products';
 
 import ProductCategory from '@app/src/common/enums/productCategory.enum';
 import generatedQuoteHtmlTemplate from '@app/src/templates/html/generatedQuoteHtmlTemplate';
 import CreateQuoteFormStep from '@app/src/common/enums/createQuoteFormStep.enum';
 import ISelectableBenefit from '@app/src/common/interfaces/selectable-benefit.interface';
-import BenefitType from '@app/src/common/enums/benefitType.enum';
 import ClientDetailsForm from '@app/src/components/CreateQuote/ClientDetailsForm';
 import CostDetailsForm from '../../components/CreateQuote/CostDetailsForm';
 import BenefitDetailsForm from '../../components/CreateQuote/BenefitDetailsForm';
+import { useMutation } from '@tanstack/react-query';
+import quotes from '../../api/services/quotes';
+import { NewClientQuoteRequest } from '../../common/interfaces/new-client-quote-request.interface';
 
 const createQuoteSchemasArr = [
   ClientDetailsStepSchema,
@@ -39,8 +36,15 @@ const createQuoteSchemasArr = [
 const CreateQuote = ({ navigation }) => {
   // UI/Ephemeral state not form values that will be eventually submitted.
   const [currentStep, setCurrentStep] = useState(0);
-  const [currentProductIdSelected, setCurrentProductIdSelected] =
-    useState<string>();
+
+  const { mutate, isLoading, isError } = useMutation({
+    mutationFn: (payload: NewClientQuoteRequest) => {
+      return quotes.createQuoteForNewClient(payload);
+    },
+    onSuccess: (data) => {
+      // TODO: Reload total quote count
+    },
+  });
 
   return (
     <View style={tw`h-full bg-sunlife-primary`}>
@@ -66,7 +70,7 @@ const CreateQuote = ({ navigation }) => {
           initialValues={{
             // Client Details Form
             name: '',
-            gender: 'male',
+            gender: 'MALE',
             birthday: '',
             smokingHabit: 'Non-Smoker',
             productCategory: ProductCategory.TRAD,
@@ -88,6 +92,8 @@ const CreateQuote = ({ navigation }) => {
           validationSchema={createQuoteSchemasArr[currentStep]}
           onSubmit={async (values, formikHelpers) => {
             if (currentStep === CreateQuoteFormStep.CostDetails) {
+              // Call Create Quote API Here
+
               const templateValues = {
                 generationDate: new Date(),
                 name: values.name,
@@ -107,6 +113,26 @@ const CreateQuote = ({ navigation }) => {
                 monthlyPayment: values.monthly,
                 additionalComment: values.additionalComment,
               };
+
+              const clientBenefit = [
+                ...values.productPrimaBenefits.filter((i) => i.isSelected),
+                ...values.productSuppBenefits.filter((i) => i.isSelected),
+              ].map((i) => ({
+                benefitId: i.benefitId,
+                type: i.type.toString(),
+                amount: i.value,
+              }));
+
+              mutate({
+                name: values.name,
+                gender: values.gender,
+                birthday: values.birthday,
+                smokingHabit: values.smokingHabit,
+                productId: values.productId,
+                clientBenefit,
+                annualPremium: Number(values.annualPremium),
+                additionalComment: values.additionalComment,
+              });
 
               const file = await printToFileAsync({
                 html: await generatedQuoteHtmlTemplate(templateValues),

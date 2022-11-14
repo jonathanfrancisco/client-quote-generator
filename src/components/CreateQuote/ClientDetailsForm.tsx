@@ -59,12 +59,12 @@ const ClientDetailsForm = () => {
           items={[
             {
               id: '1',
-              value: 'male',
+              value: 'MALE',
               label: 'Male',
             },
             {
               id: '2',
-              value: 'female',
+              value: 'FEMALE',
               label: 'Female',
             },
           ]}

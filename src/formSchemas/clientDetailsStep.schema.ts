@@ -2,7 +2,7 @@ import * as Yup from 'yup';
 
 const ClientDetailsStepSchema = Yup.object().shape({
   name: Yup.string().required('Required field'),
-  gender: Yup.string().oneOf(['male', 'female']).required('Required field'),
+  gender: Yup.string().oneOf(['MALE', 'FEMALE']).required('Required field'),
   birthday: Yup.string()
     .matches(
       new RegExp(
