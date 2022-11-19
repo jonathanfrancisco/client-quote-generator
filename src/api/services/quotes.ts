@@ -1,3 +1,4 @@
+import { ExistingClientQuoteRequest } from '@app/src/common/interfaces/existing-client-quote-request.interface';
 import { NewClientQuoteRequest } from '@app/src/common/interfaces/new-client-quote-request.interface';
 
 import axios from './axios';
@@ -17,11 +18,13 @@ const createQuoteForNewClient = async (
   }
 };
 
-const createQuoteForExistingCLient = async (id: string): Promise<any> => {
+const createQuoteForExistingCLient = async (
+  existingClientQuote: ExistingClientQuoteRequest
+): Promise<any> => {
   try {
     const response = await axios.post(
       `/api/quote/existing`,
-      {},
+      existingClientQuote,
       {
         headers: {
           'Content-Type': 'application/json',

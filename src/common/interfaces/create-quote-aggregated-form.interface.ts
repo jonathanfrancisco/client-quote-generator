@@ -2,6 +2,8 @@ import ProductCategory from '../enums/ProductCategory.enum';
 import ISelectableBenefit from './selectable-benefit.interface';
 
 export default interface CreateQuoteAggregatedForm {
+  clientType: string;
+  existingClientId: string;
   // Client Details Form
   name: string;
   gender: string;

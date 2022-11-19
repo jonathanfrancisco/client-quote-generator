@@ -1,5 +1,6 @@
 import tw from '@app/lib/tailwind';
 import productsService from '@app/src/api/services/products';
+import clientsService from '@app/src/api/services/clients';
 import ProductCategory from '@app/src/common/enums/productCategory.enum';
 import CreateQuoteAggregatedForm from '@app/src/common/interfaces/create-quote-aggregated-form.interface';
 import Product from '@app/src/common/interfaces/product.interface';
@@ -13,6 +14,7 @@ import { useQuery } from '@tanstack/react-query';
 import { useFormikContext } from 'formik';
 import React from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
+import dayjs from 'dayjs';
 
 const ClientDetailsForm = () => {
   const {
@@ -37,19 +39,82 @@ const ClientDetailsForm = () => {
     },
   });
 
+  const { isLoading: isClientsLoading, data: clientsData } = useQuery({
+    queryKey: ['existingClients'],
+    queryFn: () => {
+      return clientsService.getClients();
+    },
+  });
+
   return (
     <>
       <View style={tw`bg-white rounded-tl-lg rounded-tr-lg p-4`}>
         <Text style={tw`text-xl font-bold mb-2`}>Client Details</Text>
 
-        <TextInputField
-          label="Name"
-          placeholder="Name"
-          value={values.name}
-          onChangeText={handleChange('name')}
-          onBlur={handleBlur('name')}
-          error={errors.name && touched.name ? true : false}
+        <RadioGroupField
+          label=""
+          items={[
+            {
+              id: '1',
+              value: 'new',
+              label: 'New',
+            },
+            {
+              id: '2',
+              value: 'existing',
+              label: 'Existing',
+            },
+          ]}
+          picked={values.clientType}
+          onChange={(value) => {
+            handleChange('clientType')(value);
+          }}
         />
+        {errors.productCategory && touched.productCategory ? (
+          <FieldError message={errors.productCategory} />
+        ) : null}
+
+        {values.clientType === 'new' ? (
+          <TextInputField
+            label="Name"
+            placeholder="Name"
+            value={values.name}
+            onChangeText={handleChange('name')}
+            onBlur={handleBlur('name')}
+            error={errors.name && touched.name ? true : false}
+          />
+        ) : (
+          <DropDownList
+            isLoading={false}
+            label=""
+            placeholder="Select existing client"
+            items={clientsData!.map((i) => {
+              return {
+                label: i.name,
+                value: i.id,
+              };
+            })}
+            picked={values.existingClientId}
+            onChange={async (id) => {
+              const clientDetails = clientsData?.find((i) => i.id === id);
+              handleChange('existingClientId')(id);
+              setFieldValue('name', clientDetails?.name);
+
+              // set birthday
+              const birthdate = dayjs(clientDetails?.birthday).toDate();
+              type StringOrNum = string | number;
+              let mm: StringOrNum = birthdate.getMonth() + 1; // Months start at 0!
+              let dd: StringOrNum = birthdate.getDate();
+              const yyyy = birthdate.getFullYear();
+              if (mm < 10) mm = '0' + mm;
+              if (dd < 10) dd = '0' + dd;
+              setFieldValue('birthday', mm + '/' + dd + '/' + yyyy);
+
+              setFieldValue('smokingHabit', clientDetails?.smokingHabit);
+            }}
+          />
+        )}
+
         {errors.name && touched.name ? (
           <FieldError message={errors.name} />
         ) : null}

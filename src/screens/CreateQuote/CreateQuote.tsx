@@ -27,6 +27,7 @@ import BenefitDetailsForm from '../../components/CreateQuote/BenefitDetailsForm'
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import quotes from '../../api/services/quotes';
 import { NewClientQuoteRequest } from '../../common/interfaces/new-client-quote-request.interface';
+import { ExistingClientQuoteRequest } from '@app/src/common/interfaces/existing-client-quote-request.interface';
 
 const createQuoteSchemasArr = [
   ClientDetailsStepSchema,
@@ -38,9 +39,26 @@ const CreateQuote = ({ navigation }) => {
   const [currentStep, setCurrentStep] = useState(0);
 
   const queryClient = useQueryClient();
-  const { mutate, isLoading, isError } = useMutation({
+  const {
+    mutate: createQuoteNewClient,
+    isLoading: createQuoteNewClientIsLoading,
+    isError: createQuoteNewClientIsError,
+  } = useMutation({
     mutationFn: (payload: NewClientQuoteRequest) => {
       return quotes.createQuoteForNewClient(payload);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['totalQuotesCount'] });
+    },
+  });
+
+  const {
+    mutate: createQuoteExistingClient,
+    isLoading: createQuoteExistingClientIsLoading,
+    isError: createQuoteExistingClientIsError,
+  } = useMutation({
+    mutationFn: (payload: ExistingClientQuoteRequest) => {
+      return quotes.createQuoteForExistingCLient(payload);
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['totalQuotesCount'] });
@@ -70,6 +88,8 @@ const CreateQuote = ({ navigation }) => {
         <Formik
           initialValues={{
             // Client Details Form
+            clientType: 'new',
+            existingClientId: '',
             name: '',
             gender: 'MALE',
             birthday: '',
@@ -124,16 +144,27 @@ const CreateQuote = ({ navigation }) => {
                 amount: i.value,
               }));
 
-              mutate({
-                name: values.name,
-                gender: values.gender,
-                birthday: values.birthday,
-                smokingHabit: values.smokingHabit,
-                productId: values.productId,
-                clientBenefit,
-                annualPremium: Number(values.annualPremium),
-                additionalComment: values.additionalComment,
-              });
+              if (values.clientType === 'new') {
+                createQuoteNewClient({
+                  name: values.name,
+                  gender: values.gender,
+                  birthday: values.birthday,
+                  smokingHabit: values.smokingHabit,
+                  productId: values.productId,
+                  clientBenefit,
+                  annualPremium: Number(values.annualPremium),
+                  additionalComment: values.additionalComment,
+                });
+              } else {
+                createQuoteExistingClient({
+                  id: values.existingClientId,
+                  smokingHabit: values.smokingHabit,
+                  productId: values.productId,
+                  clientBenefit,
+                  annualPremium: Number(values.annualPremium),
+                  additionalComment: values.additionalComment,
+                });
+              }
 
               const file = await printToFileAsync({
                 html: await generatedQuoteHtmlTemplate(templateValues),
