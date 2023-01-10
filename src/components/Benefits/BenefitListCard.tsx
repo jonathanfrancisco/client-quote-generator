@@ -1,8 +1,8 @@
 import React from 'react';
-import { View, Text, ColorValue } from 'react-native';
+import { View, Text, ColorValue, TouchableOpacity } from 'react-native';
 import tw from '@app/lib/tailwind';
 import BenefitTag from './BenefitTag';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+
 import BenefitType from '@app/src/common/enums/benefitType.enum';
 
 interface BenefitTag {
