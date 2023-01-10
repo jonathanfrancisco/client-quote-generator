@@ -14,6 +14,7 @@ interface Props {
   placeholder: string;
   value: string;
   onChangeText: ((text: string) => void) | undefined;
+  icon?: JSX.Element;
   onBlur?: ((e: NativeSyntheticEvent<TargetedEvent>) => void) | undefined;
   height?: number;
   error?: boolean;
@@ -24,6 +25,7 @@ const TextInputField = ({
   placeholder,
   value,
   onChangeText,
+  icon,
   onBlur,
   height,
   error,
@@ -36,9 +38,13 @@ const TextInputField = ({
           marginVertical: 2,
           borderWidth: error ? 1.5 : 0.5,
           padding: 8,
+          paddingLeft: 16,
           borderRadius: 6,
-          height: height,
+          height,
           borderColor: error ? 'red' : 'black',
+          flexDirection: 'row',
+          justifyContent: 'space-between',
+          alignItems: 'center',
         }}>
         <TextInput
           style={tw`text-lg font-bold`}
@@ -50,6 +56,7 @@ const TextInputField = ({
             twTheme.theme.extend.colors.sunlife.secondaryAccent
           }
         />
+        {icon ? icon : null}
       </View>
     </View>
   );
