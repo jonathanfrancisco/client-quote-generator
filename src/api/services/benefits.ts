@@ -17,6 +17,22 @@ const getAddableNotDefaultBenefits = async (): Promise<IAddableBenefit[]> => {
   }
 };
 
+const getAllBenefits = async (): Promise<IAddableBenefit[]> => {
+  try {
+    const response = await axios.get(`/api/benefits`);
+    return response?.data.result.map((i: IAddableBenefit) => {
+      return {
+        ...i,
+        value: i.amount && i.value === '' ? '0' : i.value,
+      };
+    });
+  } catch (err) {
+    console.log('error: ', err);
+    return [];
+  }
+};
+
 export default {
   getAddableNotDefaultBenefits,
+  getAllBenefits,
 };

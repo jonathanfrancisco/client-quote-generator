@@ -4,12 +4,12 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import React from 'react';
 import { SafeAreaView, StatusBar, Platform, View } from 'react-native';
-import tw from '@app/lib/tailwind';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 /* Screens components */
 import Dashboard from '@app/src/screens/Dashboard/Dashboard';
 import CreateQuote from '@app/src/screens/CreateQuote/CreateQuote';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import Benefits from '@app/src/screens/Benefits/Benefits';
 
 /* 
   Why this code? To be able to use toLocaleString to format numbers or use intl
@@ -46,6 +46,11 @@ export default function App() {
               options={{
                 headerShown: false,
               }}
+            />
+            <Stack.Screen
+              name="Benefits"
+              component={Benefits}
+              options={{ headerShown: false }}
             />
           </Stack.Navigator>
         </SafeAreaView>
