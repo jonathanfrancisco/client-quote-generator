@@ -65,8 +65,7 @@ const AddBenefit = ({ navigation }) => {
               benefitDetailsValue: '',
             }}
             validationSchema={AddBenefitFormSchema}
-            onSubmit={async (values) => {
-              console.log('submitted values: ', values);
+            onSubmit={async (values, formikHelpers) => {
               addNewBenefit({
                 name: values.benefitName,
                 defaultBenefit: false, // TODO: Remove once API is updated to not include defaultBenefit in payload
@@ -74,6 +73,7 @@ const AddBenefit = ({ navigation }) => {
                 amount: values.fixedCoverageValue,
                 value: values.benefitDetailsValue,
               });
+              formikHelpers.resetForm();
             }}>
             {({
               values,
