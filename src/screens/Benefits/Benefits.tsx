@@ -74,7 +74,8 @@ const Benefits = ({ navigation }) => {
                 navigation={navigation}
                 benefits={allBenefits || []}
               />
-            )}></Tab.Screen>
+            )}
+          />
           <Tab.Screen name="PRIMARY" component={PrimaryBenefits} />
           <Tab.Screen name="SUPPLE" component={SupplementaryBenefits} />
         </Tab.Navigator>
