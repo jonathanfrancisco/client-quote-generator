@@ -10,6 +10,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import Dashboard from '@app/src/screens/Dashboard/Dashboard';
 import CreateQuote from '@app/src/screens/CreateQuote/CreateQuote';
 import Benefits from '@app/src/screens/Benefits/Benefits';
+import AddBenefit from '@app/src/screens/AddBenefit/AddBenefit';
 
 /* 
   Why this code? To be able to use toLocaleString to format numbers or use intl
@@ -38,19 +39,28 @@ export default function App() {
             <Stack.Screen
               name="Dashboard"
               component={Dashboard}
-              options={{ headerShown: false }}
+              options={{ headerShown: false, animation: 'slide_from_right' }}
             />
             <Stack.Screen
               name="CreateQuote"
               component={CreateQuote}
               options={{
                 headerShown: false,
+                animation: 'slide_from_right',
               }}
             />
             <Stack.Screen
               name="Benefits"
               component={Benefits}
-              options={{ headerShown: false }}
+              options={{ headerShown: false, animation: 'slide_from_right' }}
+            />
+            <Stack.Screen
+              name="AddBenefit"
+              component={AddBenefit}
+              options={{
+                headerShown: false,
+                animation: 'slide_from_right',
+              }}
             />
           </Stack.Navigator>
         </SafeAreaView>

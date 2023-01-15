@@ -8,7 +8,7 @@ interface Props {
 }
 
 const FieldError = ({ message }: Props) => {
-  return <Text style={tw`text-red-400 font-bold`}>{message}</Text>;
+  return <Text style={tw`text-red-400 font-bold mb-2`}>{message}</Text>;
 };
 
 export default FieldError;

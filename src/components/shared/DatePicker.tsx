@@ -52,7 +52,7 @@ const DatePicker = ({
   };
 
   return (
-    <View style={tw`mb-4`}>
+    <View>
       <Text style={tw`text-lg mb-2`}>{label}</Text>
       <View
         style={{
