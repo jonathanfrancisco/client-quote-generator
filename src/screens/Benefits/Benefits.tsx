@@ -77,7 +77,17 @@ const Benefits = ({ navigation }) => {
             children={() => (
               <AllBenefits
                 navigation={navigation}
-                benefits={allBenefits || []}
+                benefits={
+                  allBenefits.filter((i) => {
+                    if (!searchQuery) {
+                      return true;
+                    }
+
+                    return i.name
+                      .toLowerCase()
+                      .includes(searchQuery.toLowerCase());
+                  }) || []
+                }
               />
             )}
           />
@@ -87,8 +97,17 @@ const Benefits = ({ navigation }) => {
               <PrimaryBenefits
                 navigation={navigation}
                 benefits={
-                  allBenefits!.filter((i) => i.type === BenefitType.PRIMARY) ||
-                  []
+                  allBenefits!
+                    .filter((i) => i.type === BenefitType.PRIMARY)
+                    .filter((i) => {
+                      if (!searchQuery) {
+                        return true;
+                      }
+
+                      return i.name
+                        .toLowerCase()
+                        .includes(searchQuery.toLowerCase());
+                    }) || []
                 }
               />
             )}
@@ -99,9 +118,17 @@ const Benefits = ({ navigation }) => {
               <SupplementaryBenefits
                 navigation={navigation}
                 benefits={
-                  allBenefits!.filter(
-                    (i) => i.type === BenefitType.SUPPLEMENTARY
-                  ) || []
+                  allBenefits!
+                    .filter((i) => i.type === BenefitType.SUPPLEMENTARY)
+                    .filter((i) => {
+                      if (!searchQuery) {
+                        return true;
+                      }
+
+                      return i.name
+                        .toLowerCase()
+                        .includes(searchQuery.toLowerCase());
+                    }) || []
                 }
               />
             )}
