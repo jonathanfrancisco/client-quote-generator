@@ -19,7 +19,6 @@ interface Props {
   onAdd: (benefit: IAddableBenefit, type: IBenefitType) => void;
 }
 
-// TODO: Use React query here
 const AddBenefitButtonModal = ({ onAdd }: Props) => {
   const [isVisible, setIsVisible] = useState(false);
 
