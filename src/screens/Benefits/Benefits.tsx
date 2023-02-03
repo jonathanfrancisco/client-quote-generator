@@ -3,7 +3,7 @@ import { HeaderBackButton } from '@react-navigation/elements';
 import { NavigationContainer } from '@react-navigation/native';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 
-import React from 'react';
+import React, { useState } from 'react';
 import { View, Text, ScrollView } from 'react-native';
 import AllBenefits from '@app/src/components/Benefits/AllBenefits';
 import PrimaryBenefits from '@app/src/components/Benefits/PrimaryBenefits';
@@ -13,15 +13,18 @@ import TextInputField from '@app/src/components/shared/TextInputField';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import benefitsService from '@app/src/api/services/benefits';
 import { useQuery } from '@tanstack/react-query';
+import BenefitType from '@app/src/common/enums/benefitType.enum';
 
 const Tab = createMaterialTopTabNavigator();
 
 const Benefits = ({ navigation }) => {
+  const [searchQuery, setSearchQuery] = useState('');
   const { isLoading: isAllBenefitsLoading, data: allBenefits } = useQuery({
     queryKey: ['allBenefits'],
     queryFn: () => {
       return benefitsService.getAllBenefits();
     },
+    initialData: [],
   });
 
   return (
@@ -43,8 +46,10 @@ const Benefits = ({ navigation }) => {
         <TextInputField
           label=""
           placeholder="Search"
-          value=""
-          onChangeText={() => {}}
+          value={searchQuery}
+          onChangeText={(val) => {
+            setSearchQuery(val);
+          }}
           icon={<Ionicons name="ios-search" size={20} color="#000" />}
           onBlur={() => {}}
         />
@@ -76,8 +81,31 @@ const Benefits = ({ navigation }) => {
               />
             )}
           />
-          <Tab.Screen name="PRIMARY" component={PrimaryBenefits} />
-          <Tab.Screen name="SUPPLE" component={SupplementaryBenefits} />
+          <Tab.Screen
+            name="PRIMARY"
+            children={() => (
+              <PrimaryBenefits
+                navigation={navigation}
+                benefits={
+                  allBenefits!.filter((i) => i.type === BenefitType.PRIMARY) ||
+                  []
+                }
+              />
+            )}
+          />
+          <Tab.Screen
+            name="SUPPLE"
+            children={() => (
+              <SupplementaryBenefits
+                navigation={navigation}
+                benefits={
+                  allBenefits!.filter(
+                    (i) => i.type === BenefitType.SUPPLEMENTARY
+                  ) || []
+                }
+              />
+            )}
+          />
         </Tab.Navigator>
       </NavigationContainer>
     </View>

@@ -21,7 +21,6 @@ const AllBenefits = ({ navigation, benefits }: Props) => {
         <TouchableOpacity
           style={tw`flex-row items-center bg-sunlife-primaryDarker rounded-lg px-6 py-1.5`}
           onPress={() => {
-            // Todo navigate to stack screen for adding benefit
             navigation.navigate('AddBenefit');
           }}>
           <Ionicons
