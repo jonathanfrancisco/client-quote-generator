@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { TouchableOpacity, Text, View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import Modal from 'react-native-modal';
@@ -13,6 +13,7 @@ import IAddableBenefit from '@app/src/common/interfaces/addable-benefit.interfac
 import { Formik } from 'formik';
 import AddAdditionalBenefitSchema from '@app/src/formSchemas/addAdditionalBenefit.schema';
 import FieldError from '@app/src/components/shared/FieldError';
+import { useQuery } from '@tanstack/react-query';
 
 interface Props {
   onAdd: (benefit: IAddableBenefit, type: IBenefitType) => void;
@@ -21,19 +22,18 @@ interface Props {
 // TODO: Use React query here
 const AddBenefitButtonModal = ({ onAdd }: Props) => {
   const [isVisible, setIsVisible] = useState(false);
-  const [addableNotDefaultBenefits, setAddableNotDefaultBenefits] = useState<
-    IAddableBenefit[]
-  >([]);
 
   const toggleModal = () => {
     setIsVisible(!isVisible);
   };
 
-  useEffect(() => {
-    Benefits.getAddableNotDefaultBenefits().then((results) => {
-      setAddableNotDefaultBenefits(results);
+  const { isLoading: isAddableBenefitsLoading, data: addableBenefits } =
+    useQuery({
+      queryKey: ['addableBenefits'],
+      queryFn: () => {
+        return Benefits.getAddableNotDefaultBenefits();
+      },
     });
-  }, []);
 
   return (
     <View>
@@ -62,7 +62,7 @@ const AddBenefitButtonModal = ({ onAdd }: Props) => {
             selectedBenefitType: IBenefitType.PRIMARY,
           }}
           onSubmit={(values, formikHelpers) => {
-            const benefit = addableNotDefaultBenefits.find(
+            const benefit = addableBenefits!.find(
               (i) => i.id === values.selectedBenefitId
             );
             toggleModal();
@@ -97,9 +97,10 @@ const AddBenefitButtonModal = ({ onAdd }: Props) => {
                 />
               </View>
               <DropDownList
+                isLoading={isAddableBenefitsLoading}
                 listMode="MODAL"
                 placeholder="Select Benefit Name"
-                items={addableNotDefaultBenefits.map((i) => {
+                items={addableBenefits!.map((i) => {
                   return {
                     label: i.name,
                     value: i.id,
