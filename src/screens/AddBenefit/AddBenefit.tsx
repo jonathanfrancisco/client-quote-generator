@@ -17,6 +17,8 @@ import AddBenefitFormSchema from '@app/src/formSchemas/addBenefitForm.schema';
 
 import BenefitType from '@app/src/common/enums/benefitType.enum';
 import AddNewBenefitRequest from '@app/src/common/interfaces/add-new-benefit-request.interface';
+import RadioGroupField from '@app/src/components/shared/RadioGroupField';
+import IBenefitType from '@app/src/common/enums/benefitType.enum';
 
 const AddBenefit = ({ navigation }) => {
   const queryClient = useQueryClient();
@@ -61,6 +63,7 @@ const AddBenefit = ({ navigation }) => {
             initialValues={{
               benefitName: '',
               defaultType: BenefitType.PRIMARY,
+              isDefaultBenefit: false,
               fixedCoverageValue: false,
               benefitDetailsValue: '',
             }}
@@ -68,8 +71,8 @@ const AddBenefit = ({ navigation }) => {
             onSubmit={async (values, formikHelpers) => {
               addNewBenefit({
                 name: values.benefitName,
-                defaultBenefit: false, // TODO: Remove once API is updated to not include defaultBenefit in payload
-                type: '', // TODO: Remove once API is updated to not include type in payload
+                defaultBenefit: values.isDefaultBenefit,
+                type: values.defaultType,
                 amount: values.fixedCoverageValue,
                 value: values.benefitDetailsValue,
               });
@@ -98,7 +101,46 @@ const AddBenefit = ({ navigation }) => {
                 <View style={tw`my-2`}></View>
 
                 <View style={tw`flex flex-row justify-between items-center`}>
-                  <Text style={tw`text-lg mb-2`}>Fixed coverage value</Text>
+                  <Text style={tw`text-lg mb-2`}>Set as default</Text>
+                  <SwitchField
+                    isToggled={values.isDefaultBenefit}
+                    onToggle={(value) => {
+                      setFieldValue('isDefaultBenefit', value);
+                    }}
+                  />
+                </View>
+
+                {values.isDefaultBenefit ? (
+                  <RadioGroupField
+                    items={[
+                      {
+                        id: '1',
+                        label:
+                          IBenefitType.PRIMARY.toString()
+                            .charAt(0)
+                            .toUpperCase() +
+                          IBenefitType.PRIMARY.toString().slice(1),
+                        value: IBenefitType.PRIMARY,
+                      },
+                      {
+                        id: '2',
+                        label:
+                          IBenefitType.SUPPLEMENTARY.toString()
+                            .charAt(0)
+                            .toUpperCase() +
+                          IBenefitType.SUPPLEMENTARY.toString().slice(1),
+                        value: IBenefitType.SUPPLEMENTARY,
+                      },
+                    ]}
+                    picked={values.defaultType}
+                    onChange={handleChange('defaultType')}
+                  />
+                ) : null}
+
+                <View style={tw`my-2`}></View>
+
+                <View style={tw`flex flex-row justify-between items-center`}>
+                  <Text style={tw`text-lg mb-2`}>Fixed caoverage value</Text>
                   <SwitchField
                     isToggled={values.fixedCoverageValue}
                     onToggle={(value) => {
