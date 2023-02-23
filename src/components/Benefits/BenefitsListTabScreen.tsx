@@ -1,17 +1,18 @@
 import React from 'react';
-import { View, Text, ScrollView, TouchableOpacity } from 'react-native';
+import { ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import tw from '@app/lib/tailwind';
-import Ionicons from '@expo/vector-icons/Ionicons';
-import twTheme from '@app/tailwind.config';
-import BenefitListCard from '@app/src/components/Benefits/BenefitListCard';
 import IAddableBenefit from '@app/src/common/interfaces/addable-benefit.interface';
+import twTheme from '@app/tailwind.config';
+
+import BenefitListCard from './BenefitListCard';
+import Ionicons from '@expo/vector-icons/Ionicons';
 
 interface Props {
   navigation: any;
   benefits: IAddableBenefit[];
 }
 
-const SupplementaryBenefits = ({ navigation, benefits }: Props) => {
+const BenefitsListTabScreen = ({ navigation, benefits }: Props) => {
   return (
     <ScrollView style={tw`p-6`}>
       <View style={tw`flex-row justify-end mb-6`}>
@@ -58,4 +59,4 @@ const SupplementaryBenefits = ({ navigation, benefits }: Props) => {
   );
 };
 
-export default SupplementaryBenefits;
+export default BenefitsListTabScreen;
