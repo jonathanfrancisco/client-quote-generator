@@ -71,15 +71,14 @@ const Home = ({ navigation }) => {
         <ActionCard
           icon={ProductListIcon}
           text="Product List"
-          onPress={() => {
-            alert('Feature not yet available');
-          }}
+          onPress={() => navigation.navigate('Products')}
         />
         <ActionCard
           icon={BenefitListIcon}
           text="Benefit List"
           onPress={() => navigation.navigate('Benefits')}
         />
+        <ActionCard text="SOON" onPress={() => {}} />
       </ActionsDrawer>
     </View>
   );
