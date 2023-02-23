@@ -16,7 +16,7 @@ const BenefitTag = ({ text, color }: Props) => {
       }}>
       <Text
         style={{
-          ...tw`text-sm`,
+          ...tw`text-xs`,
           color,
         }}>
         {text}

@@ -4,16 +4,14 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 
 import React, { useState } from 'react';
-import { View, Text, ScrollView } from 'react-native';
-import AllBenefits from '@app/src/components/Benefits/AllBenefits';
-import PrimaryBenefits from '@app/src/components/Benefits/PrimaryBenefits';
-import SupplementaryBenefits from '@app/src/components/Benefits/SupplementaryBenefits';
+import { View, Text } from 'react-native';
 import twTheme from '@app/tailwind.config';
-import TextInputField from '@app/src/components/shared/TextInputField';
-import Ionicons from '@expo/vector-icons/Ionicons';
 import benefitsService from '@app/src/api/services/benefits';
 import { useQuery } from '@tanstack/react-query';
 import BenefitType from '@app/src/common/enums/benefitType.enum';
+import BenefitsListTabScreen from '@app/src/components/Benefits/BenefitsListTabScreen';
+import IAddableBenefit from '@app/src/common/interfaces/addable-benefit.interface';
+import ListScreenSearch from '@app/src/components/shared/ListScreenSearch';
 
 const Tab = createMaterialTopTabNavigator();
 
@@ -26,6 +24,23 @@ const Benefits = ({ navigation }) => {
     },
     initialData: [],
   });
+
+  const filterBySearchQuery = (benefits: IAddableBenefit[]) => {
+    return benefits.filter((i) => {
+      if (!searchQuery) {
+        return true;
+      }
+      return i.name.toLowerCase().includes(searchQuery.toLowerCase());
+    });
+  };
+
+  const filteredAllBenefits = filterBySearchQuery(allBenefits!);
+  const filteredPrimBenefits = filterBySearchQuery(allBenefits!).filter(
+    (i) => i.type === BenefitType.PRIMARY
+  );
+  const filteredSuppBenefits = filterBySearchQuery(allBenefits!).filter(
+    (i) => i.type === BenefitType.SUPPLEMENTARY
+  );
 
   return (
     <View style={tw`h-full bg-sunlife-primary`}>
@@ -41,19 +56,13 @@ const Benefits = ({ navigation }) => {
         <View style={tw`pr-14`} />
       </View>
 
-      <View
-        style={tw`bg-sunlife-accent pl-6 pr-6 rounded-tl-3xl rounded-tr-3xl`}>
-        <TextInputField
-          label=""
-          placeholder="Search"
-          value={searchQuery}
-          onChangeText={(val) => {
-            setSearchQuery(val);
-          }}
-          icon={<Ionicons name="ios-search" size={20} color="#000" />}
-          onBlur={() => {}}
-        />
-      </View>
+      <ListScreenSearch
+        placeholder="Search"
+        value={searchQuery}
+        onChange={(value) => {
+          setSearchQuery(value);
+        }}
+      />
 
       <NavigationContainer independent>
         <Tab.Navigator
@@ -75,61 +84,27 @@ const Benefits = ({ navigation }) => {
           <Tab.Screen
             name="ALL"
             children={() => (
-              <AllBenefits
+              <BenefitsListTabScreen
                 navigation={navigation}
-                benefits={
-                  allBenefits.filter((i) => {
-                    if (!searchQuery) {
-                      return true;
-                    }
-
-                    return i.name
-                      .toLowerCase()
-                      .includes(searchQuery.toLowerCase());
-                  }) || []
-                }
+                benefits={filteredAllBenefits}
               />
             )}
           />
           <Tab.Screen
             name="PRIMARY"
             children={() => (
-              <PrimaryBenefits
+              <BenefitsListTabScreen
                 navigation={navigation}
-                benefits={
-                  allBenefits!
-                    .filter((i) => i.type === BenefitType.PRIMARY)
-                    .filter((i) => {
-                      if (!searchQuery) {
-                        return true;
-                      }
-
-                      return i.name
-                        .toLowerCase()
-                        .includes(searchQuery.toLowerCase());
-                    }) || []
-                }
+                benefits={filteredPrimBenefits}
               />
             )}
           />
           <Tab.Screen
             name="SUPPLE"
             children={() => (
-              <SupplementaryBenefits
+              <BenefitsListTabScreen
                 navigation={navigation}
-                benefits={
-                  allBenefits!
-                    .filter((i) => i.type === BenefitType.SUPPLEMENTARY)
-                    .filter((i) => {
-                      if (!searchQuery) {
-                        return true;
-                      }
-
-                      return i.name
-                        .toLowerCase()
-                        .includes(searchQuery.toLowerCase());
-                    }) || []
-                }
+                benefits={filteredSuppBenefits}
               />
             )}
           />

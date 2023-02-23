@@ -24,7 +24,7 @@ const BenefitListCard = ({ benefitName, benefitType, benefitTags }: Props) => {
           style={{
             flex: 1, // for text wrapping
             flexWrap: 'wrap', // for text wrapping
-            ...tw`text-2xl font-bold`,
+            ...tw`text-xl font-bold`,
           }}>
           {benefitName}
         </Text>
@@ -33,10 +33,10 @@ const BenefitListCard = ({ benefitName, benefitType, benefitTags }: Props) => {
           onPress={() => {
             console.log('hello');
           }}>
-          <Text style={tw`text-white text-base`}>Edit</Text>
+          <Text style={tw`text-white text-sm`}>Edit</Text>
         </TouchableOpacity>
       </View>
-      <Text style={tw`text-lg mb-2`}>{benefitType}</Text>
+      <Text style={tw`text-xs mb-2`}>{benefitType}</Text>
       <View style={tw`flex-row`}>
         {benefitTags.map((bt, index) => (
           <BenefitTag key={index} text={bt.name} color={bt.color} />
