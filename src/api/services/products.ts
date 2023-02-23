@@ -3,6 +3,15 @@ import Product from '@app/src/common/interfaces/product.interface';
 
 import axios from './axios';
 
+const getAllProducts = async (): Promise<Product[]> => {
+  try {
+    const response = await axios.get(`/api/products`);
+    return response.data.result;
+  } catch (err: any) {
+    return [];
+  }
+};
+
 const getProductsByCategory = async (
   prodCategory: ProductCategory
 ): Promise<Product[]> => {
@@ -36,6 +45,7 @@ const getProductById = async (id: string): Promise<Nullable<Product>> => {
 };
 
 export default {
+  getAllProducts,
   getProductsByCategory,
   getProductById,
 };
