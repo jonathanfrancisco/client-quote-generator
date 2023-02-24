@@ -19,7 +19,7 @@ interface Props {
   error?: boolean;
 }
 
-const TextInputField = ({
+const DisabledTextInputField = ({
   label,
   placeholder,
   value,
@@ -29,7 +29,7 @@ const TextInputField = ({
   error,
 }: Props) => {
   return (
-    <View>
+    <View style={tw`my-2`}>
       <Text style={tw`text-lg mb-2`}>{label}</Text>
       <View
         style={{
@@ -57,4 +57,4 @@ const TextInputField = ({
   );
 };
 
-export default TextInputField;
+export default DisabledTextInputField;

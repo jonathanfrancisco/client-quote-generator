@@ -42,7 +42,7 @@ const AddBenefitButtonModal = ({ onAdd }: Props) => {
         <View style={tw`flex-row justify-between items-center`}>
           <View>
             <Text style={tw`text-lg text-white font-semibold`}>
-              ADD BENEFITS
+              Add Benefits
             </Text>
             <Text style={tw`text-sm text-white`}>Lorem ipsum...</Text>
           </View>
@@ -76,7 +76,7 @@ const AddBenefitButtonModal = ({ onAdd }: Props) => {
             touched,
           }) => (
             <View style={tw`bg-white rounded-md px-4 pb-6`}>
-              <View style={tw`flex-row justify-between items-center mb-4`}>
+              <View style={tw`flex-row justify-between items-center`}>
                 <Ionicons
                   name="close"
                   size={24}
@@ -84,7 +84,7 @@ const AddBenefitButtonModal = ({ onAdd }: Props) => {
                   color="white"
                 />
                 <Text
-                  style={tw`font-bold text-sunlife-primaryDarker text-center text-xl`}>
+                  style={tw`font-bold text-sunlife-primaryDarker text-center text-lg`}>
                   ADD BENEFIT
                 </Text>
                 <Ionicons

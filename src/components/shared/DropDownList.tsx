@@ -30,7 +30,7 @@ const DropDownList = ({
   const [open, setOpen] = useState(false);
 
   return (
-    <View>
+    <View style={tw`my-2`}>
       {label ? <Text style={tw`text-lg mb-2`}>{label}</Text> : null}
       <DropDownPicker
         loading={isLoading}

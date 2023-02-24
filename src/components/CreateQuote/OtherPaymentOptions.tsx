@@ -21,17 +21,17 @@ const OtherPaymentOptions = ({ semiAnnual, quarterly, monthly }: Props) => {
         borderWidth: 0.5,
         padding: 8,
         borderRadius: 6,
-        marginBottom: 10,
+        marginBottom: 4,
       }}>
       <Text style={tw`text-lg font-semibold mb-2`}>OTHER PAYMENT OPTIONS</Text>
       <View>
-        <Text style={tw`text-lg`}>
+        <Text style={tw`text-base`}>
           Semi Annual: {formatter.format(semiAnnual)}
         </Text>
-        <Text style={tw`text-lg`}>
+        <Text style={tw`text-base`}>
           Quarterly: {formatter.format(quarterly)}
         </Text>
-        <Text style={tw`text-lg`}>Monthly: {formatter.format(monthly)}</Text>
+        <Text style={tw`text-base`}>Monthly: {formatter.format(monthly)}</Text>
       </View>
     </View>
   );
