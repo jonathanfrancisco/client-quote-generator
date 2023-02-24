@@ -29,6 +29,7 @@ const renderBenefits = (
             render={(arrayHelpers) => (
               <>
                 {benefits.map((benefit, index) => {
+                  console.log(`benefit ${index}: `, benefit);
                   return (
                     <BenefitCard
                       key={benefit.benefitId}

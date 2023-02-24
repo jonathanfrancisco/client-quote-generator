@@ -15,6 +15,7 @@ import CreateQuote from '@app/src/screens/CreateQuote/CreateQuote';
 import Benefits from '@app/src/screens/Benefits/Benefits';
 import AddBenefit from '@app/src/screens/AddBenefit/AddBenefit';
 import Products from '@app/src/screens/Products/Products';
+import EditBenefit from '@app/src/screens/EditBenefit/EditBenefit';
 
 /* 
   Why this code? To be able to use toLocaleString to format numbers or use intl
@@ -68,6 +69,11 @@ export default function App() {
             <Stack.Screen
               name="AddBenefit"
               component={AddBenefit}
+              options={stackscreenOpts}
+            />
+            <Stack.Screen
+              name="EditBenefit"
+              component={EditBenefit}
               options={stackscreenOpts}
             />
           </Stack.Navigator>

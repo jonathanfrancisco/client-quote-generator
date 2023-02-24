@@ -35,7 +35,7 @@ const ProductListCard = ({ productName, productQuoteCount }: Props) => {
           <TouchableOpacity
             style={tw`px-6 py-1 mt-2 bg-sunlife-secondary rounded-lg self-end`}
             onPress={() => {
-              console.log('hello');
+              console.log('I should save the edited product');
             }}>
             <Text style={tw`text-white text-sm`}>Edit</Text>
           </TouchableOpacity>

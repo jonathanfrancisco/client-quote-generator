@@ -5,5 +5,5 @@ export default interface AddNewBenefitRequest {
   amount: boolean;
   value: string;
   defaultBenefit: boolean;
-  type: BenefitType;
+  type: BenefitType | '';
 }
