@@ -6,13 +6,14 @@ import twTheme from '@app/tailwind.config';
 
 import BenefitListCard from './BenefitListCard';
 import Ionicons from '@expo/vector-icons/Ionicons';
+import IBenefitType from '@app/src/common/enums/benefitType.enum';
 
 interface Props {
   navigation: any;
   benefits: IAddableBenefit[];
 }
 
-const BenefitsListTabScreen = ({ navigation, benefits }: Props) => {
+const BenefitsListTabScreen = ({ benefits, navigation }: Props) => {
   return (
     <ScrollView style={tw`p-6`}>
       <View style={tw`flex-row justify-end mb-6`}>
@@ -52,6 +53,17 @@ const BenefitsListTabScreen = ({ navigation, benefits }: Props) => {
             benefitName={benefit.name}
             benefitType={benefit.type}
             benefitTags={benefitTags}
+            onEdit={() => {
+              const fixedCoverageValueToggled = !benefit.amount; //  Negate amount e.g true becomes false. Basically, amount here means to state the amount so if value is already fixed then this should be false;
+              navigation.navigate('EditBenefit', {
+                benefitId: benefit.id,
+                benefitName: benefit.name,
+                defaultType: benefit.type,
+                isDefaultBenefit: benefit.defaultBenefit,
+                fixedCoverageValue: fixedCoverageValueToggled,
+                benefitDetailsValue: benefit.value,
+              });
+            }}
           />
         );
       })}

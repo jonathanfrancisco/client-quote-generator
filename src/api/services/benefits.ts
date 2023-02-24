@@ -2,6 +2,7 @@ import axios from './axios';
 import IAddableBenefit from '@app/src/common/interfaces/addable-benefit.interface';
 import ISelectableBenefit from '@app/src/common/interfaces/selectable-benefit.interface';
 import { AddNewBenefitRequest } from '@app/src/common/interfaces/add-new-benefit-request.interface';
+import UpdateBenefitRequest from '@app/src/common/interfaces/update-benefit-request.interface';
 
 const getAddableNotDefaultBenefits = async (): Promise<IAddableBenefit[]> => {
   try {
@@ -44,8 +45,25 @@ const addBenefit = async (payload: AddNewBenefitRequest): Promise<boolean> => {
   }
 };
 
+const updateBenefit = async (
+  payload: UpdateBenefitRequest
+): Promise<boolean> => {
+  try {
+    const response = await axios.put(
+      `/api/benefits/${payload.params.benefitId}`,
+      payload.body
+    );
+
+    return true;
+  } catch (err) {
+    console.log('error: ', err);
+    return false;
+  }
+};
+
 export default {
   getAddableNotDefaultBenefits,
   getAllBenefits,
   addBenefit,
+  updateBenefit,
 };
