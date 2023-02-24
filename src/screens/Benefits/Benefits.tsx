@@ -68,6 +68,7 @@ const Benefits = ({ navigation }) => {
         <Tab.Navigator
           initialRouteName="ALL"
           screenOptions={{
+            swipeEnabled: false,
             tabBarLabelStyle: { fontSize: 18, fontWeight: 'bold' },
             tabBarStyle: {
               backgroundColor: twTheme.theme.extend.colors.sunlife.accent,
