@@ -52,8 +52,8 @@ const DatePicker = ({
   };
 
   return (
-    <View>
-      <Text style={tw`text-lg mb-2`}>{label}</Text>
+    <View style={tw`my-2`}>
+      <Text style={tw`mb-2 text-lg`}>{label}</Text>
       <View
         style={{
           marginVertical: 2,

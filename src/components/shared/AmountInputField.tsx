@@ -23,7 +23,7 @@ const AmountInputField = ({
 }: Props) => {
   return (
     <View style={tw`mb-4`}>
-      <Text style={tw`text-lg mb-2`}>{label}</Text>
+      <Text style={tw`text-lg font-bold mb-2`}>{label}</Text>
       <View
         style={{
           marginVertical: 2,

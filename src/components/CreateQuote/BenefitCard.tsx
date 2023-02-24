@@ -43,7 +43,9 @@ const BenefitCard = ({
       }}>
       <View style={tw`rounded-lg px-4 pt-2 pb-6`}>
         <View style={tw`flex-row justify-between items-center`}>
-          <Text style={tw`text-lg my-2 font-semibold`}>{name}</Text>
+          <Text style={tw`text-lg my-2 font-semibold`}>
+            {name.toUpperCase()}
+          </Text>
           <Checkbox
             value={isSelected}
             style={tw`rounded-full`}
@@ -52,11 +54,11 @@ const BenefitCard = ({
         </View>
         {stateAmount && (
           <View style={tw`flex-row items-center`}>
-            <Text>AMOUNT</Text>
+            <Text style={tw`text-xs`}>AMOUNT</Text>
             <View style={tw`mx-2`}></View>
             <CurrencyInput
               style={{
-                ...tw`text-base pl-2 w-38`,
+                ...tw`text-sm pl-2 w-38`,
                 borderWidth: 0.8,
               }}
               value={parseInt(valueField)}

@@ -21,7 +21,7 @@ const renderBenefits = (
     <>
       {benefits && benefits.length > 0 ? (
         <>
-          <Text style={tw`text-lg font-semibold mb-2`}>
+          <Text style={tw`font-semibold mb-2`}>
             {benefitsCategory.toUpperCase()}
           </Text>
           <FieldArray
@@ -112,6 +112,7 @@ const BenefitDetailsForm = ({ onBack }: Props) => {
                 }
               )}
 
+              <View style={tw`py-4`}></View>
               {renderBenefits(
                 'productSuppBenefits',
                 BenefitType.SUPPLEMENTARY,
@@ -175,14 +176,14 @@ const BenefitDetailsForm = ({ onBack }: Props) => {
           onPress={() => {
             onBack();
           }}
-          style={tw`bg-gray-200 py-2 rounded-2 min-w-1/2.1`}>
+          style={tw`bg-gray-200 py-3.5 rounded-2 min-w-1/2.1`}>
           <Text style={tw`text-center text-black font-bold text-lg`}>Back</Text>
         </TouchableOpacity>
         <TouchableOpacity
           onPress={() => {
             handleSubmit();
           }}
-          style={tw`bg-sunlife-secondary py-2 rounded-2 min-w-1/2.1`}>
+          style={tw`bg-sunlife-secondary py-3.5 rounded-2 min-w-1/2.1`}>
           <Text style={tw`text-center text-white font-bold text-lg`}>Next</Text>
         </TouchableOpacity>
       </View>

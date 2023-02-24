@@ -84,7 +84,7 @@ const CostDetailsForm = ({ onBack }: Props) => {
         ) : null}
 
         <TouchableOpacity
-          style={tw`px-8 py-4 my-2 bg-sunlife-secondary rounded-xl`}
+          style={tw`px-8 py-5 my-2 bg-sunlife-secondary rounded-xl`}
           onPress={() => {
             handleSubmit();
           }}>
@@ -98,7 +98,7 @@ const CostDetailsForm = ({ onBack }: Props) => {
           onPress={() => {
             onBack();
           }}
-          style={tw`bg-gray-200 py-2 rounded-2 min-w-1/2.1`}>
+          style={tw`bg-gray-200 py-3.5 rounded-2 min-w-1/2.1`}>
           <Text style={tw`text-center text-black font-bold text-lg`}>Back</Text>
         </TouchableOpacity>
       </View>

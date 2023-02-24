@@ -240,7 +240,7 @@ const ClientDetailsForm = () => {
           onPress={() => {
             handleSubmit();
           }}
-          style={tw`bg-sunlife-secondary py-2 rounded-2 min-w-1/2.1`}>
+          style={tw`bg-sunlife-secondary py-3.5 rounded-2 min-w-1/2.1`}>
           <Text style={tw`text-center text-white font-bold text-lg`}>Next</Text>
         </TouchableOpacity>
       </View>
