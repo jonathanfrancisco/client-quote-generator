@@ -47,7 +47,7 @@ const TextInputField = ({
           alignItems: 'center',
         }}>
         <TextInput
-          style={tw`text-lg font-bold`}
+          style={tw`text-lg font-bold w-100`}
           placeholder={placeholder}
           value={value}
           onChangeText={onChangeText}
