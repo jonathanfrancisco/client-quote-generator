@@ -3,8 +3,8 @@ import BenefitType from '@app/src/common/enums/benefitType.enum';
 import CreateQuoteAggregatedForm from '@app/src/common/interfaces/create-quote-aggregated-form.interface';
 import ISelectableBenefit from '@app/src/common/interfaces/selectable-benefit.interface';
 import { FieldArray, useFormikContext } from 'formik';
-import React, { useEffect, useState } from 'react';
-import { Text, TouchableOpacity, View, ActivityIndicator } from 'react-native';
+import React from 'react';
+import { ActivityIndicator, Text, TouchableOpacity, View } from 'react-native';
 import FieldError from '../shared/FieldError';
 import AddBenefitButtonModal from './AddBenefitButtonModal';
 import BenefitCard from './BenefitCard';
@@ -29,7 +29,6 @@ const renderBenefits = (
             render={(arrayHelpers) => (
               <>
                 {benefits.map((benefit, index) => {
-                  console.log(`benefit ${index}: `, benefit);
                   return (
                     <BenefitCard
                       key={benefit.benefitId}
@@ -60,7 +59,7 @@ const BenefitDetailsForm = ({ onBack }: Props) => {
     useFormikContext<CreateQuoteAggregatedForm>();
 
   const { isLoading: isProductBenefitsLoading } = useQuery({
-    queryKey: ['productBenefits', values.productId],
+    queryKey: [`product`],
     queryFn: () => {
       return productsService.getProductById(values.productId);
     },

@@ -3,14 +3,13 @@ import productsService from '@app/src/api/services/products';
 import clientsService from '@app/src/api/services/clients';
 import ProductCategory from '@app/src/common/enums/productCategory.enum';
 import CreateQuoteAggregatedForm from '@app/src/common/interfaces/create-quote-aggregated-form.interface';
-import Product from '@app/src/common/interfaces/product.interface';
 import DatePicker from '@app/src/components/shared/DatePicker';
 import DisabledTextInputField from '@app/src/components/shared/DisabledTextInputField';
 import DropDownList from '@app/src/components/shared/DropDownList';
 import FieldError from '@app/src/components/shared/FieldError';
 import RadioGroupField from '@app/src/components/shared/RadioGroupField';
 import TextInputField from '@app/src/components/shared/TextInputField';
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { useFormikContext } from 'formik';
 import React from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
@@ -27,6 +26,7 @@ const ClientDetailsForm = () => {
     touched,
   } = useFormikContext<CreateQuoteAggregatedForm>();
 
+  const queryClient = useQueryClient();
   const {
     isLoading: isProductsDropdownListLoading,
     data: productsDropdownListData,
@@ -207,6 +207,15 @@ const ClientDetailsForm = () => {
             const selectedProduct = productsDropdownListData!.find(
               (i) => i.id === value
             );
+
+            /*
+             *  This fixes a bug where list of benefits does not reload and is still stale
+             *  when going back to client details form then selecting a new product that has different benefits
+             * */
+            queryClient.invalidateQueries({
+              queryKey: [`product`],
+              refetchType: 'none',
+            });
 
             // Set formik values
             setFieldValue('productId', selectedProduct!.id);

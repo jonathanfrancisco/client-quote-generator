@@ -1,11 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import {
-  ActivityIndicator,
-  ScrollView,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import { ScrollView, Text, View } from 'react-native';
 import { HeaderBackButton } from '@react-navigation/elements';
 import { Formik } from 'formik';
 import { printToFileAsync } from 'expo-print';
@@ -39,6 +33,7 @@ const CreateQuote = ({ navigation }) => {
   const [currentStep, setCurrentStep] = useState(0);
 
   const queryClient = useQueryClient();
+
   const {
     mutate: createQuoteNewClient,
     isLoading: createQuoteNewClientIsLoading,
@@ -64,6 +59,22 @@ const CreateQuote = ({ navigation }) => {
       queryClient.invalidateQueries({ queryKey: ['totalQuotesCount'] });
     },
   });
+
+  useEffect(() => {
+    return () => {
+      /*
+       *  This fixes a bug where list of benefits does not load on
+       *  [create quote -> benefit details form] after going back to dashboard then going back again to [create quote -> benefit details form]
+       *
+       *  The reason is after retrieving product with benefits on benefit details form it is cached.
+       *  It is cached, so that when switching step forms under Create Quote screen the list of benefits (selected or unselected) does not change state
+       * */
+      queryClient.invalidateQueries({
+        queryKey: [`product`],
+        refetchType: 'none',
+      });
+    };
+  }, []);
 
   return (
     <View style={tw`h-full bg-sunlife-primary`}>
