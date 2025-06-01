@@ -3,6 +3,11 @@ import { NewClientQuoteRequest } from '@app/src/common/interfaces/new-client-quo
 
 import axios from './axios';
 
+export default {
+  GET: {},
+  POST: {},
+};
+
 const createQuoteForNewClient = async (
   newCLientQuote: NewClientQuoteRequest
 ): Promise<any> => {

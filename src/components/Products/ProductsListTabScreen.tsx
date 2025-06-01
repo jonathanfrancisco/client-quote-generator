@@ -17,7 +17,7 @@ const ProductsListTabScreen = ({ navigation, products }: Props) => {
         <TouchableOpacity
           style={tw`flex-row items-center bg-sunlife-primaryDarker rounded-lg px-6 py-1.5`}
           onPress={() => {
-            navigation.navigate('AddBenefit');
+            navigation.navigate('AddProduct');
           }}>
           <Ionicons
             name="add-outline"

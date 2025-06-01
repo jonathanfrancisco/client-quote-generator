@@ -44,7 +44,7 @@ const TextInputField = ({
           borderColor: error ? 'red' : 'black',
           flexDirection: 'row',
           justifyContent: 'space-between',
-          alignItems: 'center',
+          alignItems: 'flex-start',
         }}>
         <TextInput
           style={tw`text-lg font-bold w-100`}
